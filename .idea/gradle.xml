@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="/media/quio/HDD/GitHub/TroyTD" />
+            <option value="/media/quio/HDD/GitHub/TroyTD/android" />
+            <option value="/media/quio/HDD/GitHub/TroyTD/core" />
+            <option value="/media/quio/HDD/GitHub/TroyTD/desktop" />
+            <option value="/media/quio/HDD/GitHub/TroyTD/html" />
+            <option value="/media/quio/HDD/GitHub/TroyTD/ios" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
