@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		config.setTitle("TroyTD");
 		// TODO: make changeable in settings
 		config.setWindowedMode(800,480);
-		config.setResizable(false);
-		config.setMaximized(true);
+		config.setResizable(true);
+		config.setMaximized(false);
 		new Lwjgl3Application(new TroyTD(), config);
 	}
 }

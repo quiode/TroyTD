@@ -22,7 +22,7 @@ public class PauseScreen implements Screen {
         this.gameScreen = gameScreen;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
 
         glyphLayout = new GlyphLayout(game.font, "Paused...");
 
@@ -48,7 +48,7 @@ public class PauseScreen implements Screen {
         ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
 
         game.batch.begin();
-        game.font.draw(game.batch, glyphLayout, 800f / 2 - glyphLayout.width / 2, 480f / 2);
+        game.font.draw(game.batch, glyphLayout, camera.viewportWidth / 2 - glyphLayout.width / 2, camera.viewportHeight / 2);
         game.batch.end();
 
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {

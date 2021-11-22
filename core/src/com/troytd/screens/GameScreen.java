@@ -35,7 +35,7 @@ public class GameScreen implements Screen {
 
         // create stage
         camera = new OrthographicCamera();
-        viewport = new FitViewport(800, 480, camera);
+        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         // settings icon
@@ -70,7 +70,6 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         screenSwitchDelta = System.currentTimeMillis();
-        Gdx.app.log("GameScreen", "show");
     }
 
     /**

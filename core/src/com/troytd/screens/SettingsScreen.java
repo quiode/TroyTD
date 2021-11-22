@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,13 +29,17 @@ public class SettingsScreen implements Screen {
     // UI Elements
     private final ImageButton backToGameButton;
 
+    private final Label screenResolutionLabel;
+    private final TextField screenResolutionTextField1;
+    private final TextField screenResolutionTextField2;
+    private final Label screenResolutionLabel2;
 
     public SettingsScreen(final TroyTD game, final GameScreen gameScreen) {
         this.game = game;
         this.gameScreen = gameScreen;
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(800, 480, camera);
+        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         table = new Table();
@@ -58,9 +64,25 @@ public class SettingsScreen implements Screen {
             }
         });
 
-        // table
-        table.add(backToGameButton).width(backToGameButton.getWidth()).height(backToGameButton.getHeight()).pad(10).expandX().right();
+        // Preferences
+
+
+        // Table
+        table.add(backToGameButton).width(backToGameButton.getWidth()).height(backToGameButton.getHeight()).pad(10).expandX().right().colspan(4);
         table.top();
+
+        // UI Elements
+        screenResolutionLabel = new Label("Screen Resolution:", game.skin);
+        screenResolutionTextField1 = new TextField(String.valueOf(game.settingPreference.getInteger("width")), game.skin);
+        screenResolutionLabel2 = new Label("x", game.skin);
+        screenResolutionTextField2 = new TextField(String.valueOf(game.settingPreference.getInteger("height")), game.skin);
+        table.row();
+        table.add(screenResolutionLabel);
+        table.add(screenResolutionTextField1).right();
+        table.add(screenResolutionLabel2).width(10);
+        table.add(screenResolutionTextField2).left();
+
+        table.debug();
     }
 
     /**

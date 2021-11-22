@@ -1,5 +1,25 @@
 {
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Bullpen3D-16-black: {
+		file: Bullpen3D.fnt
+	}
+	Bullpen3D16-white: {
+		file: Bullpen3D(2).fnt
+	}
+	Montserrat-Regular-16-black: {
+		file: Montserrat-Regular.fnt
+	}
+	Montserrat-Regular-16-white: {
+		file: Montserrat-Regular(1).fnt
+	}
+}
 com.badlogic.gdx.graphics.Color: {
+	BLACK: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
 	GREEN: {
 		r: 0
 		g: 1
@@ -12,11 +32,31 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
+	WHITE: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	YELLOW_HIGHLIGHT: {
+		r: 1
+		g: 1
+		b: 0
+		a: 0.39215687
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	green: {
 		name: white-pixel
 		color: GREEN
+	}
+	YELLOW: {
+		name: white-pixel
+		color: YELLOW_HIGHLIGHT
+	}
+	white: {
+		name: white-pixel
+		color: WHITE
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
@@ -27,6 +67,25 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	backToGame: {
 		up: gamepad-vector-clipart
 		down: gamepad-vector-clipart
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Montserrat-Regular-16-white
+		fontColor: WHITE
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: Montserrat-Regular-16-white
+		fontColor: WHITE
+		cursor: white
+		selection: YELLOW
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
 	}
 }
 }

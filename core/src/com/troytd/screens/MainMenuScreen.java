@@ -20,7 +20,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
 
         glyphLayout1 = new GlyphLayout(game.font, Text1);
         glyphLayout2 = new GlyphLayout(game.font, Text2);
@@ -47,8 +47,8 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.font.draw(game.batch, glyphLayout1, 800f / 2 - glyphLayout1.width / 2, 480f / 2);
-        game.font.draw(game.batch, glyphLayout2, 800f / 2 - glyphLayout2.width / 2, (float) (480 / 2 - glyphLayout1.height * 1.25));
+        game.font.draw(game.batch, glyphLayout1, camera.viewportWidth / 2 - glyphLayout1.width / 2, camera.viewportHeight / 2);
+        game.font.draw(game.batch, glyphLayout2, camera.viewportWidth / 2 - glyphLayout2.width / 2, (float) (camera.viewportHeight / 2 - glyphLayout1.height * 1.25));
         game.batch.end();
 
         if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonPressed(Input.Buttons.LEFT) || Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
