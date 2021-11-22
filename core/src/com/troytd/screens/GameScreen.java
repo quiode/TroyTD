@@ -4,24 +4,31 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
 
 public class GameScreen implements Screen {
 
     private final TroyTD game;
+    // settings Icon
+    private final ImageButton settingsButton;
     OrthographicCamera camera;
-
     // time when this screen was switched to
     private long screenSwitchDelta = -1;
-
-    // settings Icon
-    private ImageButton settingsButton;
+    // stage for this screen
+    private final Stage stage;
+    private final Table table;
+    // camera and viewport
+    private final Viewport viewport;
+    private final Camera
 
     public GameScreen(final TroyTD game) {
         this.game = game;
@@ -34,16 +41,11 @@ public class GameScreen implements Screen {
         settingsButton = new ImageButton(game.skin, "settings");
         settingsButton.setSize(64, 64);
         settingsButton.setPosition(Gdx.graphics.getWidth() - settingsButton.getWidth(), Gdx.graphics.getHeight());
-        settingsButton.addListener(new InputListener(){
+        settingsButton.addListener(new ClickListener() {
             // TODO: make inputListener work
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("GameScreen", "Pressed Image Button");
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("GameScreen", "Pressed Image Button");
-                return true;
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("Debugging", "Clicked!");
             }
         });
     }
