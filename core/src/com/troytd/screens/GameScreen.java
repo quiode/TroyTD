@@ -6,24 +6,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
 
 public class GameScreen implements Screen {
 
-    private final TroyTD game;
     // settings Icon
-    private final ImageButton settingsButton;
+    public final ImageButton settingsButton;
+    private final TroyTD game;
     // stage for this screen
     private final Stage stage;
-    private final Table table;
+    private final Container<ImageButton> container;
     // camera and viewport
     private final Viewport viewport;
     private final Camera camera;
@@ -38,17 +38,30 @@ public class GameScreen implements Screen {
         viewport = new FitViewport(800, 480, camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
+        // settings icon
+        settingsButton = new ImageButton(game.skin, "toSettings");
+        settingsButton.setSize(viewport.getWorldWidth() / 15f, viewport.getScreenWidth() / 15f);
 
+        final GameScreen thisScreen = this;
+
+        settingsButton.addListener(new ChangeListener() {
+            /**
+             * @param event
+             * @param actor The event target, which is the actor that emitted the change event.
+             */
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new SettingsScreen(game, thisScreen));
+            }
+        });
+
+        container = new Container<ImageButton>(settingsButton).width(settingsButton.getWidth()).height(settingsButton.getHeight());
+        stage.addActor(container);
+        container.setPosition(viewport.getWorldWidth() - settingsButton.getWidth() - 10, viewport.getWorldHeight() - settingsButton.getHeight() - 10);
+        container.setSize(settingsButton.getWidth(), settingsButton.getHeight());
 
         // wait before switching screens
         screenSwitchDelta = System.currentTimeMillis();
-
-        // settings icon
-        settingsButton = new ImageButton(game.skin, "settings");
-        table.add(settingsButton);
     }
 
     /**
@@ -57,6 +70,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         screenSwitchDelta = System.currentTimeMillis();
+        Gdx.app.log("GameScreen", "show");
     }
 
     /**
@@ -66,13 +80,14 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
         stage.act(delta);
+        game.batch.begin();
         stage.draw();
+        game.batch.end();
 
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
             game.setScreen(new PauseScreen(game, this));
-            this.pause();
         }
     }
 
@@ -91,7 +106,6 @@ public class GameScreen implements Screen {
      */
     @Override
     public void pause() {
-        hide();
     }
 
     /**
@@ -99,7 +113,6 @@ public class GameScreen implements Screen {
      */
     @Override
     public void resume() {
-        show();
     }
 
     /**

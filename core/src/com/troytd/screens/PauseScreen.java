@@ -14,7 +14,7 @@ public class PauseScreen implements Screen {
     private final TroyTD game;
     private final GameScreen gameScreen;
     private final GlyphLayout glyphLayout;
-    private OrthographicCamera camera;
+    private final OrthographicCamera camera;
     private long screenSwitchDelta = -1;
 
     public PauseScreen(final TroyTD game, final GameScreen gameScreen) {
@@ -45,7 +45,7 @@ public class PauseScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
 
         game.batch.begin();
         game.font.draw(game.batch, glyphLayout, 800f / 2 - glyphLayout.width / 2, 480f / 2);
@@ -53,7 +53,6 @@ public class PauseScreen implements Screen {
 
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
             game.setScreen(gameScreen);
-            gameScreen.resume();
             dispose();
         }
 

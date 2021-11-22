@@ -20,9 +20,13 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
-	settings: {
+	toSettings: {
 		up: Settings-icon-symbol-vector-white
 		down: Settings-icon-symbol-vector-red
+	}
+	backToGame: {
+		up: gamepad-vector-clipart
+		down: gamepad-vector-clipart
 	}
 }
 }

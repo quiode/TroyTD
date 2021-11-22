@@ -16,7 +16,7 @@ public class MainMenuScreen implements Screen {
 
     OrthographicCamera camera;
 
-    public MainMenuScreen(final TroyTD game) {
+    public MainMenuScreen(TroyTD game) {
         this.game = game;
 
         camera = new OrthographicCamera();
@@ -41,7 +41,7 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
