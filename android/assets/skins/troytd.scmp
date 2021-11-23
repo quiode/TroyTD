@@ -492,13 +492,13 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageCheckedDown
 						optional: true
-						value: null
+						value: Settings-icon-symbol-vector-red
 					}
 					imageCheckedOver: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageCheckedOver
 						optional: true
-						value: null
+						value: Settings-icon-symbol-vector-gray
 					}
 					up: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -540,13 +540,13 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: checkedOver
 						optional: true
-						value: null
+						value: Settings-icon-symbol-vector-gray
 					}
 					checkedDown: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: checkedDown
 						optional: true
-						value: null
+						value: Settings-icon-symbol-vector-red
 					}
 					checkedFocused: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
