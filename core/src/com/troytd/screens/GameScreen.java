@@ -68,6 +68,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         screenSwitchDelta = System.currentTimeMillis();
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
