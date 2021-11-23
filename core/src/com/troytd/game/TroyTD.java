@@ -20,6 +20,8 @@ public class TroyTD extends Game {
     public void create() {        // preferences
         settingPreference = Gdx.app.getPreferences("TroyTD-settings");
 
+        assetManager = new AssetManager();
+
         if (!settingPreference.contains("width")) {
             settingPreference.putInteger("width", 800);
         }
@@ -37,14 +39,13 @@ public class TroyTD extends Game {
 
         // set skin
         assetManager.load("skins/troytd.json", Skin.class);
+        assetManager.finishLoading();
+        skin = assetManager.get("skins/troytd.json", Skin.class);
+        this.setScreen(new MainMenuScreen(this));
     }
 
     public void render() {
-        if (assetManager.update(100)) {
-            skin = assetManager.get("skins/troytd.json", Skin.class);
-            this.setScreen(new MainMenuScreen(this));
-            super.render(); // important!
-        }
+        super.render();
     }
 
     public void dispose() {
