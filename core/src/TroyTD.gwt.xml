@@ -4,4 +4,6 @@
 <module>
     <source path="com/troytd/game"/>
     <source path="com/troytd/screens"/>
+    <source path="com/troytd/enemies"/>
+    <source path="com/troytd/towers"/>
 </module>
