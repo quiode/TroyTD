@@ -63,8 +63,7 @@ public class MainMenuScreen implements Screen {
         toSettingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game));
-                dispose();
+                game.setScreen(new SettingsScreen(game, MainMenuScreen.this));
             }
         });
 
@@ -76,7 +75,7 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
