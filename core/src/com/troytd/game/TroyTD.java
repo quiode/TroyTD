@@ -25,9 +25,9 @@ public class TroyTD extends Game {
             settingPreference.putInteger("height", 480);
         }
 
-        Gdx.graphics.setWindowedMode(settingPreference.getInteger("width"), settingPreference.getInteger("height"));
-
         settingPreference.flush();
+
+        Gdx.graphics.setWindowedMode(settingPreference.getInteger("width"), settingPreference.getInteger("height"));
 
         batch = new SpriteBatch();
         font = new BitmapFont(); // use libGDX's default Arial font
