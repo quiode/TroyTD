@@ -63,6 +63,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toSettings: {
 		up: Settings-icon-symbol-vector-white
 		down: Settings-icon-symbol-vector-red
+		over: Settings-icon-symbol-vector-gray
 	}
 	backToGame: {
 		up: gamepad-vector-clipart
