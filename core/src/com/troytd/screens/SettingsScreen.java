@@ -24,7 +24,6 @@ public class SettingsScreen implements Screen {
     private final Stage stage;
     private final Table table;
     private final Viewport viewport;
-    private final GameScreen gameScreen;
 
     // UI Elements
     private final ImageButton backToGameButton;
@@ -34,9 +33,8 @@ public class SettingsScreen implements Screen {
     private final TextField screenResolutionTextField2;
     private final Label screenResolutionLabel2;
 
-    public SettingsScreen(final TroyTD game, final GameScreen gameScreen) {
+    public SettingsScreen(final TroyTD game) {
         this.game = game;
-        this.gameScreen = gameScreen;
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
@@ -59,7 +57,7 @@ public class SettingsScreen implements Screen {
              */
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(gameScreen);
+                game.setScreen(new MainMenuScreen(game));
                 thisGame.dispose();
             }
         });

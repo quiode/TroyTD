@@ -6,6 +6,21 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	Bullpen3D16-white: {
 		file: Bullpen3D(2).fnt
 	}
+	Montserrat-Bold-16-black: {
+		file: Montserrat-Bold.fnt
+	}
+	Montserrat-Bold-32-black: {
+		file: Montserrat-Bold(1).fnt
+	}
+	Montserrat-Bold-32-white: {
+		file: Montserrat-Bold(2).fnt
+	}
+	Montserrat-Bold-64-white: {
+		file: Montserrat-Bold(3).fnt
+	}
+	Montserrat-Bold-96-white: {
+		file: Montserrat-Bold(5).fnt
+	}
 	Montserrat-Regular-16-black: {
 		file: Montserrat-Regular.fnt
 	}
@@ -20,6 +35,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
+	GRAY: {
+		r: 0.47058824
+		g: 0.47058824
+		b: 0.47058824
+		a: 1
+	}
 	GREEN: {
 		r: 0
 		g: 1
@@ -32,10 +53,22 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
+	TRANSPARENT: {
+		r: 0
+		g: 0
+		b: 0
+		a: 0
+	}
 	WHITE: {
 		r: 1
 		g: 1
 		b: 1
+		a: 1
+	}
+	YELLOW: {
+		r: 1
+		g: 1
+		b: 0
 		a: 1
 	}
 	YELLOW_HIGHLIGHT: {
@@ -83,6 +116,13 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: Montserrat-Regular-16-white
 		fontColor: WHITE
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: Montserrat-Bold-96-white
+		fontColor: WHITE
+		overFontColor: YELLOW
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

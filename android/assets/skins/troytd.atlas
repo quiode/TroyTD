@@ -4,72 +4,134 @@ size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
-white-pixel
-  rotate: false
-  xy: 509, 293
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
-Bullpen3D
-  rotate: false
-  xy: 1, 266
-  size: 506, 93
-  orig: 506, 93
-  offset: 0, 0
-  index: -1
-Bullpen3D(2)
-  rotate: false
-  xy: 1, 171
-  size: 506, 93
-  orig: 506, 93
-  offset: 0, 0
-  index: -1
-Montserrat-Regular
-  rotate: false
-  xy: 509, 296
-  size: 505, 63
-  orig: 505, 63
-  offset: 0, 0
-  index: -1
-Montserrat-Regular(1)
-  rotate: false
-  xy: 1, 106
-  size: 505, 63
-  orig: 505, 63
-  offset: 0, 0
-  index: -1
 Settings-icon-symbol-vector
   rotate: false
-  xy: 1, 1163
+  xy: 1, 803
   size: 800, 800
   orig: 800, 800
   offset: 0, 0
   index: -1
 Settings-icon-symbol-vector-gray
   rotate: false
-  xy: 803, 361
+  xy: 803, 1
   size: 800, 800
   orig: 800, 800
   offset: 0, 0
   index: -1
 Settings-icon-symbol-vector-red
   rotate: false
-  xy: 1, 361
+  xy: 1, 1
   size: 800, 800
   orig: 800, 800
   offset: 0, 0
   index: -1
 Settings-icon-symbol-vector-white
   rotate: false
-  xy: 803, 1163
+  xy: 803, 803
   size: 800, 800
   orig: 800, 800
   offset: 0, 0
   index: -1
+
+troytd2.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+white-pixel
+  rotate: false
+  xy: 509, 497
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+Bullpen3D
+  rotate: false
+  xy: 1029, 1947
+  size: 506, 93
+  orig: 506, 93
+  offset: 0, 0
+  index: -1
+Bullpen3D(2)
+  rotate: false
+  xy: 1, 405
+  size: 506, 93
+  orig: 506, 93
+  offset: 0, 0
+  index: -1
+Montserrat-Bold
+  rotate: false
+  xy: 515, 739
+  size: 505, 67
+  orig: 505, 67
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(1)
+  rotate: false
+  xy: 515, 808
+  size: 506, 204
+  orig: 506, 204
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(2)
+  rotate: false
+  xy: 1029, 1741
+  size: 506, 204
+  orig: 506, 204
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(3)_0
+  rotate: false
+  xy: 1, 1528
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(3)_1
+  rotate: false
+  xy: 1, 1014
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(5)_0
+  rotate: false
+  xy: 515, 1528
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(5)_1
+  rotate: false
+  xy: 1, 500
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(5)_2
+  rotate: false
+  xy: 515, 1014
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Regular
+  rotate: false
+  xy: 1537, 1977
+  size: 505, 63
+  orig: 505, 63
+  offset: 0, 0
+  index: -1
+Montserrat-Regular(1)
+  rotate: false
+  xy: 1, 340
+  size: 505, 63
+  orig: 505, 63
+  offset: 0, 0
+  index: -1
 gamepad-vector-clipart
   rotate: false
-  xy: 1605, 1739
+  xy: 1029, 1515
   size: 360, 224
   orig: 360, 224
   offset: 0, 0

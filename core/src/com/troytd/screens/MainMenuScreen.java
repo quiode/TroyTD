@@ -1,29 +1,74 @@
 package com.troytd.screens;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
 
 public class MainMenuScreen implements Screen {
 
     final TroyTD game;
-    final String Text1 = "Welcome to TroyTD!!!";
-    final String Text2 = "Tap anywhere or press any button to begin!";
-    final GlyphLayout glyphLayout1;
-    final GlyphLayout glyphLayout2;
+    final Viewport viewport;
+    final OrthographicCamera camera;
 
-    OrthographicCamera camera;
+    // UI
+    final Stage stage;
+    final VerticalGroup menuGroup;
+    final TextButton toSettingsButton;
+    final TextButton toGameButton;
 
-    public MainMenuScreen(TroyTD game) {
+    public MainMenuScreen(final TroyTD game) {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
+        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
 
-        glyphLayout1 = new GlyphLayout(game.font, Text1);
-        glyphLayout2 = new GlyphLayout(game.font, Text2);
+        // UI
+        // initialize
+        stage = new Stage(viewport);
+        menuGroup = new VerticalGroup();
+        toGameButton = new TextButton("Play", game.skin);
+        toSettingsButton = new TextButton("Settings", game.skin);
+
+        // positioning
+        menuGroup.center();
+
+        menuGroup.setPosition(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f);
+
+        toGameButton.padBottom(50);
+
+        menuGroup.addActor(toGameButton);
+        menuGroup.addActor(toSettingsButton);
+
+        stage.addActor(menuGroup);
+
+        // listeners
+        toGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game));
+            }
+        });
+
+        toSettingsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new SettingsScreen(game));
+                dispose();
+            }
+        });
+
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
@@ -45,26 +90,22 @@ public class MainMenuScreen implements Screen {
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
+        stage.act();
 
         game.batch.begin();
-        game.font.draw(game.batch, glyphLayout1, camera.viewportWidth / 2 - glyphLayout1.width / 2, camera.viewportHeight / 2);
-        game.font.draw(game.batch, glyphLayout2, camera.viewportWidth / 2 - glyphLayout2.width / 2, (float) (camera.viewportHeight / 2 - glyphLayout1.height * 1.25));
+        stage.draw();
         game.batch.end();
 
-        if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonPressed(Input.Buttons.LEFT) || Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
     }
 
     /**
-     * @param width
-     * @param height
+     * @param width  new width
+     * @param height new height
      * @see ApplicationListener#resize(int, int)
      */
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     /**
@@ -96,5 +137,6 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void dispose() {
+        stage.dispose();
     }
 }
