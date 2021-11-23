@@ -146,4 +146,12 @@ public class SettingsScreen implements Screen {
     public void dispose() {
         stage.dispose();
     }
+
+    private void putData() {
+        game.settingPreference.putInteger("width", Integer.parseInt(screenResolutionTextField1.getText()));
+        game.settingPreference.putInteger("height", Integer.parseInt(screenResolutionTextField2.getText()));
+        game.settingPreference.flush();
+
+        Gdx.graphics.setWindowedMode(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
+    }
 }

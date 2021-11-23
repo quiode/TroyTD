@@ -25,6 +25,8 @@ public class TroyTD extends Game {
             settingPreference.putInteger("height", 480);
         }
 
+        Gdx.graphics.setWindowedMode(settingPreference.getInteger("width"), settingPreference.getInteger("height"));
+
         settingPreference.flush();
 
         batch = new SpriteBatch();
