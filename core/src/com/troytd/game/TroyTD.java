@@ -3,6 +3,7 @@ package com.troytd.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,6 +15,7 @@ public class TroyTD extends Game {
     public BitmapFont font;
     public Skin skin;
     public Preferences settingPreference;
+    public AssetManager assetManager;
 
     public void create() {        // preferences
         settingPreference = Gdx.app.getPreferences("TroyTD-settings");
@@ -32,18 +34,22 @@ public class TroyTD extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont(); // use libGDX's default Arial font
         font.getData().setScale(2);
-        this.setScreen(new MainMenuScreen(this));
 
         // set skin
-        skin = new Skin(Gdx.files.internal("skins/troytd.json"));
+        assetManager.load("skins/troytd.json", Skin.class);
     }
 
     public void render() {
-        super.render(); // important!
+        if (assetManager.update(100)) {
+            skin = assetManager.get("skins/troytd.json", Skin.class);
+            this.setScreen(new MainMenuScreen(this));
+            super.render(); // important!
+        }
     }
 
     public void dispose() {
         batch.dispose();
         font.dispose();
+        assetManager.dispose();
     }
 }
