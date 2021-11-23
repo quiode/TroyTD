@@ -42,7 +42,6 @@ public class TroyTD extends Game {
         assetManager.finishLoading();
         skin = assetManager.get("skins/troytd.json", Skin.class);
         this.setScreen(new MainMenuScreen(this));
-        dispose();
     }
 
     public void render() {
