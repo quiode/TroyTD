@@ -1,9 +1,11 @@
 package com.troytd.maps;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.CatmullRomSpline;
+import com.badlogic.gdx.math.Vector2;
 
-public class Map
-{
+public class Map {
     protected Texture texture;
-    // TODO: add path
+    protected CatmullRomSpline<Vector2> path;
+    protected Vector2[] dataSet;
 }
