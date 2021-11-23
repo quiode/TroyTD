@@ -42,8 +42,6 @@ public class GameScreen implements Screen {
         settingsButton = new ImageButton(game.skin, "toSettings");
         settingsButton.setSize(viewport.getWorldWidth() / 15f, viewport.getScreenWidth() / 15f);
 
-        final GameScreen thisScreen = this;
-
         settingsButton.addListener(new ChangeListener() {
             /**
              * @param event
@@ -51,7 +49,7 @@ public class GameScreen implements Screen {
              */
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game, thisScreen));
+                toSettingsScreen();
             }
         });
 
@@ -128,5 +126,9 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    private void toSettingsScreen() {
+        game.setScreen(new SettingsScreen(game, this));
     }
 }
