@@ -8,4 +8,8 @@ public class Map {
     protected Texture texture;
     protected CatmullRomSpline<Vector2> path;
     protected Vector2[] dataSet;
+
+    public void dispose() {
+        texture.dispose();
+    }
 }
