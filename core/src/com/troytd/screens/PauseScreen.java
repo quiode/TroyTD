@@ -21,7 +21,7 @@ public class PauseScreen implements Screen {
         this.game = game;
         this.gameScreen = gameScreen;
 
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
         camera.setToOrtho(false, game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
 
         glyphLayout = new GlyphLayout(game.font, "Paused...");
@@ -45,7 +45,7 @@ public class PauseScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
+        ScreenUtils.clear(game.BACKGROUND_COLOR);
 
         game.batch.begin();
         game.font.draw(game.batch, glyphLayout, camera.viewportWidth / 2 - glyphLayout.width / 2, camera.viewportHeight / 2);

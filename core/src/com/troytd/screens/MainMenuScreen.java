@@ -30,7 +30,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final TroyTD game) {
         this.game = game;
 
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
         viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
 
         // UI
@@ -85,7 +85,7 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
+        ScreenUtils.clear(game.BACKGROUND_COLOR);
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -104,7 +104,7 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 
     /**

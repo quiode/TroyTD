@@ -6,6 +6,9 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	Bullpen3D16-white: {
 		file: Bullpen3D(2).fnt
 	}
+	Montserrat-Bold-128-white: {
+		file: Montserrat-Bold(7).fnt
+	}
 	Montserrat-Bold-16-black: {
 		file: Montserrat-Bold.fnt
 	}
@@ -95,27 +98,31 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toSettings: {
 		imageUp: Settings-icon-symbol-vector-white
-		imageDown: Settings-icon-symbol-vector-red
+		imageDown: Settings-icon-symbol-vector-gray
 		imageOver: Settings-icon-symbol-vector-gray
 		imageChecked: Settings-icon-symbol-vector-white
-		imageCheckedDown: Settings-icon-symbol-vector-red
+		imageCheckedDown: Settings-icon-symbol-vector-gray
 		imageCheckedOver: Settings-icon-symbol-vector-gray
 		up: Settings-icon-symbol-vector-white
-		down: Settings-icon-symbol-vector-red
+		down: Settings-icon-symbol-vector-gray
 		over: Settings-icon-symbol-vector-gray
 		checked: Settings-icon-symbol-vector-white
 		checkedOver: Settings-icon-symbol-vector-gray
-		checkedDown: Settings-icon-symbol-vector-red
+		checkedDown: Settings-icon-symbol-vector-gray
 	}
 	backToGame: {
-		up: gamepad-vector-clipart
-		down: gamepad-vector-clipart
+		up: noun_back button_251451-white
+		over: noun_back button_251451-light-gray
+		checkedOver: noun_back button_251451-light-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: Montserrat-Regular-16-white
 		fontColor: WHITE
+	}
+	settings: {
+		font: Montserrat-Bold-32-white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -124,10 +131,21 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		fontColor: WHITE
 		overFontColor: YELLOW
 	}
+	settings: {
+		font: Montserrat-Bold-64-white
+		fontColor: WHITE
+		overFontColor: YELLOW
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: Montserrat-Regular-16-white
+		font: Montserrat-Bold-32-white
+		fontColor: WHITE
+		cursor: white
+		selection: YELLOW
+	}
+	settings: {
+		font: Montserrat-Bold-32-white
 		fontColor: WHITE
 		cursor: white
 		selection: YELLOW

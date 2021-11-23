@@ -38,101 +38,163 @@ size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
-white-pixel
-  rotate: false
-  xy: 509, 497
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
-Bullpen3D
-  rotate: false
-  xy: 1029, 1947
-  size: 506, 93
-  orig: 506, 93
-  offset: 0, 0
-  index: -1
-Bullpen3D(2)
-  rotate: false
-  xy: 1, 405
-  size: 506, 93
-  orig: 506, 93
-  offset: 0, 0
-  index: -1
-Montserrat-Bold
-  rotate: false
-  xy: 515, 739
-  size: 505, 67
-  orig: 505, 67
-  offset: 0, 0
-  index: -1
-Montserrat-Bold(1)
-  rotate: false
-  xy: 515, 808
-  size: 506, 204
-  orig: 506, 204
-  offset: 0, 0
-  index: -1
-Montserrat-Bold(2)
-  rotate: false
-  xy: 1029, 1741
-  size: 506, 204
-  orig: 506, 204
-  offset: 0, 0
-  index: -1
 Montserrat-Bold(3)_0
   rotate: false
-  xy: 1, 1528
+  xy: 1, 1029
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(3)_1
   rotate: false
-  xy: 1, 1014
+  xy: 1, 515
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(5)_0
   rotate: false
-  xy: 515, 1528
+  xy: 515, 1029
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(5)_1
   rotate: false
-  xy: 1, 500
+  xy: 1, 1
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(5)_2
   rotate: false
-  xy: 515, 1014
+  xy: 515, 515
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(7)_0
+  rotate: false
+  xy: 1029, 1029
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(7)_1
+  rotate: false
+  xy: 515, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(7)_2
+  rotate: false
+  xy: 1029, 515
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(7)_3
+  rotate: false
+  xy: 1029, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+troytd3.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+white-pixel
+  rotate: false
+  xy: 1022, 719
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+Bullpen3D
+  rotate: false
+  xy: 1, 414
+  size: 506, 93
+  orig: 506, 93
+  offset: 0, 0
+  index: -1
+Bullpen3D(2)
+  rotate: false
+  xy: 515, 928
+  size: 506, 93
+  orig: 506, 93
+  offset: 0, 0
+  index: -1
+Montserrat-Bold
+  rotate: false
+  xy: 1, 74
+  size: 505, 67
+  orig: 505, 67
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(1)
+  rotate: false
+  xy: 1, 208
+  size: 506, 204
+  orig: 506, 204
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(2)
+  rotate: false
+  xy: 515, 722
+  size: 506, 204
+  orig: 506, 204
+  offset: 0, 0
+  index: -1
+Montserrat-Bold(7)_4
+  rotate: false
+  xy: 1, 509
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Regular
   rotate: false
-  xy: 1537, 1977
+  xy: 1, 143
   size: 505, 63
   orig: 505, 63
   offset: 0, 0
   index: -1
 Montserrat-Regular(1)
   rotate: false
-  xy: 1, 340
+  xy: 515, 657
   size: 505, 63
   orig: 505, 63
   offset: 0, 0
   index: -1
 gamepad-vector-clipart
   rotate: false
-  xy: 1029, 1515
+  xy: 515, 431
   size: 360, 224
   orig: 360, 224
+  offset: 0, 0
+  index: -1
+noun_back button_251451
+  rotate: false
+  xy: 877, 457
+  size: 98, 98
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+noun_back button_251451-light-gray
+  rotate: false
+  xy: 509, 331
+  size: 98, 98
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+noun_back button_251451-white
+  rotate: false
+  xy: 877, 557
+  size: 98, 98
+  orig: 98, 98
   offset: 0, 0
   index: -1

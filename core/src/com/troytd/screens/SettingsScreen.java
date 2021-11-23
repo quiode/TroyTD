@@ -7,11 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -33,12 +31,13 @@ public class SettingsScreen implements Screen {
     private final TextField screenResolutionTextField1;
     private final TextField screenResolutionTextField2;
     private final Label screenResolutionLabel2;
+    private final TextButton submitButton;
 
     public SettingsScreen(final TroyTD game, final Screen lastScreen) {
         this.game = game;
         this.lastScreen = lastScreen;
 
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
         viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
@@ -50,39 +49,58 @@ public class SettingsScreen implements Screen {
         backToGameButton = new ImageButton(game.skin, "backToGame");
         backToGameButton.setSize(backToGameButton.getWidth() * 0.25f, backToGameButton.getHeight() * 0.25f);
 
-        final SettingsScreen thisGame = this;
-
         backToGameButton.addListener(new ChangeListener() {
             /**
-             * @param event
+             * @param event The Event that triggered this listener.
              * @param actor The event target, which is the actor that emitted the change event.
              */
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(lastScreen);
-                thisGame.dispose();
+                dispose();
             }
         });
 
-        // Preferences
-
-
         // Table
-        table.add(backToGameButton).width(backToGameButton.getWidth()).height(backToGameButton.getHeight()).pad(10).expandX().right().colspan(4);
+        table.add(backToGameButton).width(game.settingPreference.getInteger("icon-size")).height(game.settingPreference.getInteger("icon-size")).pad(10).expandX().left().colspan(4);
         table.top();
 
         // UI Elements
-        screenResolutionLabel = new Label("Screen Resolution:", game.skin);
-        screenResolutionTextField1 = new TextField(String.valueOf(game.settingPreference.getInteger("width")), game.skin);
-        screenResolutionLabel2 = new Label("x", game.skin);
-        screenResolutionTextField2 = new TextField(String.valueOf(game.settingPreference.getInteger("height")), game.skin);
+        screenResolutionLabel = new Label("Screen Resolution:", game.skin, "settings");
+        screenResolutionTextField1 = new TextField(String.valueOf(game.settingPreference.getInteger("width")), game.skin, "settings");
+        /*
+        screenResolutionTextField1.setOnscreenKeyboard(new TextField.OnscreenKeyboard() {
+            @Override
+            public void show(boolean visible) {
+            }
+        });
+        */
+        screenResolutionTextField1.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
+        screenResolutionTextField1.addListener(new ChangeListener() {
+            /**
+             * @param event The Event that triggered this listener.
+             * @param actor The event target, which is the actor that emitted the change event.
+             */
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+            }
+        });
+        screenResolutionTextField1.setAlignment(Align.right);
+        screenResolutionLabel2 = new Label("x", game.skin, "settings");
+        screenResolutionTextField2 = new TextField(String.valueOf(game.settingPreference.getInteger("height")), game.skin, "settings");
+        screenResolutionTextField2.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
+        screenResolutionTextField2.setAlignment(Align.left);
+        submitButton = new TextButton("Submit", game.skin, "settings");
         table.row();
         table.add(screenResolutionLabel);
         table.add(screenResolutionTextField1).right();
-        table.add(screenResolutionLabel2).width(10);
+        table.add(screenResolutionLabel2);
         table.add(screenResolutionTextField2).left();
+        table.row();
+        table.add(submitButton).colspan(4).pad(10).center();
 
-        table.debug();
+        stage.setDebugAll(true);
     }
 
     /**
@@ -100,7 +118,7 @@ public class SettingsScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
+        ScreenUtils.clear(game.BACKGROUND_COLOR);
         stage.act(delta);
         stage.draw();
     }
@@ -112,7 +130,7 @@ public class SettingsScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 
     /**

@@ -34,13 +34,13 @@ public class GameScreen implements Screen {
         this.game = game;
 
         // create stage
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
         viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         // settings icon
         settingsButton = new ImageButton(game.skin, "toSettings");
-        settingsButton.setSize(viewport.getWorldWidth() / 15f, viewport.getScreenWidth() / 15f);
+        settingsButton.setSize(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
 
         settingsButton.addListener(new ChangeListener() {
             /**
@@ -55,8 +55,7 @@ public class GameScreen implements Screen {
 
         container = new Container<ImageButton>(settingsButton).width(settingsButton.getWidth()).height(settingsButton.getHeight());
         stage.addActor(container);
-        container.setPosition(viewport.getWorldWidth() - settingsButton.getWidth() - 10, viewport.getWorldHeight() - settingsButton.getHeight() - 10);
-        container.setSize(settingsButton.getWidth(), settingsButton.getHeight());
+        container.setPosition(viewport.getWorldWidth() - settingsButton.getWidth(), viewport.getWorldHeight() - settingsButton.getHeight());
 
         // wait before switching screens
         screenSwitchDelta = System.currentTimeMillis();
@@ -78,7 +77,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
+        ScreenUtils.clear(game.BACKGROUND_COLOR);
         stage.act(delta);
         game.batch.begin();
         stage.draw();

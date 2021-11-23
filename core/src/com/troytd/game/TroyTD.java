@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,17 +17,25 @@ public class TroyTD extends Game {
     public Skin skin;
     public Preferences settingPreference;
     public AssetManager assetManager;
+    public final Color BACKGROUND_COLOR = new Color(0.2f, 0.2f, 0.2f, 1);
 
     public void create() {        // preferences
         settingPreference = Gdx.app.getPreferences("TroyTD-settings");
 
         assetManager = new AssetManager();
 
+        // standard values
         if (!settingPreference.contains("width")) {
             settingPreference.putInteger("width", 800);
         }
         if (!settingPreference.contains("height")) {
             settingPreference.putInteger("height", 480);
+        }
+        if (!settingPreference.contains("fullscreen")) {
+            settingPreference.putBoolean("fullscreen", false);
+        }
+        if (!settingPreference.contains("icon-size")) {
+            settingPreference.putInteger("icon-size", settingPreference.getInteger("width") / 20);
         }
 
         settingPreference.flush();
