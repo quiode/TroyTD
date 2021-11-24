@@ -1,5 +1,10 @@
 package com.troytd.enemies;
 
-public class BoesEnemy extends Enemy{
+import com.troytd.game.TroyTD;
 
+public class BoesEnemy extends Enemy {
+
+    public BoesEnemy(TroyTD game) {
+        super(game);
+    }
 }
