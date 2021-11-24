@@ -59,6 +59,8 @@ public class GameScreen implements Screen {
 
         // wait before switching screens
         screenSwitchDelta = System.currentTimeMillis();
+
+        game.setScreen(new LoadingScreen(game, this));
     }
 
     /**

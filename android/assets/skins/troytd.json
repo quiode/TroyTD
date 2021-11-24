@@ -125,6 +125,12 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: Montserrat-Bold-32-white
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: white
+		knobBefore: green
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: Montserrat-Bold-96-white

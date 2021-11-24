@@ -5,71 +5,48 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
 
-public class MainMenuScreen implements Screen {
+public class LoadingScreen implements Screen {
 
-    final TroyTD game;
-    final Viewport viewport;
-    final OrthographicCamera camera;
+    private final TroyTD game;
+    private final Screen calledScreen;
 
-    // UI
-    final Stage stage;
-    final VerticalGroup menuGroup;
-    final TextButton toSettingsButton;
-    final TextButton toGameButton;
+    // Camera and stuff
+    private final OrthographicCamera camera;
+    private final FitViewport viewport;
+    private final Stage stage;
+    private final ProgressBar loadingBar;
 
-    public MainMenuScreen(final TroyTD game) {
+
+    public LoadingScreen(final TroyTD game, final Screen calledScreen) {
         this.game = game;
+        this.calledScreen = calledScreen;
 
+        // Camera and stuff
         camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
+        game.batch.setProjectionMatrix(camera.combined);
         viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
-
-        // UI
-        // initialize
         stage = new Stage(viewport);
-        menuGroup = new VerticalGroup();
-        toGameButton = new TextButton("Play", game.skin);
-        toSettingsButton = new TextButton("Settings", game.skin);
-
-        // positioning
-        menuGroup.center();
-
-        menuGroup.setPosition(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f);
-
-        toGameButton.padBottom(50);
-
-        menuGroup.addActor(toGameButton);
-        menuGroup.addActor(toSettingsButton);
-
-        stage.addActor(menuGroup);
-
-        // listeners
-        toGameButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
-            }
-        });
-
-        toSettingsButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game, MainMenuScreen.this));
-            }
-        });
-
         Gdx.input.setInputProcessor(stage);
 
-        game.setScreen(new LoadingScreen(game, this));
+        // UI
+        // UI
+        VerticalGroup verticalGroup = new VerticalGroup();
+        verticalGroup.center();
+        stage.addActor(verticalGroup);
+
+        Label loadingLabel = new Label("Loading...", game.skin);
+        verticalGroup.addActor(loadingLabel);
+
+        loadingBar = new ProgressBar(0, 100, 1, false, game.skin);
+        verticalGroup.addActor(loadingBar);
     }
 
     /**
@@ -88,25 +65,32 @@ public class MainMenuScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(game.BACKGROUND_COLOR);
-
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
-        stage.act();
 
+        // Update the loading bar
+        loadingBar.setValue(game.assetManager.getProgress() * 100);
+
+        // Draw the stage
+        stage.act(delta);
         game.batch.begin();
         stage.draw();
         game.batch.end();
 
+        // If the loading is complete, go to the menu screen
+        if (game.assetManager.update()) {
+            game.setScreen(calledScreen);
+            dispose();
+        }
     }
 
     /**
-     * @param width  new width
-     * @param height new height
+     * @param width  width of new window
+     * @param height height of new window
      * @see ApplicationListener#resize(int, int)
      */
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        viewport.update(width, height);
     }
 
     /**

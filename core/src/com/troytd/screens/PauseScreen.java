@@ -27,6 +27,8 @@ public class PauseScreen implements Screen {
         glyphLayout = new GlyphLayout(game.font, "Paused...");
 
         screenSwitchDelta = System.currentTimeMillis();
+
+        game.setScreen(new LoadingScreen(game, this));
     }
 
     /**
