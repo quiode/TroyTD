@@ -98,8 +98,6 @@ public class SettingsScreen implements Screen {
         table.add(submitButton).colspan(4).pad(10).center();
 
         stage.setDebugAll(true);
-
-        game.setScreen(new LoadingScreen(game, this));
     }
 
     /**
@@ -117,6 +115,7 @@ public class SettingsScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, this));
         ScreenUtils.clear(game.BACKGROUND_COLOR);
         camera.update();
         stage.act(delta);

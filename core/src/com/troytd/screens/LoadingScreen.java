@@ -12,7 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.troytd.game.TroyTD;
+import com.troytd.maps.Map;
 
+/**
+ * Displays a loading screen with a progress bar for the asset manager.
+ */
 public class LoadingScreen implements Screen {
 
     private final TroyTD game;
@@ -24,8 +28,19 @@ public class LoadingScreen implements Screen {
     private final Stage stage;
     private final ProgressBar loadingBar;
 
+    // Map
+    private Map map = null;
 
-    public LoadingScreen(final TroyTD game, final Screen calledScreen) {
+
+    /**
+     * Constructor for the LoadingScreen
+     *
+     * @param game         game instance
+     * @param calledScreen the screen to go to after loading is complete
+     * @param loadingText  the text to display while loading (loadingText2: loadingText...)
+     * @param loadingText2 the text before the loadingText (loadingText2: loadingText...)
+     */
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final String loadingText2) {
         this.game = game;
         this.calledScreen = calledScreen;
 
@@ -42,11 +57,34 @@ public class LoadingScreen implements Screen {
         verticalGroup.center();
         stage.addActor(verticalGroup);
 
-        Label loadingLabel = new Label("Loading...", game.skin);
+        Label loadingLabel = new Label(loadingText2 + loadingText, game.skin);
         verticalGroup.addActor(loadingLabel);
 
         loadingBar = new ProgressBar(0, 100, 1, false, game.skin);
         verticalGroup.addActor(loadingBar);
+    }
+
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText) {
+        this(game, calledScreen, loadingText, "Loading: ");
+    }
+
+    public LoadingScreen(final TroyTD game, final Screen calledScreen) {
+        this(game, calledScreen, "Loading...", "");
+    }
+
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final String loadingText2, final Map afterLoadMap) {
+        this(game, calledScreen, loadingText, loadingText2);
+        map = afterLoadMap;
+    }
+
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final Map afterLoadMap) {
+        this(game, calledScreen);
+        map = afterLoadMap;
+    }
+
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final Map afterLoadMap) {
+        this(game, calledScreen, loadingText);
+        map = afterLoadMap;
     }
 
     /**
@@ -79,6 +117,9 @@ public class LoadingScreen implements Screen {
         // If the loading is complete, go to the menu screen
         if (game.assetManager.update()) {
             game.setScreen(calledScreen);
+            if (map != null) {
+                map.afterLoad();
+            }
             dispose();
         }
     }

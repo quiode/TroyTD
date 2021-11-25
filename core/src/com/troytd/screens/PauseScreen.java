@@ -27,8 +27,6 @@ public class PauseScreen implements Screen {
         glyphLayout = new GlyphLayout(game.font, "Paused...");
 
         screenSwitchDelta = System.currentTimeMillis();
-
-        game.setScreen(new LoadingScreen(game, this));
     }
 
     /**
@@ -46,6 +44,7 @@ public class PauseScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, this));
 
         ScreenUtils.clear(game.BACKGROUND_COLOR);
 

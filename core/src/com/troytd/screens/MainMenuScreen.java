@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
+import com.troytd.maps.DefaultMap;
 
 public class MainMenuScreen implements Screen {
 
@@ -56,7 +57,7 @@ public class MainMenuScreen implements Screen {
         toGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game, new DefaultMap(game)));
             }
         });
 
@@ -68,8 +69,6 @@ public class MainMenuScreen implements Screen {
         });
 
         Gdx.input.setInputProcessor(stage);
-
-        game.setScreen(new LoadingScreen(game, this));
     }
 
     /**
@@ -87,6 +86,8 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, this));
+
         ScreenUtils.clear(game.BACKGROUND_COLOR);
 
         camera.update();
