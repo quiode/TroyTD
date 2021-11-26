@@ -94,6 +94,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: white-pixel
 		color: WHITE
 	}
+	black: {
+		name: white-pixel
+		color: BLACK
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toSettings: {
@@ -160,6 +164,14 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: black
+		titleFont: Montserrat-Regular-16-white
+		titleFontColor: WHITE
+		stageBackground: black
 	}
 }
 }

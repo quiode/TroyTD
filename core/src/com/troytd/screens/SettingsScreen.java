@@ -24,9 +24,12 @@ public class SettingsScreen implements Screen {
 
     private final TextField screenResolutionTextField1;
     private final TextField screenResolutionTextField2;
+    private final Screen lastScreen;
+    private Dialog dialog;
 
     public SettingsScreen(final TroyTD game, final Screen lastScreen) {
         this.game = game;
+        this.lastScreen = lastScreen;
 
         camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
         viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
@@ -85,8 +88,6 @@ public class SettingsScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 putData();
-                game.setScreen(lastScreen);
-                dispose();
             }
         });
         table.row();
@@ -165,8 +166,51 @@ public class SettingsScreen implements Screen {
     }
 
     private void putData() {
-        game.settingPreference.putInteger("width", Integer.parseInt(screenResolutionTextField1.getText()));
-        game.settingPreference.putInteger("height", Integer.parseInt(screenResolutionTextField2.getText()));
+        if (Integer.parseInt(screenResolutionTextField1.getText()) != game.settingPreference.getInteger("width") || Integer.parseInt(screenResolutionTextField2.getText()) != game.settingPreference.getInteger("height")) {
+            if (screenResolutionTextField1.getText().length() > 0 && screenResolutionTextField2.getText().length() > 0) {
+                // TODO: Display that the resolution has been changed and therefore, the application must restart, give cancel button to undo change. Flush before closing.
+                dialog = new Dialog("Apply Settings", game.skin);
+                dialog.text("The application must restart to apply the new resolution.\n\nDo you still want to change it?");
+                dialog.button("Yes", new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        game.settingPreference.putInteger("width", Integer.parseInt(screenResolutionTextField1.getText()));
+                        game.settingPreference.putInteger("height", Integer.parseInt(screenResolutionTextField2.getText()));
+                        game.settingPreference.flush();
+                        Gdx.app.exit();
+                    }
+                });
+                dialog.button("No", new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        game.setScreen(lastScreen);
+                        dispose();
+                    }
+                });
+            } else {
+                // TODO: Error message
+                dialog = new Dialog("Error", game.skin, "error");
+                dialog.text("Please enter a valid resolution.");
+                dialog.button("OK", new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        stage.getActors().removeValue(dialog, true);
+                    }
+                });
+            }
+        } else {
+            // TODO: Display that nothing has changed
+            dialog = new Dialog("No changes", game.skin);
+            dialog.text("No changes have been made.");
+            dialog.button("OK", new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    game.setScreen(lastScreen);
+                    dispose();
+                }
+            });
+        }
+        stage.addActor(dialog);
         game.settingPreference.flush();
 
         Gdx.graphics.setWindowedMode(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
