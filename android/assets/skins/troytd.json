@@ -30,6 +30,12 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	Montserrat-Regular-16-white: {
 		file: Montserrat-Regular(1).fnt
 	}
+	Montserrat-Regular-20-white: {
+		file: Montserrat-Regular(2).fnt
+	}
+	Montserrat-Regular-28-white: {
+		file: Montserrat-Regular(3).fnt
+	}
 }
 com.badlogic.gdx.graphics.Color: {
 	BLACK: {
@@ -37,6 +43,12 @@ com.badlogic.gdx.graphics.Color: {
 		g: 0
 		b: 0
 		a: 1
+	}
+	BLACK_TRANSPARENT: {
+		r: 0
+		g: 0
+		b: 0
+		a: 0.6862745
 	}
 	GRAY: {
 		r: 0.47058824
@@ -98,6 +110,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: white-pixel
 		color: BLACK
 	}
+	transparent: {
+		name: white-pixel
+		color: TRANSPARENT
+	}
+	black_transparent: {
+		name: white-pixel
+		color: BLACK_TRANSPARENT
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toSettings: {
@@ -128,6 +148,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	settings: {
 		font: Montserrat-Bold-32-white
 	}
+	info: {
+		font: Montserrat-Regular-28-white
+		fontColor: WHITE
+	}
+	error: {
+		font: Montserrat-Regular-28-white
+		fontColor: RED
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: {
@@ -145,6 +173,15 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: Montserrat-Bold-64-white
 		fontColor: WHITE
 		overFontColor: YELLOW
+	}
+	info: {
+		font: Montserrat-Bold-32-white
+		overFontColor: GREEN
+	}
+	error: {
+		font: Montserrat-Bold-32-white
+		fontColor: WHITE
+		overFontColor: RED
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
@@ -168,10 +205,16 @@ com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
-		background: black
 		titleFont: Montserrat-Regular-16-white
-		titleFontColor: WHITE
-		stageBackground: black
+	}
+	info: {
+		titleFont: Montserrat-Regular-20-white
+		stageBackground: black_transparent
+	}
+	error: {
+		titleFont: Montserrat-Regular-20-white
+		titleFontColor: RED
+		stageBackground: black_transparent
 	}
 }
 }
