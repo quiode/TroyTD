@@ -12,12 +12,12 @@ import com.troytd.screens.MainMenuScreen;
 
 public class TroyTD extends Game {
 
+    public final Color BACKGROUND_COLOR = new Color(0.2f, 0.2f, 0.2f, 1);
     public SpriteBatch batch;
     public BitmapFont font;
     public Skin skin;
     public Preferences settingPreference;
     public AssetManager assetManager;
-    public final Color BACKGROUND_COLOR = new Color(0.2f, 0.2f, 0.2f, 1);
 
     public void create() {        // preferences
         settingPreference = Gdx.app.getPreferences("TroyTD-settings");
@@ -51,6 +51,9 @@ public class TroyTD extends Game {
         assetManager.finishLoading();
         skin = assetManager.get("skins/troytd.json", Skin.class);
         this.setScreen(new MainMenuScreen(this));
+
+        // set window title and icon
+        Gdx.graphics.setTitle("TroyTD");
     }
 
     public void render() {
