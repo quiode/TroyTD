@@ -1,9 +1,15 @@
 package com.troytd.maps;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 
 public class DefaultMap extends Map {
+    final int k = 100;
+    ShapeRenderer shapeRenderer = new ShapeRenderer();
+    Vector2[] points = new Vector2[k + 1];
+
     /**
      * A Map with a texture, it's path, and the places where towers can be placed on the map
      *
@@ -21,5 +27,24 @@ public class DefaultMap extends Map {
                 new Vector2(906, 221), new Vector2(946, 221), new Vector2(948, 215), new Vector2(1116, 182),
                 new Vector2(1164, 166), new Vector2(1218, 148), new Vector2(1258, 128), new Vector2(1280, 120),
                 new Vector2(1330, 133)});
+
+        shapeRenderer.setColor(1, 0, 1, 1);
+    }
+
+    @Override
+    public void draw(final SpriteBatch batch) {
+        super.draw(batch);
+        if (path != null) {
+            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            for (int i = 0; i < k - 1; ++i) {
+                points[i] = new Vector2();
+                points[i + 1] = new Vector2();
+                shapeRenderer.line(path.valueAt(points[i], ((float) i) / ((float) k - 1)), path.valueAt(points[i + 1],
+                        ((float) (i + 1)) / ((float) k - 1)));
+            }
+            shapeRenderer.line(new Vector2(100, 100), new Vector2(100, 200));
+            shapeRenderer.end();
+        }
     }
 }
