@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.troytd.game.TroyTD;
+import com.troytd.helpers.Loadable;
 import com.troytd.maps.Map;
 
 /**
@@ -29,7 +30,7 @@ public class LoadingScreen implements Screen {
     private final ProgressBar loadingBar;
 
     // Map
-    private Map map = null;
+    private Loadable afterLoadObject = null;
 
 
     /**
@@ -72,19 +73,19 @@ public class LoadingScreen implements Screen {
         this(game, calledScreen, "Loading...", "");
     }
 
-    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final String loadingText2, final Map afterLoadMap) {
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final String loadingText2, final Loadable afterLoadObject) {
         this(game, calledScreen, loadingText, loadingText2);
-        map = afterLoadMap;
+        this.afterLoadObject = afterLoadObject;
     }
 
     public LoadingScreen(final TroyTD game, final Screen calledScreen, final Map afterLoadMap) {
         this(game, calledScreen);
-        map = afterLoadMap;
+        afterLoadObject = afterLoadMap;
     }
 
     public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final Map afterLoadMap) {
         this(game, calledScreen, loadingText);
-        map = afterLoadMap;
+        afterLoadObject = afterLoadMap;
     }
 
     /**
@@ -117,8 +118,8 @@ public class LoadingScreen implements Screen {
         // If the loading is complete, go to the menu screen
         if (game.assetManager.update()) {
             game.setScreen(calledScreen);
-            if (map != null) {
-                map.afterLoad();
+            if (afterLoadObject != null) {
+                afterLoadObject.afterLoad();
             }
             dispose();
         }

@@ -6,13 +6,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
-import com.troytd.hud.topHUD;
+import com.troytd.helpers.Loadable;
+import com.troytd.screens.GameScreen;
+import com.troytd.screens.LoadingScreen;
 import com.troytd.towers.Tower;
 
 /**
  * A Map with a texture, it's path, and the places where towers can be placed
  */
-public class Map {
+public class Map implements Loadable {
+    public final byte maxRounds;
     protected final TroyTD game;
     protected final String pathName;
     /**
@@ -27,11 +30,11 @@ public class Map {
      * the points where the path is
      */
     protected Vector2[] pathPoints;
+    // Assets
     /**
      * the path for the enemies to follow
      */
     protected CatmullRomSpline<Vector2> path;
-    // Assets
     /**
      * the texture of the map
      */
@@ -45,7 +48,7 @@ public class Map {
      * @param towerPlaces the places where towers can be placed
      * @param pathPoints  the points that make up the path
      */
-    public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints) {
+    public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints, byte maxRounds) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 
@@ -53,6 +56,7 @@ public class Map {
         this.game = game;
         this.pathName = texturePath;
         this.towerPlaces = new towerPlace[towerPlaces.length];
+        this.maxRounds = maxRounds;
         for (int i = 0; i < towerPlaces.length; i++) {
             this.towerPlaces[i] = new towerPlace(towerPlaces[i], null);
         }
@@ -63,7 +67,9 @@ public class Map {
     /**
      * draws the map
      */
-    public void draw(final SpriteBatch batch) {
+    public void draw(final SpriteBatch batch, final GameScreen gameScreen) {
+        if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, gameScreen, this));
+
         if (mapSprite != null) {
             mapSprite.draw(batch);
         }

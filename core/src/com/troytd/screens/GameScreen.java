@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
+import com.troytd.hud.TopHUD;
 import com.troytd.maps.DefaultMap;
 import com.troytd.maps.Map;
 
@@ -22,21 +23,29 @@ public class GameScreen implements Screen {
 
     // settings Icon
     public final ImageButton settingsButton;
-    private final TroyTD game;
     // stage for this screen
-    private final Stage stage;
+    public final Stage stage;
+    public final byte maxRounds;
+    private final TroyTD game;
     private final Container<ImageButton> container;
     // camera and viewport
     private final Viewport viewport;
     private final Camera camera;
     // assets
     private final Map map;
+    // stats
+    public short money;
+    public short kills;
+    public short health;
+    public byte round;
+    private TopHUD topHUD;
     // time when this screen was switched to
     private long screenSwitchDelta = -1;
 
     public GameScreen(final TroyTD game, final Map map) {
         this.game = game;
         this.map = map;
+        this.maxRounds = (byte) (map.maxRounds * game.settingPreference.getInteger("difficulty", 1));
 
         // create stage
         camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
@@ -64,6 +73,10 @@ public class GameScreen implements Screen {
 
         // wait before switching screens
         screenSwitchDelta = System.currentTimeMillis();
+
+        // HUD
+        TopHUD.loadAssets(game);
+        game.setScreen(new LoadingScreen(game, this));
     }
 
     public GameScreen(final TroyTD game) {
@@ -77,6 +90,9 @@ public class GameScreen implements Screen {
     public void show() {
         screenSwitchDelta = System.currentTimeMillis();
         Gdx.input.setInputProcessor(stage);
+        if (topHUD == null && game.assetManager.isFinished()) {
+            topHUD = new TopHUD(this, game);
+        }
     }
 
     /**
@@ -86,13 +102,11 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, this, map));
-
         ScreenUtils.clear(game.BACKGROUND_COLOR);
         stage.act(delta);
         game.batch.begin();
         // Draw map
-        map.draw(game.batch);
+        map.draw(game.batch, this);
 
         stage.draw();
         game.batch.end();
@@ -140,5 +154,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        topHUD.dispose();
     }
 }

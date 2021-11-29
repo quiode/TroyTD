@@ -20,6 +20,6 @@ public class DefaultMap extends Map {
                 new Vector2(727, 342), new Vector2(766, 300), new Vector2(808, 243), new Vector2(852, 230),
                 new Vector2(906, 221), new Vector2(946, 221), new Vector2(948, 215), new Vector2(1116, 182),
                 new Vector2(1164, 166), new Vector2(1218, 148), new Vector2(1258, 128), new Vector2(1280, 120),
-                new Vector2(1330, 133)});
+                new Vector2(1330, 133)}, (byte) 3);
     }
 }
