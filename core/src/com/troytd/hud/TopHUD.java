@@ -1,9 +1,9 @@
 package com.troytd.hud;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
 
@@ -30,7 +30,7 @@ public class TopHUD {
     public final float height;
     private final GameScreen gameScreen;
     private final TroyTD game;
-    private final HorizontalGroup topBar;
+    private final Table topBar;
     private final SimpleDateFormat formatter;
     private final Image moneyIcon;
     private final Image healthIcon;
@@ -45,14 +45,14 @@ public class TopHUD {
         this.height = gameScreen.stage.getHeight() * 0.05f;
 
         // create the top bar and set properties
-        this.topBar = new HorizontalGroup();
-        topBar.top();
+        this.topBar = new Table();
         topBar.setWidth(gameScreen.stage.getWidth());
         topBar.setHeight(height);
+        topBar.center();
+        topBar.setPosition(0, gameScreen.stage.getHeight() - height);
 
         // money icon
         moneyIcon = new Image(game.assetManager.get("hud/coin.png", Texture.class));
-        moneyIcon.setHeight(height);
 
         // money label
         moneyLabel = new Label("", game.skin) {
@@ -61,11 +61,9 @@ public class TopHUD {
                 this.setText(String.valueOf(gameScreen.money));
             }
         };
-        moneyLabel.setHeight(height);
 
         // health icon
         healthIcon = new Image(game.assetManager.get("hud/heart.png", Texture.class));
-        healthIcon.setHeight(height);
 
         // health label
         healthLabel = new Label("", game.skin) {
@@ -74,7 +72,6 @@ public class TopHUD {
                 this.setText(String.valueOf(gameScreen.health));
             }
         };
-        healthLabel.setHeight(height);
 
         // round label
         roundLabel = new Label("", game.skin) {
@@ -83,7 +80,6 @@ public class TopHUD {
                 this.setText(String.valueOf(gameScreen.round) + "/" + String.valueOf(gameScreen.maxRounds));
             }
         };
-        roundLabel.setHeight(height);
 
         // time label
         formatter = new SimpleDateFormat("HH:mm");
@@ -94,18 +90,17 @@ public class TopHUD {
                 this.setText(formatter.format(date));
             }
         };
-        timeLabel.setHeight(height);
 
         // add the labels to the top bar
-        topBar.addActor(moneyIcon);
-        topBar.addActor(moneyLabel);
+        topBar.add(moneyIcon);
+        topBar.add(moneyLabel);
 
-        topBar.addActor(healthIcon);
-        topBar.addActor(healthLabel);
+        topBar.add(healthIcon);
+        topBar.add(healthLabel);
 
-        topBar.addActor(timeLabel);
+        topBar.add(timeLabel);
 
-        topBar.addActor(roundLabel);
+        topBar.add(roundLabel);
 
         // Add topBar to the stage
         gameScreen.stage.addActor(topBar);

@@ -76,8 +76,6 @@ public class GameScreen implements Screen {
 
         // HUD
         TopHUD.loadAssets(game);
-
-        stage.setDebugAll(true);
     }
 
     public GameScreen(final TroyTD game) {
