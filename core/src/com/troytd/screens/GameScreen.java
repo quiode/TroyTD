@@ -76,7 +76,8 @@ public class GameScreen implements Screen {
 
         // HUD
         TopHUD.loadAssets(game);
-        game.setScreen(new LoadingScreen(game, this));
+
+        stage.setDebugAll(true);
     }
 
     public GameScreen(final TroyTD game) {
@@ -92,6 +93,8 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         if (topHUD == null && game.assetManager.isFinished()) {
             topHUD = new TopHUD(this, game);
+        } else {
+            game.setScreen(new LoadingScreen(game, this));
         }
     }
 
@@ -106,7 +109,7 @@ public class GameScreen implements Screen {
         stage.act(delta);
         game.batch.begin();
         // Draw map
-        map.draw(game.batch, this);
+        //map.draw(game.batch, this);
 
         stage.draw();
         game.batch.end();

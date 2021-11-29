@@ -116,7 +116,7 @@ public class LoadingScreen implements Screen {
         game.batch.end();
 
         // If the loading is complete, go to the menu screen
-        if (game.assetManager.update()) {
+        if (game.assetManager.update() && game.assetManager.isFinished()) {
             game.setScreen(calledScreen);
             if (afterLoadObject != null) {
                 afterLoadObject.afterLoad();

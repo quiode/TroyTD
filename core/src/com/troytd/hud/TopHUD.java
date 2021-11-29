@@ -51,35 +51,39 @@ public class TopHUD {
         topBar.setHeight(height);
 
         // money icon
-        this.moneyIcon = new Image(game.assetManager.get("hud/coin.png", Texture.class));
+        moneyIcon = new Image(game.assetManager.get("hud/coin.png", Texture.class));
+        moneyIcon.setHeight(height);
 
         // money label
-        this.moneyLabel = new Label("", game.skin) {
+        moneyLabel = new Label("", game.skin) {
             @Override
             public void act(float delta) {
                 this.setText(String.valueOf(gameScreen.money));
             }
         };
+        moneyLabel.setHeight(height);
 
         // health icon
-        this.healthIcon = new Image(game.assetManager.get("hud/heart.png", Texture.class));
+        healthIcon = new Image(game.assetManager.get("hud/heart.png", Texture.class));
+        healthIcon.setHeight(height);
 
         // health label
-        this.healthLabel = new Label("", game.skin) {
+        healthLabel = new Label("", game.skin) {
             @Override
             public void act(float delta) {
                 this.setText(String.valueOf(gameScreen.health));
             }
         };
+        healthLabel.setHeight(height);
 
         // round label
-        this.roundLabel = new Label("", game.skin) {
+        roundLabel = new Label("", game.skin) {
             @Override
             public void act(float delta) {
                 this.setText(String.valueOf(gameScreen.round) + "/" + String.valueOf(gameScreen.maxRounds));
             }
         };
-
+        roundLabel.setHeight(height);
 
         // time label
         formatter = new SimpleDateFormat("HH:mm");
@@ -90,6 +94,7 @@ public class TopHUD {
                 this.setText(formatter.format(date));
             }
         };
+        timeLabel.setHeight(height);
 
         // add the labels to the top bar
         topBar.addActor(moneyIcon);
