@@ -1,2 +1,2 @@
-# super-cooles-game
-super cooles game mit cLé
+# TroyTD
+ A tower defence game. Based on the trojan war. Build with libGDX. 
