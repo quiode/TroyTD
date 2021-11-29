@@ -22,7 +22,8 @@ public class topHUD {
     private final GameScreen gameScreen;
     private final HorizontalGroup topBar;
 
-    public topHUD(GameScreen gameScreen) {
+    public topHUD(final GameScreen gameScreen) {
         this.gameScreen = gameScreen;
+        this.topBar = new HorizontalGroup();
     }
 }
