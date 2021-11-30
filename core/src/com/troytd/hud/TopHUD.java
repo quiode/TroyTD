@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
 
@@ -50,9 +52,10 @@ public class TopHUD {
         topBar.setHeight(height);
         topBar.center();
         topBar.setPosition(0, gameScreen.stage.getHeight() - height);
+        topBar.padTop(height * 0.1f);
 
         // money icon
-        moneyIcon = new Image(game.assetManager.get("hud/coin.png", Texture.class));
+        moneyIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/coin.png", Texture.class)), Scaling.fit);
 
         // money label
         moneyLabel = new Label("", game.skin) {
@@ -63,7 +66,7 @@ public class TopHUD {
         };
 
         // health icon
-        healthIcon = new Image(game.assetManager.get("hud/heart.png", Texture.class));
+        healthIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/heart.png", Texture.class)), Scaling.fit);
 
         // health label
         healthLabel = new Label("", game.skin) {
@@ -92,18 +95,18 @@ public class TopHUD {
         };
 
         // add the labels to the top bar
-        topBar.add(moneyIcon);
-        topBar.add(moneyLabel);
+        topBar.add(moneyLabel).padRight(height * 0.1f);
+        topBar.add(moneyIcon).maxWidth(height * 0.75f).padRight(height * 0.5f);
+        topBar.add(healthLabel).padRight(height * 0.1f);
+        topBar.add(healthIcon).maxWidth(height * 0.75f);
 
-        topBar.add(healthIcon);
-        topBar.add(healthLabel);
-
-        topBar.add(timeLabel);
+        topBar.add(timeLabel).padLeft(height * 0.3f).padRight(height * 0.3f);
 
         topBar.add(roundLabel);
 
         // Add topBar to the stage
         gameScreen.stage.addActor(topBar);
+        gameScreen.stage.setDebugAll(false);
 
         // safe-guard
         loadAssets(game);
