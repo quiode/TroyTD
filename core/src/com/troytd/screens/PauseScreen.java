@@ -6,27 +6,51 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.troytd.game.TroyTD;
 
 public class PauseScreen implements Screen {
 
     private final TroyTD game;
     private final GameScreen gameScreen;
-    private final GlyphLayout glyphLayout;
     private final OrthographicCamera camera;
+    private final FitViewport viewport;
     private long screenSwitchDelta = -1;
+    private final Stage stage;
+    private final VerticalGroup table;
+    private final TextButton SettingsLabel;
+    private final TextButton ResumeLabel;
+    private final TextButton ExitLabel;
 
     public PauseScreen(final TroyTD game, final GameScreen gameScreen) {
         this.game = game;
         this.gameScreen = gameScreen;
 
         camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
-        camera.setToOrtho(false, game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
+        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
+        this.stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
 
-        glyphLayout = new GlyphLayout(game.font, "Paused...");
 
         screenSwitchDelta = System.currentTimeMillis();
+
+        // Table
+        table = new VerticalGroup();
+        stage.addActor(table);
+        stage.setDebugAll(true);
+
+        // Buttons
+        SettingsLabel = new TextButton("Settings", game.skin);
+        ResumeLabel = new TextButton("Resume", game.skin);
+        ExitLabel = new TextButton("Exit", game.skin);
+        table.addActor(SettingsLabel);
+        table.addActor(ResumeLabel);
+        table.addActor(ExitLabel);
     }
 
     /**
@@ -35,6 +59,7 @@ public class PauseScreen implements Screen {
     @Override
     public void show() {
         screenSwitchDelta = System.currentTimeMillis();
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
@@ -49,7 +74,8 @@ public class PauseScreen implements Screen {
         ScreenUtils.clear(game.BACKGROUND_COLOR);
 
         game.batch.begin();
-        game.font.draw(game.batch, glyphLayout, camera.viewportWidth / 2 - glyphLayout.width / 2, camera.viewportHeight / 2);
+        stage.act();
+        stage.draw();
         game.batch.end();
 
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
@@ -66,7 +92,7 @@ public class PauseScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     /**
