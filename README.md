@@ -1,5 +1,5 @@
 # TroyTD
- A tower defence game. Based on the trojan war. Build with libGDX. 
+ A tower defence game. Based on the trojan war. Build with [libGDX](https://github.com/libgdx/libgdx). 
 ## TOC
 1. [Usage](#usage)
 1. [Build Guide](#build-guide)
