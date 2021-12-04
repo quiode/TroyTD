@@ -5,9 +5,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.troytd.game.TroyTD;
@@ -41,15 +43,36 @@ public class PauseScreen implements Screen {
         table = new VerticalGroup();
         table.setFillParent(true);
         table.center();
+
         stage.addActor(table);
-        stage.setDebugAll(true);
 
         // Buttons
-        SettingsLabel = new TextButton("Settings", game.skin);
         ResumeLabel = new TextButton("Resume", game.skin);
-        ExitLabel = new TextButton("Exit", game.skin);
-        table.addActor(SettingsLabel);
+        ResumeLabel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(gameScreen);
+                dispose();
+            }
+        });
         table.addActor(ResumeLabel);
+
+        SettingsLabel = new TextButton("Settings", game.skin);
+        SettingsLabel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new SettingsScreen(game, PauseScreen.this));
+            }
+        });
+        table.addActor(SettingsLabel);
+
+        ExitLabel = new TextButton("Exit", game.skin);
+        ExitLabel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
         table.addActor(ExitLabel);
     }
 
