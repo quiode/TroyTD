@@ -268,6 +268,44 @@ atlasData: {
 			type: PIXEL
 			hidden: false
 		}
+		{
+			file: "/media/quio/HDD/GitHub/TroyTD/android/assets/skins/troytd_data/240px-Eo_circle_white_pause.png"
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: 240px-Eo_circle_white_pause
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: TEXTURE
+			hidden: false
+		}
+		{
+			file: "/media/quio/HDD/GitHub/TroyTD/android/assets/skins/troytd_data/240px-Eo_circle_grey_pause.png"
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: 240px-Eo_circle_grey_pause
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: TEXTURE
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -2169,19 +2207,19 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageUp
 						optional: true
-						value: Settings-icon-symbol-vector-white
+						value: 240px-Eo_circle_white_pause
 					}
 					imageDown: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageDown
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					imageOver: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageOver
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					imageDisabled: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -2193,37 +2231,37 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageChecked
 						optional: true
-						value: Settings-icon-symbol-vector-white
+						value: 240px-Eo_circle_white_pause
 					}
 					imageCheckedDown: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageCheckedDown
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					imageCheckedOver: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: imageCheckedOver
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					up: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: up
 						optional: true
-						value: Settings-icon-symbol-vector-white
+						value: 240px-Eo_circle_white_pause
 					}
 					down: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: down
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					over: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: over
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					focused: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
@@ -2241,19 +2279,19 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: checked
 						optional: true
-						value: Settings-icon-symbol-vector-white
+						value: 240px-Eo_circle_white_pause
 					}
 					checkedOver: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: checkedOver
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					checkedDown: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: checkedDown
 						optional: true
-						value: Settings-icon-symbol-vector-gray
+						value: 240px-Eo_circle_grey_pause
 					}
 					checkedFocused: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable

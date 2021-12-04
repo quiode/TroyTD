@@ -35,7 +35,7 @@ public class TroyTD extends Game {
             settingPreference.putBoolean("fullscreen", false);
         }
         if (!settingPreference.contains("icon-size")) {
-            settingPreference.putInteger("icon-size", settingPreference.getInteger("width") / 20);
+            settingPreference.putInteger("icon-size", settingPreference.getInteger("width") / 18);
         }
 
         settingPreference.flush();

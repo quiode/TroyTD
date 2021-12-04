@@ -22,7 +22,7 @@ import com.troytd.maps.Map;
 public class GameScreen implements Screen {
 
     // settings Icon
-    public final ImageButton settingsButton;
+    public final ImageButton pauseButton;
     // stage for this screen
     public final Stage stage;
     public final byte maxRounds;
@@ -53,23 +53,24 @@ public class GameScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         // settings icon
-        settingsButton = new ImageButton(game.skin, "toSettings");
-        settingsButton.setSize(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
+        pauseButton = new ImageButton(game.skin, "toSettings");
+        pauseButton.setSize(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
 
-        settingsButton.addListener(new ChangeListener() {
+        pauseButton.addListener(new ChangeListener() {
             /**
              * @param event The Event
              * @param actor The event target, which is the actor that emitted the change event.
              */
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new SettingsScreen(game, GameScreen.this));
+                game.setScreen(new PauseScreen(game, GameScreen.this));
             }
         });
 
-        container = new Container<ImageButton>(settingsButton).width(settingsButton.getWidth()).height(settingsButton.getHeight());
+        container = new Container<ImageButton>(pauseButton).width(pauseButton.getWidth()).height(pauseButton.getHeight());
         stage.addActor(container);
-        container.setPosition(viewport.getWorldWidth() - settingsButton.getWidth(), viewport.getWorldHeight() - settingsButton.getHeight());
+        container.setPosition(viewport.getWorldWidth() - pauseButton.getWidth() + 20,
+                viewport.getWorldHeight() - pauseButton.getHeight() + 20);
 
         // wait before switching screens
         screenSwitchDelta = System.currentTimeMillis();

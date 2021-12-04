@@ -121,18 +121,18 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toSettings: {
-		imageUp: Settings-icon-symbol-vector-white
-		imageDown: Settings-icon-symbol-vector-gray
-		imageOver: Settings-icon-symbol-vector-gray
-		imageChecked: Settings-icon-symbol-vector-white
-		imageCheckedDown: Settings-icon-symbol-vector-gray
-		imageCheckedOver: Settings-icon-symbol-vector-gray
-		up: Settings-icon-symbol-vector-white
-		down: Settings-icon-symbol-vector-gray
-		over: Settings-icon-symbol-vector-gray
-		checked: Settings-icon-symbol-vector-white
-		checkedOver: Settings-icon-symbol-vector-gray
-		checkedDown: Settings-icon-symbol-vector-gray
+		imageUp: 240px-Eo_circle_white_pause
+		imageDown: 240px-Eo_circle_grey_pause
+		imageOver: 240px-Eo_circle_grey_pause
+		imageChecked: 240px-Eo_circle_white_pause
+		imageCheckedDown: 240px-Eo_circle_grey_pause
+		imageCheckedOver: 240px-Eo_circle_grey_pause
+		up: 240px-Eo_circle_white_pause
+		down: 240px-Eo_circle_grey_pause
+		over: 240px-Eo_circle_grey_pause
+		checked: 240px-Eo_circle_white_pause
+		checkedOver: 240px-Eo_circle_grey_pause
+		checkedDown: 240px-Eo_circle_grey_pause
 	}
 	backToGame: {
 		up: noun_back button_251451-white

@@ -90,6 +90,45 @@ public class SettingsScreen implements Screen {
                 putData();
             }
         });
+        TextButton cancelButton = new TextButton("Cancel", game.skin, "settings");
+        cancelButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(lastScreen);
+                dispose();
+            }
+        });
+        TextButton resetButton = new TextButton("Reset", game.skin, "settings");
+        resetButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO: ask if sure, reset to default
+                Dialog dialog = new Dialog("", game.skin, "info") {
+                    @Override
+                    public void result(Object object) {
+                        if ((boolean) object) {
+                            game.settingPreference.clear();
+                            game.settingPreference.flush();
+                            Gdx.app.exit();
+                        } else {
+                            game.setScreen(lastScreen);
+                            dispose();
+                        }
+                    }
+                };
+                dialog.text("Are you sure you want to reset to default?", game.skin.get("info", Label.LabelStyle.class));
+                dialog.button("Yes", true, game.skin.get("error", TextButton.TextButtonStyle.class));
+                dialog.button("No", false, game.skin.get("info", TextButton.TextButtonStyle.class));
+                dialog.center();
+                if (dialog.getButtonTable().getCells().size > 1)
+                    dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
+                dialog.getContentTable().pad(0, 25, 25, 25);
+                dialog.setWidth(Gdx.graphics.getWidth() / 2f);
+                dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+                stage.addActor(dialog);
+                dialog.show(stage);
+            }
+        });
         table.row();
         table.add(screenResolutionLabel);
         table.add(screenResolutionTextField1).right();
@@ -97,6 +136,10 @@ public class SettingsScreen implements Screen {
         table.add(screenResolutionTextField2).left();
         table.row();
         table.add(submitButton).colspan(4).pad(10).center();
+        table.row();
+        table.add(cancelButton).colspan(4).padBottom(10).center();
+        table.row();
+        table.add(resetButton).colspan(4).padBottom(10).center();
 
         stage.setDebugAll(false);
     }
