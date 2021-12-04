@@ -82,6 +82,8 @@ public class Map implements Loadable {
     public void afterLoad() {
         mapSprite = new Sprite(game.assetManager.get(pathName, Texture.class));
         mapSprite.setSize(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
+        mapSprite.setPosition(-(game.settingPreference.getInteger("width") / 2f),
+                -(game.settingPreference.getInteger("height") / 2f));
         mapDistortion = new Vector2((float) game.settingPreference.getInteger(
                 "width") / mapSprite.getTexture().getWidth(), (float) game.settingPreference.getInteger("height") /
                 mapSprite.getTexture().getHeight());

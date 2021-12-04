@@ -107,10 +107,10 @@ public class GameScreen implements Screen {
         stage.act(delta);
         game.batch.begin();
         // Draw map
-        //map.draw(game.batch, this);
-
-        stage.draw();
+        map.draw(game.batch, this);
         game.batch.end();
+        // Draw HUD
+        stage.draw();
 
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
             game.setScreen(new PauseScreen(game, this));
