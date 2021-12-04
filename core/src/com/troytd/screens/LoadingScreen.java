@@ -55,7 +55,6 @@ public class LoadingScreen implements Screen {
         // UI
         // UI
         VerticalGroup verticalGroup = new VerticalGroup();
-        verticalGroup.center();
         stage.addActor(verticalGroup);
 
         Label loadingLabel = new Label(loadingText2 + loadingText, game.skin);
@@ -63,6 +62,8 @@ public class LoadingScreen implements Screen {
 
         loadingBar = new ProgressBar(0, 100, 1, false, game.skin);
         verticalGroup.addActor(loadingBar);
+
+        stage.setDebugAll(true);
     }
 
     public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText) {

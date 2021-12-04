@@ -89,10 +89,10 @@ public class GameScreen implements Screen {
     public void show() {
         screenSwitchDelta = System.currentTimeMillis();
         Gdx.input.setInputProcessor(stage);
-        if (topHUD == null && game.assetManager.isFinished()) {
-            topHUD = new TopHUD(this, game);
-        } else {
+        if (!game.assetManager.isFinished()) {
             game.setScreen(new LoadingScreen(game, this));
+        } else if (topHUD == null) {
+            topHUD = new TopHUD(this, game);
         }
     }
 
