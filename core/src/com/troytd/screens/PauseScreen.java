@@ -5,9 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -20,12 +18,12 @@ public class PauseScreen implements Screen {
     private final GameScreen gameScreen;
     private final OrthographicCamera camera;
     private final FitViewport viewport;
-    private long screenSwitchDelta = -1;
     private final Stage stage;
     private final VerticalGroup table;
     private final TextButton SettingsLabel;
     private final TextButton ResumeLabel;
     private final TextButton ExitLabel;
+    private long screenSwitchDelta = -1;
 
     public PauseScreen(final TroyTD game, final GameScreen gameScreen) {
         this.game = game;
@@ -41,6 +39,8 @@ public class PauseScreen implements Screen {
 
         // Table
         table = new VerticalGroup();
+        table.setFillParent(true);
+        table.center();
         stage.addActor(table);
         stage.setDebugAll(true);
 
@@ -73,10 +73,8 @@ public class PauseScreen implements Screen {
 
         ScreenUtils.clear(game.BACKGROUND_COLOR);
 
-        game.batch.begin();
-        stage.act();
+        stage.act(delta);
         stage.draw();
-        game.batch.end();
 
         if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
             game.setScreen(gameScreen);
