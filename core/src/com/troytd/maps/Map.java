@@ -97,7 +97,14 @@ public class Map implements Loadable {
             pathPoint.x *= mapDistortion.x;
             pathPoint.y *= mapDistortion.y;
         }
+
         this.path = new CatmullRomSpline<Vector2>(pathPoints, false);
+
+        // recalculate the tower places
+        for (towerPlace place : towerPlaces) {
+            place.place.x *= mapDistortion.x;
+            place.place.y *= mapDistortion.y;
+        }
     }
 
     /**
@@ -144,7 +151,7 @@ public class Map implements Loadable {
             if (towerPlace.tower != null) {
                 towerPlaceRectangle = towerPlace.tower.getRect();
             } else {
-                towerPlaceRectangle = new Rectangle(towerPlace.place.x, towerPlace.place.y, Tower.size, Tower.size);
+                towerPlaceRectangle = new Rectangle(towerPlace.place.x - Tower.size / 2f, towerPlace.place.y - Tower.size / 2f, Tower.size, Tower.size);
             }
             if (clickPositionRectangle.overlaps(towerPlaceRectangle)) {
                 return towerPlace;

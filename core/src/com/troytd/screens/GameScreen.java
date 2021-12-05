@@ -123,8 +123,15 @@ public class GameScreen implements Screen {
         stage.act(delta);
 
         if (Gdx.input.isTouched()) {
-            final towerPlace selectedTowerPlace = map.checkTowerClick(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+            towerPlace selectedTowerPlace =
+                    map.checkTowerClick(new Vector2(Gdx.input.getX(),
+                            viewport.getWorldHeight() - Gdx.input.getY()));
+            /*
+            Gdx.app.log("Touched", "X: " + Gdx.input.getX() + " Y: " + (viewport.getWorldHeight() - Gdx.input.getY
+             ()));
+            */
             if (selectedTowerPlace != null) {
+                //Gdx.app.log("Touched", "Tower place found");
                 if (selectedTowerPlace.tower == null) {
                     placeTowerHUD.show(selectedTowerPlace);
                 } else {

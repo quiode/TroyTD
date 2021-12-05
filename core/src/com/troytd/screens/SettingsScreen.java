@@ -102,7 +102,6 @@ public class SettingsScreen implements Screen {
         resetButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO: ask if sure, reset to default
                 Dialog dialog = new Dialog("", game.skin, "info") {
                     @Override
                     public void result(Object object) {

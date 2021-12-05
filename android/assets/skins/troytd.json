@@ -118,6 +118,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: white-pixel
 		color: BLACK_TRANSPARENT
 	}
+	red: {
+		name: white-pixel
+		color: RED
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toSettings: {
