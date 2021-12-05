@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.CatmullRomSpline;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Loadable;
@@ -16,6 +17,9 @@ import com.troytd.towers.Tower;
  */
 public class Map implements Loadable {
     public final byte maxRounds;
+    /**
+     * game instance
+     */
     protected final TroyTD game;
     protected final String pathName;
     /**
@@ -121,14 +125,32 @@ public class Map implements Loadable {
         game.assetManager.unload(pathName);
         mapSprite.getTexture().dispose();
     }
-}
 
-class towerPlace {
-    public final Vector2 place;
-    public Tower tower;
+    /**
+     * Checks if a towerPosition (a position where a tower can be placed) is clicked, and if so, returns the object.
+     *
+     * @param clickPosition the position of the click
+     * @return returns the tower place that is at the position of the click or null if there is no tower place at
+     * the position
+     */
+    public towerPlace checkTowerClick(final Vector2 clickPosition) {
+        final byte clickPositionRectangleSize = 10;
+        Rectangle clickPositionRectangle = new Rectangle(clickPosition.x - clickPositionRectangleSize / 2f,
+                clickPosition.y - clickPositionRectangleSize / 2f, clickPositionRectangleSize,
+                clickPositionRectangleSize);
 
-    public towerPlace(final Vector2 place, final Tower tower) {
-        this.place = place;
-        this.tower = tower;
+        for (towerPlace towerPlace : towerPlaces) {
+            Rectangle towerPlaceRectangle;
+            if (towerPlace.tower != null) {
+                towerPlaceRectangle = towerPlace.tower.getRect();
+            } else {
+                towerPlaceRectangle = new Rectangle(towerPlace.place.x, towerPlace.place.y, Tower.size, Tower.size);
+            }
+            if (clickPositionRectangle.overlaps(towerPlaceRectangle)) {
+                return towerPlace;
+            }
+        }
+        return null;
     }
 }
+

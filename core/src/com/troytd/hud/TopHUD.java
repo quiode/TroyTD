@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
+import com.troytd.maps.towerPlace;
 import com.troytd.screens.GameScreen;
 
 import java.text.SimpleDateFormat;
@@ -108,7 +109,7 @@ public class TopHUD {
         gameScreen.stage.addActor(topBar);
         gameScreen.stage.setDebugAll(false);
 
-        // safe-guard
+        // safeguard
         loadAssets(game);
     }
 

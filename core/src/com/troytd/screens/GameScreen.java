@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -15,9 +16,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
+import com.troytd.hud.InfoTowerHUD;
+import com.troytd.hud.PlaceTowerHUD;
 import com.troytd.hud.TopHUD;
+import com.troytd.hud.UpgradeTowerHUD;
 import com.troytd.maps.DefaultMap;
 import com.troytd.maps.Map;
+import com.troytd.maps.towerPlace;
 
 public class GameScreen implements Screen {
 
@@ -38,6 +43,10 @@ public class GameScreen implements Screen {
     public short kills;
     public short health;
     public byte round;
+    // HUDs
+    private PlaceTowerHUD placeTowerHUD;
+    private InfoTowerHUD infoTowerHUD;
+    private UpgradeTowerHUD upgradeTowerHUD;
     private TopHUD topHUD;
     // time when this screen was switched to
     private long screenSwitchDelta = -1;
@@ -77,6 +86,9 @@ public class GameScreen implements Screen {
 
         // HUD
         TopHUD.loadAssets(game);
+        InfoTowerHUD.loadAssets(game);
+        PlaceTowerHUD.loadAssets(game);
+        UpgradeTowerHUD.loadAssets(game);
     }
 
     public GameScreen(final TroyTD game) {
@@ -92,8 +104,11 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         if (!game.assetManager.isFinished()) {
             game.setScreen(new LoadingScreen(game, this));
-        } else if (topHUD == null) {
-            topHUD = new TopHUD(this, game);
+        } else if (topHUD == null || infoTowerHUD == null || placeTowerHUD == null || upgradeTowerHUD == null) {
+            if (topHUD == null) topHUD = new TopHUD(this, game);
+            if (infoTowerHUD == null) infoTowerHUD = new InfoTowerHUD();
+            if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD();
+            if (upgradeTowerHUD == null) upgradeTowerHUD = new UpgradeTowerHUD();
         }
     }
 
@@ -106,6 +121,18 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(game.BACKGROUND_COLOR);
         stage.act(delta);
+
+        if (Gdx.input.isTouched()) {
+            final towerPlace selectedTowerPlace = map.checkTowerClick(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+            if (selectedTowerPlace != null) {
+                if (selectedTowerPlace.tower == null) {
+                    placeTowerHUD.show(selectedTowerPlace);
+                } else {
+                    infoTowerHUD.show(selectedTowerPlace);
+                }
+            }
+        }
+
         game.batch.begin();
         // Draw map
         map.draw(game.batch, this);
