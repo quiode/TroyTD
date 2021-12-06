@@ -2,7 +2,9 @@
  A tower defence game. Based on the trojan war. Build with [libGDX](https://github.com/libgdx/libgdx). 
 ## TOC
 1. [Usage](#usage)
-1. [Build Guide](#build-guide)
+2. [Build Guide](#build-guide)
+3. [Controls](#controls)
+4. [Screenshots](#screenshots)
 ## Usage
 [Download the latest version.](https://github.com/quiode/TroyTD/releases/latest)  
 For android, move the apk file to your phone and open in.  
@@ -38,3 +40,7 @@ gh repo clone https://github.com/quiode/TroyTD
 1. run `./gradlew html:dist`
 2. the files are located under `html/build/dist/`
 3. open the html file with a webbrowser or upload it to a webserver
+# Controls
+## In-Game
+- **<ESC\>**: Pause
+# Screenshots
