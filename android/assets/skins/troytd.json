@@ -122,6 +122,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: white-pixel
 		color: RED
 	}
+	grey: {
+		name: white-pixel
+		color: GRAY
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toSettings: {
@@ -143,6 +147,20 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		over: noun_back button_251451-light-gray
 		checkedOver: noun_back button_251451-light-gray
 	}
+	close: {
+		imageUp: close_icon
+		imageDown: close_icon_2
+		imageOver: close_icon_2
+		imageChecked: close_icon
+		imageCheckedDown: close_icon_2
+		imageCheckedOver: close_icon_2
+		up: close_icon
+		down: close_icon_2
+		over: close_icon_2
+		checked: close_icon
+		checkedOver: close_icon_2
+		checkedDown: close_icon_2
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
@@ -159,6 +177,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	error: {
 		font: Montserrat-Regular-28-white
 		fontColor: RED
+	}
+	big: {
+		font: Montserrat-Regular-28-white
+		fontColor: WHITE
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
