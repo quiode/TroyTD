@@ -19,6 +19,8 @@ public class PlaceTowerHUD {
     final Table table;
     final ImageButton closeButton;
     final Label placeTowerLabel;
+    final ImageButton nextButton;
+    final ImageButton previousButton;
     // variables
     TowerPlace towerPlace;
 
@@ -50,6 +52,20 @@ public class PlaceTowerHUD {
         table.add(closeButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
         table.top().right();
         table.row();
+
+        // hud - previous button
+        previousButton = new ImageButton(game.skin, "navigation");
+        previousButton.setTransform(true);
+        previousButton.setRotation(90f);
+        table.add(previousButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
+
+        // hud - next button
+        nextButton = new ImageButton(game.skin, "navigation");
+        nextButton.setTransform(true);
+        nextButton.setRotation(360 - 90f);
+        table.add(nextButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
+
+        table.debug();
     }
 
     /**
