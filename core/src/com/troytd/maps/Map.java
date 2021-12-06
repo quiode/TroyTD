@@ -29,7 +29,7 @@ public class Map implements Loadable {
     /**
      * the places where towers can be placed and the tower
      */
-    protected towerPlace[] towerPlaces;
+    protected TowerPlace[] towerPlaces;
     /**
      * the points where the path is
      */
@@ -59,10 +59,10 @@ public class Map implements Loadable {
         // set values
         this.game = game;
         this.pathName = texturePath;
-        this.towerPlaces = new towerPlace[towerPlaces.length];
+        this.towerPlaces = new TowerPlace[towerPlaces.length];
         this.maxRounds = maxRounds;
         for (int i = 0; i < towerPlaces.length; i++) {
-            this.towerPlaces[i] = new towerPlace(towerPlaces[i], null);
+            this.towerPlaces[i] = new TowerPlace(towerPlaces[i], null);
         }
         this.pathPoints = pathPoints;
     }
@@ -101,7 +101,7 @@ public class Map implements Loadable {
         this.path = new CatmullRomSpline<Vector2>(pathPoints, false);
 
         // recalculate the tower places
-        for (towerPlace place : towerPlaces) {
+        for (TowerPlace place : towerPlaces) {
             place.place.x *= mapDistortion.x;
             place.place.y *= mapDistortion.y;
         }
@@ -113,7 +113,7 @@ public class Map implements Loadable {
      * @return returns 1 if the tower can be placed, 0 if it can't, and -1 if it can be placed but there is already a tower
      */
     public byte placeTower(final Vector2 position, final Tower tower) {
-        for (towerPlace towerPlace : towerPlaces) {
+        for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.place.equals(position)) {
                 if (towerPlace.tower == null) {
                     towerPlace.tower = tower;
@@ -140,13 +140,13 @@ public class Map implements Loadable {
      * @return returns the tower place that is at the position of the click or null if there is no tower place at
      * the position
      */
-    public towerPlace checkTowerClick(final Vector2 clickPosition) {
+    public TowerPlace checkTowerClick(final Vector2 clickPosition) {
         final byte clickPositionRectangleSize = 10;
         Rectangle clickPositionRectangle = new Rectangle(clickPosition.x - clickPositionRectangleSize / 2f,
                 clickPosition.y - clickPositionRectangleSize / 2f, clickPositionRectangleSize,
                 clickPositionRectangleSize);
 
-        for (towerPlace towerPlace : towerPlaces) {
+        for (TowerPlace towerPlace : towerPlaces) {
             Rectangle towerPlaceRectangle;
             if (towerPlace.tower != null) {
                 towerPlaceRectangle = towerPlace.tower.getRect();

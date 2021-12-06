@@ -1,7 +1,7 @@
 package com.troytd.hud;
 
 import com.troytd.game.TroyTD;
-import com.troytd.maps.towerPlace;
+import com.troytd.maps.TowerPlace;
 
 public class UpgradeTowerHUD {
     /**
@@ -14,7 +14,7 @@ public class UpgradeTowerHUD {
     public static void loadAssets(final TroyTD game) {
     }
 
-    public void show(towerPlace selectedTowerPlace) {
+    public void show(TowerPlace selectedTowerPlace) {
 
     }
 

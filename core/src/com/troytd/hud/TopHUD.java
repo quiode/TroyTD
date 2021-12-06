@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
-import com.troytd.maps.towerPlace;
 import com.troytd.screens.GameScreen;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +44,7 @@ public class TopHUD {
     public TopHUD(final GameScreen gameScreen, final TroyTD game) {
         this.gameScreen = gameScreen;
         this.game = game;
-        this.height = gameScreen.stage.getHeight() * 0.05f;
+        this.height = game.settingPreference.getInteger("icon-size");
 
         // create the top bar and set properties
         this.topBar = new Table();
@@ -126,7 +125,7 @@ public class TopHUD {
     }
 
     /**
-     * for cleaning up, removes all actors from the stage
+     * for cleaning up, removes all actors from the stage and unloads the assets
      */
     public void dispose() {
         gameScreen.stage.getActors().removeValue(topBar, true);

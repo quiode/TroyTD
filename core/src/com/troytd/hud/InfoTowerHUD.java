@@ -1,8 +1,7 @@
 package com.troytd.hud;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.troytd.game.TroyTD;
-import com.troytd.maps.towerPlace;
+import com.troytd.maps.TowerPlace;
 
 public class InfoTowerHUD {
     /**
@@ -15,7 +14,7 @@ public class InfoTowerHUD {
     public static void loadAssets(final TroyTD game) {
     }
 
-    public void show(towerPlace selectedTowerPlace) {
+    public void show(TowerPlace selectedTowerPlace) {
     }
 
     public void dispose() {

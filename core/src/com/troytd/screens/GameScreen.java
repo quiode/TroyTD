@@ -22,7 +22,7 @@ import com.troytd.hud.TopHUD;
 import com.troytd.hud.UpgradeTowerHUD;
 import com.troytd.maps.DefaultMap;
 import com.troytd.maps.Map;
-import com.troytd.maps.towerPlace;
+import com.troytd.maps.TowerPlace;
 
 public class GameScreen implements Screen {
 
@@ -107,7 +107,7 @@ public class GameScreen implements Screen {
         } else if (topHUD == null || infoTowerHUD == null || placeTowerHUD == null || upgradeTowerHUD == null) {
             if (topHUD == null) topHUD = new TopHUD(this, game);
             if (infoTowerHUD == null) infoTowerHUD = new InfoTowerHUD();
-            if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD();
+            if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD(game, stage, topHUD.height);
             if (upgradeTowerHUD == null) upgradeTowerHUD = new UpgradeTowerHUD();
         }
     }
@@ -123,7 +123,7 @@ public class GameScreen implements Screen {
         stage.act(delta);
 
         if (Gdx.input.isTouched()) {
-            towerPlace selectedTowerPlace =
+            TowerPlace selectedTowerPlace =
                     map.checkTowerClick(new Vector2(Gdx.input.getX(),
                             viewport.getWorldHeight() - Gdx.input.getY()));
             /*
@@ -191,5 +191,8 @@ public class GameScreen implements Screen {
     public void dispose() {
         stage.dispose();
         topHUD.dispose();
+        infoTowerHUD.dispose();
+        placeTowerHUD.dispose();
+        upgradeTowerHUD.dispose();
     }
 }
