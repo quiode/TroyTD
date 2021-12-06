@@ -6,7 +6,7 @@
 3. [Controls](#controls)
 4. [Screenshots](#screenshots)
 ## Usage
-[Download the latest version.](https://github.com/quiode/TroyTD/releases/latest)  
+[Download the latest release.](https://github.com/quiode/TroyTD/releases)  
 For android, move the apk file to your phone and open in.  
 On Desktop, open the java file with java (preferred version 11) or run `java -jar [filename]`.  
 For browsers, download the zip file, unzip it and open the html file with your preferred browser.
