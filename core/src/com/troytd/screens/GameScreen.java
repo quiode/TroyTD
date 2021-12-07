@@ -20,7 +20,7 @@ import com.troytd.hud.InfoTowerHUD;
 import com.troytd.hud.PlaceTowerHUD;
 import com.troytd.hud.TopHUD;
 import com.troytd.hud.UpgradeTowerHUD;
-import com.troytd.maps.DefaultMap;
+import com.troytd.maps.DebugMap;
 import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
 
@@ -92,7 +92,7 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen(final TroyTD game) {
-        this(game, new DefaultMap(game));
+        this(game, new DebugMap(game));
     }
 
     /**

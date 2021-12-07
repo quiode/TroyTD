@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.TowerPlace;
@@ -21,12 +22,15 @@ public class PlaceTowerHUD {
     final Label placeTowerLabel;
     final ImageButton nextButton;
     final ImageButton previousButton;
+    final VerticalGroup towerGroup;
     // variables
     TowerPlace towerPlace;
 
     public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight) {
         this.game = game;
         this.stage = stage;
+
+        final int icon_size = game.settingPreference.getInteger("icon-size");
 
         // hud - table
         table = new Table();
@@ -39,7 +43,7 @@ public class PlaceTowerHUD {
 
         // hud - place tower label
         placeTowerLabel = new Label("Place Tower", game.skin, "big");
-        table.add(placeTowerLabel).expandX();
+        table.add(placeTowerLabel).expandX().colspan(2);
 
         // hud - close button
         closeButton = new ImageButton(game.skin, "close");
@@ -49,19 +53,23 @@ public class PlaceTowerHUD {
                 close();
             }
         });
-        table.add(closeButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
+        table.add(closeButton).size(icon_size, icon_size);
         table.top().right();
         table.row();
 
         // hud - previous button
         previousButton = new ImageButton(game.skin, "navigationPrevious");
-        table.add(previousButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
+        table.add(previousButton).size(icon_size, icon_size).left().padTop(icon_size / 2f).padBottom(icon_size / 2f);
+
+        // hud - tower selector
+        towerGroup = new VerticalGroup();
+        table.add(towerGroup).expandX();
 
         // hud - next button
         nextButton = new ImageButton(game.skin, "navigationNext");
-        table.add(nextButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
+        table.add(nextButton).size(icon_size, icon_size).right().padTop(icon_size / 2f).padBottom(icon_size / 2f);
 
-        //table.debug();
+        table.debug();
     }
 
     /**

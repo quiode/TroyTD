@@ -1,15 +1,17 @@
 package com.troytd.maps;
 
 import com.badlogic.gdx.math.Vector2;
+import com.troytd.enemies.DebugEnemy;
 import com.troytd.game.TroyTD;
+import com.troytd.towers.DebugTower;
 
-public class DefaultMap extends Map {
+public class DebugMap extends Map {
     /**
      * A Map with a texture, it's path, and the places where towers can be placed on the map
      *
      * @param game the game instance
      */
-    public DefaultMap(TroyTD game) {
+    public DebugMap(TroyTD game) {
         super(game, "maps/Map-Prototyp-1.png",
                 new Vector2[]{new Vector2(146, 170), new Vector2(71, 450),
                         new Vector2(102, 690), new Vector2(300, 690), new Vector2(806, 590), new Vector2(1125, 645),
@@ -22,6 +24,6 @@ public class DefaultMap extends Map {
                         new Vector2(727, 342), new Vector2(766, 300), new Vector2(808, 243), new Vector2(852, 230),
                         new Vector2(906, 221), new Vector2(946, 221), new Vector2(948, 215), new Vector2(1116, 182),
                         new Vector2(1164, 166), new Vector2(1218, 148), new Vector2(1258, 128), new Vector2(1280, 120),
-                        new Vector2(1330, 133)}, (byte) 3);
+                        new Vector2(1330, 133)}, (byte) 3, "Debugger Map", new Class[]{DebugEnemy.class}, new Class[]{DebugTower.class});
     }
 }

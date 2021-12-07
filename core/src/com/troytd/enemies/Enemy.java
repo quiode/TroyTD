@@ -8,7 +8,7 @@ import com.troytd.game.TroyTD;
 /**
  * an enemy with its texture, health and other related properties
  */
-public class Enemy {
+public abstract class Enemy {
     protected final static short hp = 100;
     protected final static short speed = 100;
     protected final static short damage = 10;
@@ -35,6 +35,9 @@ public class Enemy {
      */
     public Enemy(byte line, final TroyTD game) {
         this(line, game, new Vector2(0, 0));
+    }
+
+    public static void loadAssets() {
     }
 
     public Vector2 getPosition() {

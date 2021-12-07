@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Loadable;
 import com.troytd.screens.GameScreen;
@@ -15,8 +16,23 @@ import com.troytd.towers.Tower;
 /**
  * A Map with a texture, it's path, and the places where towers can be placed
  */
-public class Map implements Loadable {
+public abstract class Map implements Loadable {
+    /**
+     * enemies that spawn with this map
+     */
+    public final Class[] enemies;
+    /**
+     * towers that can be used with this map
+     */
+    public final Class[] towers;
+    /**
+     * the amount of rounds needed to win
+     */
     public final byte maxRounds;
+    /**
+     * The name of the map
+     */
+    public final String name;
     /**
      * game instance
      */
@@ -51,10 +67,20 @@ public class Map implements Loadable {
      * @param texturePath the path to the texture
      * @param towerPlaces the places where towers can be placed
      * @param pathPoints  the points that make up the path
+     * @param maxRounds   the amount of rounds needed to win
+     * @param name        the name of the map
      */
-    public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints, byte maxRounds) {
+    public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints, byte maxRounds, final String name, final Class<? extends Enemy>[] enemies, final Class<? extends Tower>[] towers) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
+
+        for (Class<? extends Enemy> enemy : enemies) {
+            game.assetManager.load("enemies/" + enemy.getSimpleName() + ".png", Texture.class);
+        }
+
+        for (Class<? extends Tower> tower : towers) {
+            game.assetManager.load("towers/" + tower.getSimpleName() + ".png", Texture.class);
+        }
 
         // set values
         this.game = game;
@@ -65,6 +91,9 @@ public class Map implements Loadable {
             this.towerPlaces[i] = new TowerPlace(towerPlaces[i], null);
         }
         this.pathPoints = pathPoints;
+        this.name = name;
+        this.enemies = enemies;
+        this.towers = towers;
     }
 
 
