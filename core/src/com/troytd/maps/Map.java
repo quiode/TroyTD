@@ -69,6 +69,8 @@ public abstract class Map implements Loadable {
      * @param pathPoints  the points that make up the path
      * @param maxRounds   the amount of rounds needed to win
      * @param name        the name of the map
+     * @param enemies     the enemies that spawn with this map
+     * @param towers      the towers that can be used with this map
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints, byte maxRounds, final String name, final Class<? extends Enemy>[] enemies, final Class<? extends Tower>[] towers) {
         // Load assets
