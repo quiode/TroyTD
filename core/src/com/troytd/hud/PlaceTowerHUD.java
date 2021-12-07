@@ -3,10 +3,7 @@ package com.troytd.hud;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
@@ -27,6 +24,9 @@ public class PlaceTowerHUD {
     final Label placeTowerLabel;
     final ImageButton nextButton;
     final ImageButton previousButton;
+    final TextButton cancelButton;
+    final TextButton placeButton;
+    final HorizontalGroup navigationGroup;
     Image leftTower;
     Image rightTower;
     Image middleTower;
@@ -43,7 +43,7 @@ public class PlaceTowerHUD {
 
         // hud - table
         table = new Table();
-        table.setSize(icon_size*7, stage.getHeight() - (topHUDHeight + 5));
+        table.setSize(icon_size * 7, stage.getHeight() - (topHUDHeight + 5));
         table.setPosition(stage.getWidth(), 0);
         table.pad(5);
         table.setBackground(game.skin.getDrawable("grey"));
@@ -117,6 +117,34 @@ public class PlaceTowerHUD {
                 .padTop(icon_size / 2f)
                 .padBottom(icon_size / 2f);
 
+        // hud - place tower button
+        navigationGroup = new HorizontalGroup();
+        navigationGroup.space(icon_size / 2f);
+
+        table.row();
+        table.add(navigationGroup).expandX().colspan(5).padTop(10).padBottom(10).center();
+
+        placeButton = new TextButton("Place", game.skin, "place");
+        placeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // TODO: set towerPlace tower to selected tower
+            }
+        });
+        placeButton.pad(5);
+        navigationGroup.addActor(placeButton);
+
+        // hud - cancel button
+        cancelButton = new TextButton("Cancel", game.skin, "cancel");
+        cancelButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                close();
+            }
+        });
+        cancelButton.pad(5);
+        navigationGroup.addActor(cancelButton);
+
         table.debug();
     }
 
@@ -135,7 +163,7 @@ public class PlaceTowerHUD {
      *
      * @param selectedTowerPlace the tower place which was selected
      */
-    public void show(TowerPlace selectedTowerPlace) {
+    public void show(final TowerPlace selectedTowerPlace) {
         this.towerPlace = selectedTowerPlace;
         table.addAction(sequence(visible(true), moveTo(stage.getWidth() - table.getWidth(), 0, 1 / 3f)));
     }
