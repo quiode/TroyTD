@@ -43,7 +43,7 @@ public class PlaceTowerHUD {
 
         // hud - table
         table = new Table();
-        table.setSize(stage.getWidth() / 3, stage.getHeight() - (topHUDHeight + 5));
+        table.setSize(icon_size*7, stage.getHeight() - (topHUDHeight + 5));
         table.setPosition(stage.getWidth(), 0);
         table.pad(5);
         table.setBackground(game.skin.getDrawable("grey"));
@@ -62,14 +62,14 @@ public class PlaceTowerHUD {
                 close();
             }
         });
-        table.add(closeButton).size(icon_size / 2f, icon_size / 2f).padTop(icon_size / 4f).padBottom(icon_size / 4f).padRight(icon_size / 4f);
+        table.add(closeButton).size(icon_size, icon_size);
         table.top().right();
         table.row();
 
         // hud - previous button
         previousButton = new ImageButton(game.skin, "navigationPrevious");
         table.add(previousButton)
-                .size(icon_size / 2f, (float) (icon_size))
+                .size(icon_size, (float) (icon_size))
                 .left()
                 .padTop(icon_size / 2f)
                 .padBottom(icon_size / 2f);
@@ -112,7 +112,7 @@ public class PlaceTowerHUD {
         // hud - next button
         nextButton = new ImageButton(game.skin, "navigationNext");
         table.add(nextButton)
-                .size(icon_size / 2f, (float) (icon_size))
+                .size(icon_size, (float) (icon_size))
                 .right()
                 .padTop(icon_size / 2f)
                 .padBottom(icon_size / 2f);
