@@ -30,13 +30,6 @@ size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
-Settings-icon-symbol-vector
-  rotate: false
-  xy: 995, 325
-  size: 800, 800
-  orig: 800, 800
-  offset: 0, 0
-  index: -1
 triangle_black_white
   rotate: false
   xy: 995, 1127
@@ -58,8 +51,49 @@ triangle_white
   orig: 992, 858
   offset: 0, 0
   index: -1
+triangle_white-right
+  rotate: false
+  xy: 995, 133
+  size: 858, 992
+  orig: 858, 992
+  offset: 0, 0
+  index: -1
 
 troytd4.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+Settings-icon-symbol-vector
+  rotate: false
+  xy: 861, 193
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+triangle_black_white-left
+  rotate: false
+  xy: 861, 995
+  size: 858, 992
+  orig: 858, 992
+  offset: 0, 0
+  index: -1
+triangle_black_white-right
+  rotate: false
+  xy: 1, 995
+  size: 858, 992
+  orig: 858, 992
+  offset: 0, 0
+  index: -1
+triangle_white-left
+  rotate: false
+  xy: 1, 1
+  size: 858, 992
+  orig: 858, 992
+  offset: 0, 0
+  index: -1
+
+troytd5.png
 size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
@@ -114,7 +148,7 @@ Settings-icon-symbol-vector-white
   offset: 0, 0
   index: -1
 
-troytd5.png
+troytd6.png
 size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear

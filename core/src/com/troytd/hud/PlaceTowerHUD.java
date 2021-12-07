@@ -54,18 +54,14 @@ public class PlaceTowerHUD {
         table.row();
 
         // hud - previous button
-        previousButton = new ImageButton(game.skin, "navigation");
-        previousButton.setTransform(true);
-        previousButton.setRotation(90f);
+        previousButton = new ImageButton(game.skin, "navigationPrevious");
         table.add(previousButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
 
         // hud - next button
-        nextButton = new ImageButton(game.skin, "navigation");
-        nextButton.setTransform(true);
-        nextButton.setRotation(360 - 90f);
+        nextButton = new ImageButton(game.skin, "navigationNext");
         table.add(nextButton).size(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
 
-        table.debug();
+        //table.debug();
     }
 
     /**

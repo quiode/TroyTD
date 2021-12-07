@@ -170,6 +170,22 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		checkedDown: triangle_black_white
 		pressedOffsetX: 1
 	}
+	navigationNext: {
+		up: triangle_white-right
+		down: triangle_black_white-right
+		over: triangle_black_white-right
+		checked: triangle_white-right
+		checkedOver: triangle_black_white-right
+		checkedDown: triangle_black_white-right
+	}
+	navigationPrevious: {
+		up: triangle_white-left
+		down: triangle_black_white-left
+		over: triangle_black_white-left
+		checked: triangle_white-left
+		checkedOver: triangle_black_white-left
+		checkedDown: triangle_black_white-left
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
