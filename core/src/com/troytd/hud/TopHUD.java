@@ -1,5 +1,6 @@
 package com.troytd.hud;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -40,6 +41,9 @@ public class TopHUD {
     private final Label healthLabel;
     private final Label roundLabel;
     private final Label timeLabel;
+    private final Label difficultyLabel;
+    private final Label killsLabel;
+    private final Image killsIcon;
 
     public TopHUD(final GameScreen gameScreen, final TroyTD game) {
         this.gameScreen = gameScreen;
@@ -76,6 +80,17 @@ public class TopHUD {
             }
         };
 
+        // kills label
+        killsLabel = new Label("", game.skin) {
+            @Override
+            public void act(float delta) {
+                this.setText(String.valueOf(gameScreen.kills));
+            }
+        };
+
+        // kills icon
+        killsIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/kills.png", Texture.class)), Scaling.fit);
+
         // round label
         roundLabel = new Label("", game.skin) {
             @Override
@@ -86,7 +101,7 @@ public class TopHUD {
 
         // time label
         formatter = new SimpleDateFormat("HH:mm");
-        this.timeLabel = new Label("", game.skin) {
+        timeLabel = new Label("", game.skin) {
             @Override
             public void act(float delta) {
                 Date date = new Date();
@@ -94,15 +109,47 @@ public class TopHUD {
             }
         };
 
+        // difficulty label
+        difficultyLabel = new Label("", game.skin) {
+            @Override
+            public void act(float delta) {
+                String difficulty;
+                switch (game.settingPreference.getInteger("difficulty")) {
+                    case 0:
+                        difficulty = "Easy";
+                        break;
+                    case 1:
+                        difficulty = "Normal";
+                        break;
+                    case 2:
+                        difficulty = "Hard";
+                        break;
+                    default:
+                        difficulty = "Normal";
+                        game.settingPreference.putInteger("difficulty", 1);
+                        game.settingPreference.flush();
+                        Gdx.app.log("Error", "Invalid difficulty setting");
+                        break;
+                }
+                this.setText("Difficulty: " + difficulty);
+            }
+        };
+
         // add the labels to the top bar
         topBar.add(moneyLabel).padRight(height * 0.1f);
         topBar.add(moneyIcon).maxWidth(height * 0.75f).padRight(height * 0.5f);
+
         topBar.add(healthLabel).padRight(height * 0.1f);
-        topBar.add(healthIcon).maxWidth(height * 0.75f);
+        topBar.add(healthIcon).maxWidth(height * 0.75f).padRight(height * 0.5f);
+
+        topBar.add(killsLabel).padRight(height * 0.1f);
+        topBar.add(killsIcon).maxWidth(height * 0.75f);
 
         topBar.add(timeLabel).padLeft(height * 0.3f).padRight(height * 0.3f);
 
         topBar.add(roundLabel);
+
+        topBar.add(difficultyLabel).padLeft(height * 0.3f);
 
         // Add topBar to the stage
         gameScreen.stage.addActor(topBar);
@@ -122,6 +169,7 @@ public class TopHUD {
     public static void loadAssets(final TroyTD game) {
         game.assetManager.load("hud/coin.png", Texture.class);
         game.assetManager.load("hud/heart.png", Texture.class);
+        game.assetManager.load("hud/kills.png", Texture.class);
     }
 
     /**

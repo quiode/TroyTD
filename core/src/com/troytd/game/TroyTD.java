@@ -37,6 +37,9 @@ public class TroyTD extends Game {
         if (!settingPreference.contains("icon-size")) {
             settingPreference.putInteger("icon-size", settingPreference.getInteger("width") / 18);
         }
+        if (!settingPreference.contains("difficulty")) {
+            settingPreference.putInteger("difficulty", 1); // 0 = easy, 1 = normal, 2 = hard
+        }
 
         settingPreference.flush();
 
