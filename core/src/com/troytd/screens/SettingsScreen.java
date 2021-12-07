@@ -31,8 +31,10 @@ public class SettingsScreen implements Screen {
         this.game = game;
         this.lastScreen = lastScreen;
 
-        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
-        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"),
+                                        game.settingPreference.getInteger("height"));
+        viewport = new FitViewport(game.settingPreference.getInteger("width"),
+                                   game.settingPreference.getInteger("height"), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         Table table = new Table();
@@ -57,12 +59,19 @@ public class SettingsScreen implements Screen {
         });
 
         // Table
-        table.add(backToGameButton).width(game.settingPreference.getInteger("icon-size")).height(game.settingPreference.getInteger("icon-size")).pad(10).expandX().left().colspan(4);
+        table.add(backToGameButton)
+                .width(game.settingPreference.getInteger("icon-size"))
+                .height(game.settingPreference.getInteger("icon-size"))
+                .pad(10)
+                .expandX()
+                .left()
+                .colspan(4);
         table.top();
 
         // UI Elements
         Label screenResolutionLabel = new Label("Screen Resolution:", game.skin, "settings");
-        screenResolutionTextField1 = new TextField(String.valueOf(game.settingPreference.getInteger("width")), game.skin, "settings");
+        screenResolutionTextField1 = new TextField(String.valueOf(game.settingPreference.getInteger("width")),
+                                                   game.skin, "settings");
         screenResolutionTextField1.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         screenResolutionTextField1.addListener(new ChangeListener() {
             /**
@@ -76,7 +85,8 @@ public class SettingsScreen implements Screen {
         });
         screenResolutionTextField1.setAlignment(Align.right);
         Label screenResolutionLabel2 = new Label("x", game.skin, "settings");
-        screenResolutionTextField2 = new TextField(String.valueOf(game.settingPreference.getInteger("height")), game.skin, "settings");
+        screenResolutionTextField2 = new TextField(String.valueOf(game.settingPreference.getInteger("height")),
+                                                   game.skin, "settings");
         screenResolutionTextField2.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         screenResolutionTextField2.setAlignment(Align.left);
         TextButton submitButton = new TextButton("Submit", game.skin, "settings");
@@ -115,7 +125,8 @@ public class SettingsScreen implements Screen {
                         }
                     }
                 };
-                dialog.text("Are you sure you want to reset to default?", game.skin.get("info", Label.LabelStyle.class));
+                dialog.text("Are you sure you want to reset to default?",
+                            game.skin.get("info", Label.LabelStyle.class));
                 dialog.button("Yes", true, game.skin.get("error", TextButton.TextButtonStyle.class));
                 dialog.button("No", false, game.skin.get("info", TextButton.TextButtonStyle.class));
                 dialog.center();
@@ -123,7 +134,8 @@ public class SettingsScreen implements Screen {
                     dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
                 dialog.getContentTable().pad(0, 25, 25, 25);
                 dialog.setWidth(Gdx.graphics.getWidth() / 2f);
-                dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+                dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f, Gdx.graphics.getHeight() / 2f,
+                                   Align.center);
                 stage.addActor(dialog);
                 dialog.show(stage);
             }
@@ -208,13 +220,18 @@ public class SettingsScreen implements Screen {
     }
 
     private void putData() {
-        if (Integer.parseInt(screenResolutionTextField1.getText()) != game.settingPreference.getInteger("width") || Integer.parseInt(screenResolutionTextField2.getText()) != game.settingPreference.getInteger("height")) {
-            if (Integer.parseInt(screenResolutionTextField1.getText()) > 400 && Integer.parseInt(screenResolutionTextField2.getText()) > 400) {
+        if (Integer.parseInt(screenResolutionTextField1.getText()) != game.settingPreference.getInteger(
+                "width") || Integer.parseInt(screenResolutionTextField2.getText()) != game.settingPreference.getInteger(
+                "height")) {
+            if (Integer.parseInt(screenResolutionTextField1.getText()) > 400 && Integer.parseInt(
+                    screenResolutionTextField2.getText()) > 400) {
                 dialog = new Dialog("", game.skin, "info") {
                     public void result(Object object) {
                         if (object.equals(true)) {
-                            game.settingPreference.putInteger("width", Integer.parseInt(screenResolutionTextField1.getText()));
-                            game.settingPreference.putInteger("height", Integer.parseInt(screenResolutionTextField2.getText()));
+                            game.settingPreference.putInteger("width",
+                                                              Integer.parseInt(screenResolutionTextField1.getText()));
+                            game.settingPreference.putInteger("height",
+                                                              Integer.parseInt(screenResolutionTextField2.getText()));
                             game.settingPreference.flush();
                             Gdx.app.exit();
                         } else {
@@ -223,7 +240,9 @@ public class SettingsScreen implements Screen {
                         }
                     }
                 };
-                dialog.text("The application must restart to\napply the new resolution.\nDo you still want to change it?", game.skin.get("info", Label.LabelStyle.class));
+                dialog.text(
+                        "The application must restart to\napply the new resolution.\nDo you still want to change it?",
+                        game.skin.get("info", Label.LabelStyle.class));
                 dialog.button("Yes", true, game.skin.get("info", TextButton.TextButtonStyle.class));
                 dialog.button("No", false, game.skin.get("error", TextButton.TextButtonStyle.class));
             } else {
@@ -249,9 +268,11 @@ public class SettingsScreen implements Screen {
         if (dialog.getButtonTable().getCells().size > 1) dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
         dialog.getContentTable().pad(0, 25, 25, 25);
         dialog.setWidth(Gdx.graphics.getWidth() / 2f);
-        dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
+        dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f, Gdx.graphics.getHeight() / 2f,
+                           Align.center);
         dialog.show(stage);
 
-        Gdx.graphics.setWindowedMode(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
+        Gdx.graphics.setWindowedMode(game.settingPreference.getInteger("width"),
+                                     game.settingPreference.getInteger("height"));
     }
 }

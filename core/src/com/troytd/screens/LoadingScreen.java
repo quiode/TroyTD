@@ -41,14 +41,17 @@ public class LoadingScreen implements Screen {
      * @param loadingText  the text to display while loading (loadingText2: loadingText...)
      * @param loadingText2 the text before the loadingText (loadingText2: loadingText...)
      */
-    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final String loadingText2) {
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText,
+                         final String loadingText2) {
         this.game = game;
         this.calledScreen = calledScreen;
 
         // Camera and stuff
-        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"),
+                                        game.settingPreference.getInteger("height"));
         game.batch.setProjectionMatrix(camera.combined);
-        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
+        viewport = new FitViewport(game.settingPreference.getInteger("width"),
+                                   game.settingPreference.getInteger("height"), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
@@ -74,7 +77,8 @@ public class LoadingScreen implements Screen {
         this(game, calledScreen, "Loading...", "");
     }
 
-    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final String loadingText2, final Loadable afterLoadObject) {
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText,
+                         final String loadingText2, final Loadable afterLoadObject) {
         this(game, calledScreen, loadingText, loadingText2);
         this.afterLoadObject = afterLoadObject;
     }
@@ -84,7 +88,8 @@ public class LoadingScreen implements Screen {
         afterLoadObject = afterLoadMap;
     }
 
-    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText, final Map afterLoadMap) {
+    public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText,
+                         final Map afterLoadMap) {
         this(game, calledScreen, loadingText);
         afterLoadObject = afterLoadMap;
     }

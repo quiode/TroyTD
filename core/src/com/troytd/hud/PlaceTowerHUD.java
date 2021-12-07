@@ -1,14 +1,18 @@
 package com.troytd.hud;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.TowerPlace;
+import com.troytd.towers.Tower;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -16,19 +20,24 @@ public class PlaceTowerHUD {
     // global variables
     final TroyTD game;
     final Stage stage;
+    final Class<? extends Tower>[] towers;
     // hud
     final Table table;
     final ImageButton closeButton;
     final Label placeTowerLabel;
     final ImageButton nextButton;
     final ImageButton previousButton;
-    final VerticalGroup towerGroup;
+    Image leftTower;
+    Image rightTower;
+    Image middleTower;
     // variables
     TowerPlace towerPlace;
 
-    public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight) {
+    public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight,
+                         final Class<? extends Tower>[] towers) {
         this.game = game;
         this.stage = stage;
+        this.towers = towers;
 
         final int icon_size = game.settingPreference.getInteger("icon-size");
 
@@ -43,7 +52,7 @@ public class PlaceTowerHUD {
 
         // hud - place tower label
         placeTowerLabel = new Label("Place Tower", game.skin, "big");
-        table.add(placeTowerLabel).expandX().colspan(2);
+        table.add(placeTowerLabel).expandX().colspan(4);
 
         // hud - close button
         closeButton = new ImageButton(game.skin, "close");
@@ -53,21 +62,60 @@ public class PlaceTowerHUD {
                 close();
             }
         });
-        table.add(closeButton).size(icon_size, icon_size);
+        table.add(closeButton).size(icon_size / 2f, icon_size / 2f).padTop(icon_size / 4f).padBottom(icon_size / 4f).padRight(icon_size / 4f);
         table.top().right();
         table.row();
 
         // hud - previous button
         previousButton = new ImageButton(game.skin, "navigationPrevious");
-        table.add(previousButton).size(icon_size, icon_size).left().padTop(icon_size / 2f).padBottom(icon_size / 2f);
+        table.add(previousButton)
+                .size(icon_size / 2f, (float) (icon_size))
+                .left()
+                .padTop(icon_size / 2f)
+                .padBottom(icon_size / 2f);
 
-        // hud - tower selector
-        towerGroup = new VerticalGroup();
-        table.add(towerGroup).expandX();
 
+        // left tower
+        leftTower = new Image(new TextureRegionDrawable(
+                game.assetManager.get("towers/" + towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+        table.add(leftTower)
+                .size(icon_size, icon_size)
+                .padTop(icon_size / 2f)
+                .padBottom(icon_size / 2f)
+                .padLeft(icon_size / 10f);
+        // middle tower
+        if (towers.length > 1) {
+            middleTower = new Image(new TextureRegionDrawable(
+                    game.assetManager.get("towers/" + towers[1].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+        } else {
+            middleTower = new Image(new TextureRegionDrawable(
+                    game.assetManager.get("towers/" + towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+        }
+        table.add(middleTower)
+                .size(icon_size * 2, icon_size * 2)
+                .padLeft(icon_size / 10f)
+                .padRight(icon_size / 10f)
+                .expandX();
+        // right tower
+        if (towers.length > 2) {
+            rightTower = new Image(new TextureRegionDrawable(
+                    game.assetManager.get("towers/" + towers[2].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+        } else {
+            rightTower = new Image(new TextureRegionDrawable(
+                    game.assetManager.get("towers/" + towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+        }
+        table.add(rightTower)
+                .size(icon_size, icon_size)
+                .padTop(icon_size / 2f)
+                .padBottom(icon_size / 2f)
+                .padRight(icon_size / 10f);
         // hud - next button
         nextButton = new ImageButton(game.skin, "navigationNext");
-        table.add(nextButton).size(icon_size, icon_size).right().padTop(icon_size / 2f).padBottom(icon_size / 2f);
+        table.add(nextButton)
+                .size(icon_size / 2f, (float) (icon_size))
+                .right()
+                .padTop(icon_size / 2f)
+                .padBottom(icon_size / 2f);
 
         table.debug();
     }

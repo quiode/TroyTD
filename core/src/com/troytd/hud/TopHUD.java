@@ -59,7 +59,8 @@ public class TopHUD {
         topBar.padTop(height * 0.1f);
 
         // money icon
-        moneyIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/coin.png", Texture.class)), Scaling.fit);
+        moneyIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/coin.png", Texture.class)),
+                              Scaling.fit);
 
         // money label
         moneyLabel = new Label("", game.skin) {
@@ -70,7 +71,8 @@ public class TopHUD {
         };
 
         // health icon
-        healthIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/heart.png", Texture.class)), Scaling.fit);
+        healthIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/heart.png", Texture.class)),
+                               Scaling.fit);
 
         // health label
         healthLabel = new Label("", game.skin) {
@@ -89,7 +91,8 @@ public class TopHUD {
         };
 
         // kills icon
-        killsIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/kills.png", Texture.class)), Scaling.fit);
+        killsIcon = new Image(new TextureRegionDrawable(game.assetManager.get("hud/kills.png", Texture.class)),
+                              Scaling.fit);
 
         // round label
         roundLabel = new Label("", game.skin) {

@@ -57,13 +57,16 @@ public class GameScreen implements Screen {
         this.maxRounds = (byte) (map.maxRounds * game.settingPreference.getInteger("difficulty", 1));
 
         // create stage
-        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
-        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"),
+                                        game.settingPreference.getInteger("height"));
+        viewport = new FitViewport(game.settingPreference.getInteger("width"),
+                                   game.settingPreference.getInteger("height"), camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         // settings icon
         pauseButton = new ImageButton(game.skin, "toSettings");
-        pauseButton.setSize(game.settingPreference.getInteger("icon-size"), game.settingPreference.getInteger("icon-size"));
+        pauseButton.setSize(game.settingPreference.getInteger("icon-size"),
+                            game.settingPreference.getInteger("icon-size"));
 
         pauseButton.addListener(new ChangeListener() {
             /**
@@ -76,10 +79,11 @@ public class GameScreen implements Screen {
             }
         });
 
-        container = new Container<ImageButton>(pauseButton).width(pauseButton.getWidth()).height(pauseButton.getHeight());
+        container = new Container<ImageButton>(pauseButton).width(pauseButton.getWidth())
+                .height(pauseButton.getHeight());
         stage.addActor(container);
         container.setPosition(viewport.getWorldWidth() - pauseButton.getWidth() + 20,
-                viewport.getWorldHeight() - pauseButton.getHeight() + 20);
+                              viewport.getWorldHeight() - pauseButton.getHeight() + 20);
 
         // wait before switching screens
         screenSwitchDelta = System.currentTimeMillis();
@@ -107,7 +111,7 @@ public class GameScreen implements Screen {
         } else if (topHUD == null || infoTowerHUD == null || placeTowerHUD == null || upgradeTowerHUD == null) {
             if (topHUD == null) topHUD = new TopHUD(this, game);
             if (infoTowerHUD == null) infoTowerHUD = new InfoTowerHUD();
-            if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD(game, stage, topHUD.height);
+            if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD(game, stage, topHUD.height, map.towers);
             if (upgradeTowerHUD == null) upgradeTowerHUD = new UpgradeTowerHUD();
         }
     }
@@ -123,9 +127,8 @@ public class GameScreen implements Screen {
         stage.act(delta);
 
         if (Gdx.input.isTouched()) {
-            TowerPlace selectedTowerPlace =
-                    map.checkTowerClick(new Vector2(Gdx.input.getX(),
-                            viewport.getWorldHeight() - Gdx.input.getY()));
+            TowerPlace selectedTowerPlace = map.checkTowerClick(
+                    new Vector2(Gdx.input.getX(), viewport.getWorldHeight() - Gdx.input.getY()));
             /*
             Gdx.app.log("Touched", "X: " + Gdx.input.getX() + " Y: " + (viewport.getWorldHeight() - Gdx.input.getY
              ()));
@@ -147,7 +150,8 @@ public class GameScreen implements Screen {
         // Draw HUD
         stage.draw();
 
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
+        if (Gdx.input.isKeyPressed(
+                com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
             game.setScreen(new PauseScreen(game, this));
         }
     }

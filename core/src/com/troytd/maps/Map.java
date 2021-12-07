@@ -20,11 +20,11 @@ public abstract class Map implements Loadable {
     /**
      * enemies that spawn with this map
      */
-    public final Class[] enemies;
+    public final Class<? extends Enemy>[] enemies;
     /**
      * towers that can be used with this map
      */
-    public final Class[] towers;
+    public final Class<? extends Tower>[] towers;
     /**
      * the amount of rounds needed to win
      */
@@ -72,7 +72,9 @@ public abstract class Map implements Loadable {
      * @param enemies     the enemies that spawn with this map
      * @param towers      the towers that can be used with this map
      */
-    public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints, byte maxRounds, final String name, final Class<? extends Enemy>[] enemies, final Class<? extends Tower>[] towers) {
+    public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
+               byte maxRounds, final String name, final Class<? extends Enemy>[] enemies,
+               final Class<? extends Tower>[] towers) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 
@@ -118,10 +120,10 @@ public abstract class Map implements Loadable {
         mapSprite = new Sprite(game.assetManager.get(pathName, Texture.class));
         mapSprite.setSize(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
         mapSprite.setPosition(-(game.settingPreference.getInteger("width") / 2f),
-                -(game.settingPreference.getInteger("height") / 2f));
-        mapDistortion = new Vector2((float) game.settingPreference.getInteger(
-                "width") / mapSprite.getTexture().getWidth(), (float) game.settingPreference.getInteger("height") /
-                mapSprite.getTexture().getHeight());
+                              -(game.settingPreference.getInteger("height") / 2f));
+        mapDistortion = new Vector2(
+                (float) game.settingPreference.getInteger("width") / mapSprite.getTexture().getWidth(),
+                (float) game.settingPreference.getInteger("height") / mapSprite.getTexture().getHeight());
 
         // map has a new size so points on map have to be recalculated
         for (Vector2 pathPoint : pathPoints) {
@@ -174,15 +176,16 @@ public abstract class Map implements Loadable {
     public TowerPlace checkTowerClick(final Vector2 clickPosition) {
         final byte clickPositionRectangleSize = 10;
         Rectangle clickPositionRectangle = new Rectangle(clickPosition.x - clickPositionRectangleSize / 2f,
-                clickPosition.y - clickPositionRectangleSize / 2f, clickPositionRectangleSize,
-                clickPositionRectangleSize);
+                                                         clickPosition.y - clickPositionRectangleSize / 2f,
+                                                         clickPositionRectangleSize, clickPositionRectangleSize);
 
         for (TowerPlace towerPlace : towerPlaces) {
             Rectangle towerPlaceRectangle;
             if (towerPlace.tower != null) {
                 towerPlaceRectangle = towerPlace.tower.getRect();
             } else {
-                towerPlaceRectangle = new Rectangle(towerPlace.place.x - Tower.size / 2f, towerPlace.place.y - Tower.size / 2f, Tower.size, Tower.size);
+                towerPlaceRectangle = new Rectangle(towerPlace.place.x - Tower.size / 2f,
+                                                    towerPlace.place.y - Tower.size / 2f, Tower.size, Tower.size);
             }
             if (clickPositionRectangle.overlaps(towerPlaceRectangle)) {
                 return towerPlace;
