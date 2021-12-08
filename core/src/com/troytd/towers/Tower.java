@@ -33,4 +33,8 @@ public class Tower {
     public Rectangle getRect() {
         return towerSprite.getBoundingRectangle();
     }
+
+    public void setPosition(Vector2 position) {
+        towerSprite.setPosition(position.x, position.y);
+    }
 }

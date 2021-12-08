@@ -1,6 +1,7 @@
 package com.troytd.hud;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.TowerPlace;
 import com.troytd.towers.Tower;
+
+import java.lang.reflect.Constructor;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -32,7 +35,7 @@ public class PlaceTowerHUD {
     Image middleTower;
     // variables
     TowerPlace towerPlace;
-    Tower selectedTower;
+    Class<? extends Tower> selectedTower;
 
     public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight,
                          final Class<? extends Tower>[] towers) {
@@ -88,9 +91,11 @@ public class PlaceTowerHUD {
         if (towers.length > 1) {
             middleTower = new Image(new TextureRegionDrawable(
                     game.assetManager.get("towers/" + towers[1].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+            selectedTower = towers[1];
         } else {
             middleTower = new Image(new TextureRegionDrawable(
                     game.assetManager.get("towers/" + towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+            selectedTower = towers[0];
         }
         table.add(middleTower)
                 .size(icon_size * 2, icon_size * 2)
@@ -129,7 +134,14 @@ public class PlaceTowerHUD {
         placeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // TODO: set towerPlace tower to selected tower
+                try {
+                    Constructor<? extends Tower> ctor = selectedTower.getConstructor(TroyTD.class, Vector2.class);
+                    towerPlace.tower = ctor.newInstance(game, towerPlace.place); // -> Asset not loaded Error?
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // TODO: print error message
+                }
+                close();
             }
         });
         placeButton.pad(5);
@@ -165,7 +177,7 @@ public class PlaceTowerHUD {
      * @param selectedTowerPlace the tower place which was selected
      */
     public void show(final TowerPlace selectedTowerPlace) {
-        this.towerPlace = selectedTowerPlace;
+        towerPlace = selectedTowerPlace;
         table.addAction(sequence(visible(true), moveTo(stage.getWidth() - table.getWidth(), 0, 1 / 3f)));
     }
 

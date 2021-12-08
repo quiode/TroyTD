@@ -12,6 +12,6 @@ public class DebugTower extends Tower {
     public static final String name = "DebugTower";
 
     public DebugTower(TroyTD game, Vector2 position) {
-        super(game, position, game.assetManager.get(name, Texture.class), name, TowerTypes.MELEE);
+        super(game, position, game.assetManager.get("towers/" + name + ".png", Texture.class), name, TowerTypes.MELEE);
     }
 }
