@@ -32,6 +32,7 @@ public class PlaceTowerHUD {
     Image middleTower;
     // variables
     TowerPlace towerPlace;
+    Tower selectedTower;
 
     public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight,
                          final Class<? extends Tower>[] towers) {
