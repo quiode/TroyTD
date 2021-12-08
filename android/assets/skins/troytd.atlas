@@ -100,26 +100,19 @@ filter: Linear, Linear
 repeat: none
 Montserrat-Bold(3)_0
   rotate: false
-  xy: 803, 515
+  xy: 803, 1
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(3)_1
   rotate: false
-  xy: 803, 1
+  xy: 1405, 603
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(5)_0
-  rotate: false
-  xy: 1317, 515
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-Montserrat-Bold(5)_1
   rotate: false
   xy: 1317, 1
   size: 512, 512
@@ -128,23 +121,30 @@ Montserrat-Bold(5)_1
   index: -1
 Settings-icon-symbol-vector-gray
   rotate: false
-  xy: 803, 1029
+  xy: 803, 1117
   size: 800, 800
   orig: 800, 800
   offset: 0, 0
   index: -1
 Settings-icon-symbol-vector-red
   rotate: false
-  xy: 1, 1029
+  xy: 1, 1117
   size: 800, 800
   orig: 800, 800
   offset: 0, 0
   index: -1
 Settings-icon-symbol-vector-white
   rotate: false
-  xy: 1, 227
+  xy: 1, 315
   size: 800, 800
   orig: 800, 800
+  offset: 0, 0
+  index: -1
+red-rounded-square-hi
+  rotate: false
+  xy: 803, 515
+  size: 600, 600
+  orig: 600, 600
   offset: 0, 0
   index: -1
 
@@ -155,155 +155,169 @@ filter: Linear, Linear
 repeat: none
 white-pixel
   rotate: false
-  xy: 509, 464
+  xy: 1537, 1494
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 240px-Eo_circle_grey_pause
   rotate: false
-  xy: 1543, 1541
+  xy: 1543, 1543
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
 240px-Eo_circle_white_pause
   rotate: false
-  xy: 515, 488
+  xy: 1029, 670
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
 Bullpen3D
   rotate: false
-  xy: 1, 372
+  xy: 1029, 1402
   size: 506, 93
   orig: 506, 93
   offset: 0, 0
   index: -1
 Bullpen3D(2)
   rotate: false
-  xy: 515, 886
+  xy: 1, 272
   size: 506, 93
   orig: 506, 93
   offset: 0, 0
   index: -1
 Montserrat-Bold
   rotate: false
-  xy: 1029, 1070
+  xy: 1029, 912
   size: 505, 67
   orig: 505, 67
   offset: 0, 0
   index: -1
 Montserrat-Bold(1)
   rotate: false
-  xy: 1029, 1289
+  xy: 1029, 1196
   size: 506, 204
   orig: 506, 204
   offset: 0, 0
   index: -1
 Montserrat-Bold(2)
   rotate: false
-  xy: 1, 166
+  xy: 1, 66
   size: 506, 204
   orig: 506, 204
   offset: 0, 0
   index: -1
+Montserrat-Bold(5)_1
+  rotate: false
+  xy: 1, 1497
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 Montserrat-Bold(5)_2
   rotate: false
-  xy: 1, 1495
+  xy: 1, 983
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(7)_0
   rotate: false
-  xy: 1, 981
+  xy: 515, 1497
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(7)_1
   rotate: false
-  xy: 515, 1495
+  xy: 1, 469
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(7)_2
   rotate: false
-  xy: 1, 467
+  xy: 515, 983
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(7)_3
   rotate: false
-  xy: 515, 981
+  xy: 1029, 1497
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(7)_4
   rotate: false
-  xy: 1029, 1495
+  xy: 515, 469
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Regular
   rotate: false
-  xy: 1, 101
+  xy: 1, 1
   size: 505, 63
   orig: 505, 63
   offset: 0, 0
   index: -1
 Montserrat-Regular(1)
   rotate: false
-  xy: 515, 730
+  xy: 1029, 981
   size: 505, 63
   orig: 505, 63
   offset: 0, 0
   index: -1
 Montserrat-Regular(2)
   rotate: false
-  xy: 515, 795
+  xy: 515, 378
   size: 506, 89
   orig: 506, 89
   offset: 0, 0
   index: -1
 Montserrat-Regular(3)
   rotate: false
-  xy: 1029, 1139
+  xy: 1029, 1046
   size: 506, 148
   orig: 506, 148
   offset: 0, 0
   index: -1
 gamepad-vector-clipart
   rotate: false
-  xy: 1543, 1783
+  xy: 1543, 1785
   size: 360, 224
   orig: 360, 224
   offset: 0, 0
   index: -1
 noun_back button_251451
   rotate: false
-  xy: 1905, 1909
+  xy: 1029, 570
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 noun_back button_251451-light-gray
   rotate: false
-  xy: 757, 630
+  xy: 1271, 812
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 noun_back button_251451-white
   rotate: false
-  xy: 1, 1
+  xy: 1905, 1911
   size: 98, 98
   orig: 98, 98
+  offset: 0, 0
+  index: -1
+rounded-rectangle-512-thin
+  rotate: false
+  xy: 1, 367
+  size: 512, 100
+  orig: 512, 100
   offset: 0, 0
   index: -1

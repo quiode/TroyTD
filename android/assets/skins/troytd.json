@@ -234,6 +234,18 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		fontColor: WHITE
 		overFontColor: RED
 	}
+	place: {
+		font: Montserrat-Bold-32-white
+		fontColor: BLACK
+		up: green
+		over: white
+	}
+	cancel: {
+		font: Montserrat-Bold-32-white
+		fontColor: BLACK
+		up: red
+		over: white
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
