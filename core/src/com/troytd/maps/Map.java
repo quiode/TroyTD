@@ -41,7 +41,7 @@ public abstract class Map implements Loadable {
     /**
      * the vector by which the map is scaled
      */
-    protected Vector2 mapDistortion;
+    public Vector2 mapDistortion;
     /**
      * the places where towers can be placed and the tower
      */
@@ -102,7 +102,7 @@ public abstract class Map implements Loadable {
 
 
     /**
-     * draws the map
+     * draws the map, the dowers, and the enemies
      */
     public void draw(final SpriteBatch batch, final GameScreen gameScreen) {
         if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, gameScreen, this));
@@ -110,6 +110,9 @@ public abstract class Map implements Loadable {
         if (mapSprite != null) {
             mapSprite.draw(batch);
         }
+
+        drawTowers();
+        drawEnemies();
     }
 
     /**
@@ -148,8 +151,8 @@ public abstract class Map implements Loadable {
     public byte placeTower(final Vector2 position, final Tower tower) {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.place.equals(position)) {
-                if (towerPlace.tower == null) {
-                    towerPlace.tower = tower;
+                if (towerPlace.getTower() == null) {
+                    towerPlace.setTower(tower);
                     return 1;
                 }
                 return -1;
@@ -181,8 +184,8 @@ public abstract class Map implements Loadable {
 
         for (TowerPlace towerPlace : towerPlaces) {
             Rectangle towerPlaceRectangle;
-            if (towerPlace.tower != null) {
-                towerPlaceRectangle = towerPlace.tower.getRect();
+            if (towerPlace.getTower() != null) {
+                towerPlaceRectangle = towerPlace.getTower().getRect();
             } else {
                 towerPlaceRectangle = new Rectangle(towerPlace.place.x - Tower.size / 2f,
                                                     towerPlace.place.y - Tower.size / 2f, Tower.size, Tower.size);
@@ -193,5 +196,15 @@ public abstract class Map implements Loadable {
         }
         return null;
     }
+
+    private void drawTowers() {
+        for (TowerPlace towerPlace : towerPlaces) {
+            if (towerPlace.getTower() != null) {
+                towerPlace.getTower().draw();
+            }
+        }
+    }
+
+    private void drawEnemies() {}
 }
 

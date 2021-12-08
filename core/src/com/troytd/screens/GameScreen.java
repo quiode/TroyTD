@@ -111,7 +111,7 @@ public class GameScreen implements Screen {
         } else if (topHUD == null || infoTowerHUD == null || placeTowerHUD == null || upgradeTowerHUD == null) {
             if (topHUD == null) topHUD = new TopHUD(this, game);
             if (infoTowerHUD == null) infoTowerHUD = new InfoTowerHUD();
-            if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD(game, stage, topHUD.height, map.towers);
+            if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD(game, stage, topHUD.height, map);
             if (upgradeTowerHUD == null) upgradeTowerHUD = new UpgradeTowerHUD();
         }
     }
@@ -135,7 +135,7 @@ public class GameScreen implements Screen {
             */
             if (selectedTowerPlace != null) {
                 //Gdx.app.log("Touched", "Tower place found");
-                if (selectedTowerPlace.tower == null) {
+                if (selectedTowerPlace.getTower() == null) {
                     placeTowerHUD.show(selectedTowerPlace);
                 } else {
                     infoTowerHUD.show(selectedTowerPlace);

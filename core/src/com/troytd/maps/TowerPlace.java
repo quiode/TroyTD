@@ -12,10 +12,20 @@ import com.troytd.towers.Tower;
  */
 public class TowerPlace {
     public final Vector2 place;
-    public Tower tower;
+    private Tower tower;
 
     public TowerPlace(final Vector2 place, final Tower tower) {
         this.place = place;
         this.tower = tower;
+    }
+
+    public Tower getTower() {
+        return tower;
+    }
+
+    public void setTower(Tower tower) {
+        this.tower = tower;
+        this.tower.setSize(Tower.size, Tower.size);
+        this.tower.setPosition(new Vector2(place.x - Tower.size / 2f, place.y - Tower.size / 2f));
     }
 }

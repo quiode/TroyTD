@@ -13,17 +13,22 @@ public class Tower {
     protected final static int speed = 100;
     protected final static int cost = 100;
     protected final static int hp = 100;
+    protected final Vector2 distortion;
     protected final TowerTypes type;
     protected final TroyTD game;
     private final String name;
     protected Sprite towerSprite;
 
-    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type) {
+    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
+                 Vector2 distortion) {
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
+        towerSprite.setSize(towerSprite.getWidth() * distortion.x, towerSprite.getHeight() * distortion.y);
         this.name = name;
         this.type = type;
+        this.distortion = distortion;
+
     }
 
     public void dispose() {
@@ -36,5 +41,13 @@ public class Tower {
 
     public void setPosition(Vector2 position) {
         towerSprite.setPosition(position.x, position.y);
+    }
+
+    public void draw() {
+        game.batch.draw(towerSprite, towerSprite.getX(), towerSprite.getY());
+    }
+
+    public void setSize(float width, float height) {
+        towerSprite.setSize(width * distortion.x, height * distortion.y);
     }
 }

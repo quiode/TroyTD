@@ -11,7 +11,8 @@ import com.troytd.game.TroyTD;
 public class DebugTower extends Tower {
     public static final String name = "DebugTower";
 
-    public DebugTower(TroyTD game, Vector2 position) {
-        super(game, position, game.assetManager.get("towers/" + name + ".png", Texture.class), name, TowerTypes.MELEE);
+    public DebugTower(TroyTD game, Vector2 position, Vector2 distortion) {
+        super(game, position, game.assetManager.get("towers/" + name + ".png", Texture.class), name, TowerTypes.MELEE,
+              distortion);
     }
 }

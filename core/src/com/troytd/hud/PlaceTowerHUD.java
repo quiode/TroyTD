@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
+import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
 import com.troytd.towers.Tower;
 
@@ -20,7 +21,7 @@ public class PlaceTowerHUD {
     // global variables
     final TroyTD game;
     final Stage stage;
-    final Class<? extends Tower>[] towers;
+    final Map map;
     // hud
     final Table table;
     final ImageButton closeButton;
@@ -37,11 +38,10 @@ public class PlaceTowerHUD {
     TowerPlace towerPlace;
     Class<? extends Tower> selectedTower;
 
-    public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight,
-                         final Class<? extends Tower>[] towers) {
+    public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight, final Map map) {
         this.game = game;
         this.stage = stage;
-        this.towers = towers;
+        this.map = map;
 
         final int icon_size = game.settingPreference.getInteger("icon-size");
 
@@ -81,21 +81,23 @@ public class PlaceTowerHUD {
 
         // left tower
         leftTower = new Image(new TextureRegionDrawable(
-                game.assetManager.get("towers/" + towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+                game.assetManager.get("towers/" + map.towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
         table.add(leftTower)
                 .size(icon_size, icon_size)
                 .padTop(icon_size / 2f)
                 .padBottom(icon_size / 2f)
                 .padLeft(icon_size / 10f);
         // middle tower
-        if (towers.length > 1) {
+        if (map.towers.length > 1) {
             middleTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + towers[1].getSimpleName() + ".png", Texture.class)), Scaling.fit);
-            selectedTower = towers[1];
+                    game.assetManager.get("towers/" + map.towers[1].getSimpleName() + ".png", Texture.class)),
+                                    Scaling.fit);
+            selectedTower = map.towers[1];
         } else {
             middleTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
-            selectedTower = towers[0];
+                    game.assetManager.get("towers/" + map.towers[0].getSimpleName() + ".png", Texture.class)),
+                                    Scaling.fit);
+            selectedTower = map.towers[0];
         }
         table.add(middleTower)
                 .size(icon_size * 2, icon_size * 2)
@@ -103,12 +105,14 @@ public class PlaceTowerHUD {
                 .padRight(icon_size / 10f)
                 .expandX();
         // right tower
-        if (towers.length > 2) {
+        if (map.towers.length > 2) {
             rightTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + towers[2].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+                    game.assetManager.get("towers/" + map.towers[2].getSimpleName() + ".png", Texture.class)),
+                                   Scaling.fit);
         } else {
             rightTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+                    game.assetManager.get("towers/" + map.towers[0].getSimpleName() + ".png", Texture.class)),
+                                   Scaling.fit);
         }
         table.add(rightTower)
                 .size(icon_size, icon_size)
@@ -135,8 +139,9 @@ public class PlaceTowerHUD {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    Constructor<? extends Tower> ctor = selectedTower.getConstructor(TroyTD.class, Vector2.class);
-                    towerPlace.tower = ctor.newInstance(game, towerPlace.place); // -> Asset not loaded Error?
+                    Constructor<? extends Tower> ctor = selectedTower.getConstructor(TroyTD.class, Vector2.class,
+                                                                                     Vector2.class);
+                    towerPlace.setTower(ctor.newInstance(game, towerPlace.place, map.mapDistortion));
                 } catch (Exception e) {
                     e.printStackTrace();
                     // TODO: print error message
