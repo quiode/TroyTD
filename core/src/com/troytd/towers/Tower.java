@@ -13,15 +13,17 @@ public class Tower {
     protected final static int speed = 100;
     protected final static int cost = 100;
     protected final static int hp = 100;
+    protected final TowerTypes type;
     protected final TroyTD game;
-    private final String fileName;
+    private final String name;
     protected Sprite towerSprite;
 
-    public Tower(final TroyTD game, Vector2 position, Texture texture, final String fileName) {
+    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type) {
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
-        this.fileName = fileName;
+        this.name = name;
+        this.type = type;
     }
 
     public void dispose() {
