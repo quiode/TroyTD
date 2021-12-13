@@ -141,7 +141,7 @@ public class PlaceTowerHUD {
                 try {
                     Constructor<? extends Tower> ctor = selectedTower.getConstructor(TroyTD.class, Vector2.class,
                                                                                      Vector2.class);
-                    towerPlace.setTower(ctor.newInstance(game, towerPlace.place, map.mapDistortion));
+                    towerPlace.setTower(ctor.newInstance(game, towerPlace.place, map.mapDistortion), game);
                 } catch (Exception e) {
                     e.printStackTrace();
                     // TODO: print error message

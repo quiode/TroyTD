@@ -1,6 +1,7 @@
 package com.troytd.maps;
 
 import com.badlogic.gdx.math.Vector2;
+import com.troytd.game.TroyTD;
 import com.troytd.towers.Tower;
 
 /**
@@ -23,9 +24,12 @@ public class TowerPlace {
         return tower;
     }
 
-    public void setTower(Tower tower) {
+    public void setTower(Tower tower, TroyTD game) {
         this.tower = tower;
+        float width = game.settingPreference.getInteger("width");
+        float height = game.settingPreference.getInteger("height");
         this.tower.setSize(Tower.size, Tower.size);
-        this.tower.setPosition(new Vector2(place.x - Tower.size / 2f, place.y - Tower.size / 2f));
+        this.tower.setPosition(new Vector2(-width / 2 + place.x - this.tower.getRect().height / 2,
+                                           -height / 2 + place.y - this.tower.getRect().height / 2));
     }
 }

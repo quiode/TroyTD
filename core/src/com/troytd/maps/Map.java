@@ -152,7 +152,7 @@ public abstract class Map implements Loadable {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.place.equals(position)) {
                 if (towerPlace.getTower() == null) {
-                    towerPlace.setTower(tower);
+                    towerPlace.setTower(tower, game);
                     return 1;
                 }
                 return -1;

@@ -44,7 +44,7 @@ public class Tower {
     }
 
     public void draw() {
-        game.batch.draw(towerSprite, towerSprite.getX(), towerSprite.getY());
+        towerSprite.draw(game.batch);
     }
 
     public void setSize(float width, float height) {
