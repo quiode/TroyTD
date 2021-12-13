@@ -6,7 +6,7 @@ import com.troytd.maps.Map;
 
 public class InfoTowerHUD extends SideHUD {
     public InfoTowerHUD(TroyTD game, Stage stage, Map map, float topHUDHeight) {
-        super(game, stage, map, topHUDHeight, "Tower Information");
+        super(game, stage, map, topHUDHeight, "Tower Stats");
     }
 
     /**
