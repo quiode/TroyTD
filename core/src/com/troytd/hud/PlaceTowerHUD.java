@@ -4,28 +4,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
-import com.troytd.maps.TowerPlace;
 import com.troytd.towers.Tower;
 
 import java.lang.reflect.Constructor;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-
-public class PlaceTowerHUD {
-    // global variables
-    final TroyTD game;
-    final Stage stage;
-    final Map map;
+public class PlaceTowerHUD extends SideHUD {
     // hud
-    final Table table;
-    final ImageButton closeButton;
-    final Label placeTowerLabel;
     final ImageButton nextButton;
     final ImageButton previousButton;
     final TextButton cancelButton;
@@ -35,40 +28,12 @@ public class PlaceTowerHUD {
     Image rightTower;
     Image middleTower;
     // variables
-    TowerPlace towerPlace;
     Class<? extends Tower> selectedTower;
 
     public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight, final Map map) {
-        this.game = game;
-        this.stage = stage;
-        this.map = map;
+        super(game, stage, map, topHUDHeight, "Place Tower");
 
         final int icon_size = game.settingPreference.getInteger("icon-size");
-
-        // hud - table
-        table = new Table();
-        table.setSize(icon_size * 7, stage.getHeight() - (topHUDHeight + 5));
-        table.setPosition(stage.getWidth(), 0);
-        table.pad(5);
-        table.setBackground(game.skin.getDrawable("grey"));
-        table.setVisible(false);
-        stage.addActor(table);
-
-        // hud - place tower label
-        placeTowerLabel = new Label("Place Tower", game.skin, "big");
-        table.add(placeTowerLabel).expandX().colspan(4);
-
-        // hud - close button
-        closeButton = new ImageButton(game.skin, "close");
-        closeButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                close();
-            }
-        });
-        table.add(closeButton).size(icon_size, icon_size);
-        table.top().right();
-        table.row();
 
         // hud - previous button
         previousButton = new ImageButton(game.skin, "navigationPrevious");
@@ -162,8 +127,6 @@ public class PlaceTowerHUD {
         });
         cancelButton.pad(5);
         navigationGroup.addActor(cancelButton);
-
-        table.debug();
     }
 
     /**
@@ -174,30 +137,5 @@ public class PlaceTowerHUD {
      * @param game the game instance
      */
     public static void loadAssets(final TroyTD game) {
-    }
-
-    /**
-     * Shows a HUD to place a new tower.
-     *
-     * @param selectedTowerPlace the tower place which was selected
-     */
-    public void show(final TowerPlace selectedTowerPlace) {
-        towerPlace = selectedTowerPlace;
-        table.addAction(sequence(visible(true), moveTo(stage.getWidth() - table.getWidth(), 0, 1 / 3f)));
-    }
-
-    /**
-     * <strong>Clean-up</strong>
-     * <p>removes unused objects from the stage</p>
-     */
-    public void dispose() {
-        stage.getActors().removeValue(table, true);
-    }
-
-    /**
-     * closes the table
-     */
-    public void close() {
-        table.addAction(sequence(moveTo(stage.getWidth(), 0, 1 / 3f), visible(false)));
     }
 }

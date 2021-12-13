@@ -186,6 +186,8 @@ public abstract class Map implements Loadable {
             Rectangle towerPlaceRectangle;
             if (towerPlace.getTower() != null) {
                 towerPlaceRectangle = towerPlace.getTower().getRect();
+                towerPlaceRectangle.x += game.settingPreference.getInteger("width") / 2f;
+                towerPlaceRectangle.y += game.settingPreference.getInteger("height") / 2f;
             } else {
                 towerPlaceRectangle = new Rectangle(towerPlace.place.x - Tower.size / 2f,
                                                     towerPlace.place.y - Tower.size / 2f, Tower.size, Tower.size);

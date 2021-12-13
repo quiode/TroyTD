@@ -110,9 +110,9 @@ public class GameScreen implements Screen {
             game.setScreen(new LoadingScreen(game, this));
         } else if (topHUD == null || infoTowerHUD == null || placeTowerHUD == null || upgradeTowerHUD == null) {
             if (topHUD == null) topHUD = new TopHUD(this, game);
-            if (infoTowerHUD == null) infoTowerHUD = new InfoTowerHUD();
+            if (infoTowerHUD == null) infoTowerHUD = new InfoTowerHUD(game, stage, map, topHUD.height);
             if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD(game, stage, topHUD.height, map);
-            if (upgradeTowerHUD == null) upgradeTowerHUD = new UpgradeTowerHUD();
+            if (upgradeTowerHUD == null) upgradeTowerHUD = new UpgradeTowerHUD(game, stage, map, topHUD.height);
         }
     }
 
