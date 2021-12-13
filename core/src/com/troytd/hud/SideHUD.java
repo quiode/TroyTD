@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
+import com.troytd.screens.GameScreen;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -21,6 +22,7 @@ public abstract class SideHUD {
     final TroyTD game;
     final Stage stage;
     final Map map;
+    final GameScreen gameScreen;
     // hud
     final Table table;
     final Label placeTowerLabel;
@@ -28,10 +30,12 @@ public abstract class SideHUD {
     // variables
     TowerPlace towerPlace;
 
-    public SideHUD(final TroyTD game, final Stage stage, final Map map, final float topHUDHeight, String title) {
+    public SideHUD(final TroyTD game, final Stage stage, final Map map, final float topHUDHeight, String title,
+                   final GameScreen gameScreen) {
         this.game = game;
         this.stage = stage;
         this.map = map;
+        this.gameScreen = gameScreen;
 
         final int icon_size = game.settingPreference.getInteger("icon-size");
 

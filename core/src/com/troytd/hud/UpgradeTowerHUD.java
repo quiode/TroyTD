@@ -3,10 +3,11 @@ package com.troytd.hud;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
+import com.troytd.screens.GameScreen;
 
 public class UpgradeTowerHUD extends SideHUD {
-    public UpgradeTowerHUD(TroyTD game, Stage stage, Map map, float topHUDHeight) {
-        super(game, stage, map, topHUDHeight, "Upgrade Tower");
+    public UpgradeTowerHUD(TroyTD game, Stage stage, Map map, float topHUDHeight, final GameScreen gameScreen) {
+        super(game, stage, map, topHUDHeight, "Upgrade Tower", gameScreen);
     }
 
     /**

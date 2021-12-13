@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
+import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 
 import java.lang.reflect.Constructor;
@@ -29,8 +30,9 @@ public class PlaceTowerHUD extends SideHUD {
     // variables
     private Class<? extends Tower> selectedTower;
 
-    public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight, final Map map) {
-        super(game, stage, map, topHUDHeight, "Place Tower");
+    public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight, final Map map,
+                         final GameScreen gameScreen) {
+        super(game, stage, map, topHUDHeight, "Place Tower", gameScreen);
 
         final int icon_size = game.settingPreference.getInteger("icon-size");
 
@@ -98,8 +100,18 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(costLabel);
 
         // cost amount
-        costAmount = new Label("", game.skin);
-        table.add(costAmount);
+        String tmp_text = "";
+        try {
+            tmp_text = selectedTower.getField("cost").getInt(null) + "";
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        }
+        costAmount = new Label(tmp_text, game.skin);
+        table.add(costAmount).colspan(4).right();
 
         // hud - place tower button
         navigationGroup = new HorizontalGroup();
@@ -112,6 +124,19 @@ public class PlaceTowerHUD extends SideHUD {
         placeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    if (selectedTower.getField("cost").getInt(null) <= gameScreen.money) {
+                        gameScreen.money -= selectedTower.getField("cost").getInt(null);
+                    } else {
+                        // TODO: Dialog for not enough money
+                        close();
+                        return;
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
                 try {
                     Constructor<? extends Tower> ctor = getSelectedTower().getConstructor(TroyTD.class, Vector2.class,
                                                                                           Vector2.class);
@@ -136,6 +161,8 @@ public class PlaceTowerHUD extends SideHUD {
         });
         cancelButton.pad(5);
         navigationGroup.addActor(cancelButton);
+
+        table.debug();
     }
 
     /**
@@ -153,6 +180,15 @@ public class PlaceTowerHUD extends SideHUD {
     }
 
     private void setSelectedTower(Class<? extends Tower> selectedTower) {
+        if (costAmount != null) {
+            try {
+                costAmount.setText(selectedTower.getField("cost").getInt(null) + "");
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         this.selectedTower = selectedTower;
         // https://stackoverflow.com/questions/6577089/declaring-static-generic-variables-in-a-generic-class
     }
