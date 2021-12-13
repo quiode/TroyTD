@@ -18,4 +18,13 @@ public class InfoTowerHUD extends SideHUD {
      */
     public static void loadAssets(final TroyTD game) {
     }
+
+    /**
+     * gets called when the tower place is updated
+     * used to update the labels
+     */
+    @Override
+    protected void updatedTowerPlace() {
+
+    }
 }

@@ -68,6 +68,7 @@ public abstract class SideHUD {
      */
     public void show(final TowerPlace selectedTowerPlace) {
         towerPlace = selectedTowerPlace;
+        updatedTowerPlace();
         table.addAction(sequence(visible(true), moveTo(stage.getWidth() - table.getWidth(), 0, 1 / 3f)));
     }
 
@@ -85,5 +86,11 @@ public abstract class SideHUD {
     public void close() {
         table.addAction(sequence(moveTo(stage.getWidth(), 0, 1 / 3f), visible(false)));
     }
+
+    /**
+     * gets called when the tower place is updated
+     * used to update the labels
+     */
+    protected abstract void updatedTowerPlace();
 
 }

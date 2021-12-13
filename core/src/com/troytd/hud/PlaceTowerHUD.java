@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
@@ -24,11 +21,13 @@ public class PlaceTowerHUD extends SideHUD {
     final TextButton cancelButton;
     final TextButton placeButton;
     final HorizontalGroup navigationGroup;
+    final Label costLabel;
+    final Label costAmount;
     Image leftTower;
     Image rightTower;
     Image middleTower;
     // variables
-    Class<? extends Tower> selectedTower;
+    private Class<? extends Tower> selectedTower;
 
     public PlaceTowerHUD(final TroyTD game, final Stage stage, final float topHUDHeight, final Map map) {
         super(game, stage, map, topHUDHeight, "Place Tower");
@@ -57,12 +56,12 @@ public class PlaceTowerHUD extends SideHUD {
             middleTower = new Image(new TextureRegionDrawable(
                     game.assetManager.get("towers/" + map.towers[1].getSimpleName() + ".png", Texture.class)),
                                     Scaling.fit);
-            selectedTower = map.towers[1];
+            setSelectedTower(map.towers[1]);
         } else {
             middleTower = new Image(new TextureRegionDrawable(
                     game.assetManager.get("towers/" + map.towers[0].getSimpleName() + ".png", Texture.class)),
                                     Scaling.fit);
-            selectedTower = map.towers[0];
+            setSelectedTower(map.towers[0]);
         }
         table.add(middleTower)
                 .size(icon_size * 2, icon_size * 2)
@@ -92,6 +91,16 @@ public class PlaceTowerHUD extends SideHUD {
                 .padTop(icon_size / 2f)
                 .padBottom(icon_size / 2f);
 
+        // cost label
+        table.row();
+
+        costLabel = new Label("Cost:", game.skin);
+        table.add(costLabel);
+
+        // cost amount
+        costAmount = new Label("", game.skin);
+        table.add(costAmount);
+
         // hud - place tower button
         navigationGroup = new HorizontalGroup();
         navigationGroup.space(icon_size / 2f);
@@ -104,8 +113,8 @@ public class PlaceTowerHUD extends SideHUD {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    Constructor<? extends Tower> ctor = selectedTower.getConstructor(TroyTD.class, Vector2.class,
-                                                                                     Vector2.class);
+                    Constructor<? extends Tower> ctor = getSelectedTower().getConstructor(TroyTD.class, Vector2.class,
+                                                                                          Vector2.class);
                     towerPlace.setTower(ctor.newInstance(game, towerPlace.place, map.mapDistortion), game);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -137,5 +146,22 @@ public class PlaceTowerHUD extends SideHUD {
      * @param game the game instance
      */
     public static void loadAssets(final TroyTD game) {
+    }
+
+    private Class<? extends Tower> getSelectedTower() {
+        return selectedTower;
+    }
+
+    private void setSelectedTower(Class<? extends Tower> selectedTower) {
+        this.selectedTower = selectedTower;
+        // https://stackoverflow.com/questions/6577089/declaring-static-generic-variables-in-a-generic-class
+    }
+
+    /**
+     * gets called when the tower place is updated
+     * used to update the labels
+     */
+    @Override
+    protected void updatedTowerPlace() {
     }
 }
