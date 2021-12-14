@@ -17,6 +17,7 @@ public class Tower {
     protected final TowerTypes type;
     protected final TroyTD game;
     private final String name;
+    public int kills = 0;
     protected int hp = maxHP;
     protected Sprite towerSprite;
 
@@ -50,5 +51,9 @@ public class Tower {
 
     public void setSize(float width, float height) {
         towerSprite.setSize(width * distortion.x, height * distortion.y);
+    }
+
+    public Texture getTexture() {
+        return towerSprite.getTexture();
     }
 }
