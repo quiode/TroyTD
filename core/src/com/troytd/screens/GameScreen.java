@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
     // assets
     private final Map map;
     // stats
-    public short money;
+    public short money = 200;
     public short kills;
     public short health;
     public byte round;
@@ -55,6 +55,7 @@ public class GameScreen implements Screen {
         this.game = game;
         this.map = map;
         this.maxRounds = (byte) (map.maxRounds * game.settingPreference.getInteger("difficulty", 1));
+        money += (short) (money * game.settingPreference.getInteger("difficulty", 0));
 
         // create stage
         camera = new OrthographicCamera(game.settingPreference.getInteger("width"),

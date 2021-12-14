@@ -128,7 +128,16 @@ public class PlaceTowerHUD extends SideHUD {
                     if (selectedTower.getField("cost").getInt(null) <= gameScreen.money) {
                         gameScreen.money -= selectedTower.getField("cost").getInt(null);
                     } else {
-                        // TODO: Dialog for not enough money
+                        Dialog errorDialog = new Dialog("", game.skin, "error") {
+                            @Override
+                            public void result(Object object) {
+                                stage.getActors().removeValue(this, true);
+                            }
+                        };
+                        errorDialog.text("Not enough money", game.skin.get("error", Label.LabelStyle.class));
+                        errorDialog.button("OK", true, game.skin.get("error", TextButton.TextButtonStyle.class));
+                        stage.addActor(errorDialog);
+                        errorDialog.show(stage);
                         close();
                         return;
                     }
@@ -143,7 +152,16 @@ public class PlaceTowerHUD extends SideHUD {
                     towerPlace.setTower(ctor.newInstance(game, towerPlace.place, map.mapDistortion), game);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // TODO: print error message
+                    Dialog errorDialog = new Dialog("", game.skin, "error") {
+                        @Override
+                        public void result(Object object) {
+                            stage.getActors().removeValue(this, true);
+                        }
+                    };
+                    errorDialog.text("An error occurred!", game.skin.get("error", Label.LabelStyle.class));
+                    errorDialog.button("OK", true, game.skin.get("error", TextButton.TextButtonStyle.class));
+                    stage.addActor(errorDialog);
+                    errorDialog.show(stage);
                 }
                 close();
             }
