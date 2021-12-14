@@ -9,10 +9,10 @@ import com.troytd.game.TroyTD;
 public class Tower {
     public final static int size = 100;
     public final static int cost = 100;
-    protected final static int damage = 100;
-    protected final static int range = 100;
-    protected final static int speed = 100;
-    protected final static int maxHP = 100;
+    public final static int damage = 100;
+    public final static int range = 100;
+    public final static int speed = 100;
+    public final static int maxHP = 100;
     protected final Vector2 distortion;
     protected final TowerTypes type;
     protected final TroyTD game;

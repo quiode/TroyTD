@@ -24,6 +24,14 @@ public class PlaceTowerHUD extends SideHUD {
     final HorizontalGroup navigationGroup;
     final Label costLabel;
     final Label costAmount;
+    final Label damageLabel;
+    final Label damageAmount;
+    final Label rangeLabel;
+    final Label rangeAmount;
+    final Label speedLabel;
+    final Label speedAmount;
+    final Label HPLabel;
+    final Label HPAmount;
     Image leftTower;
     Image rightTower;
     Image middleTower;
@@ -97,7 +105,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.row();
 
         costLabel = new Label("Cost:", game.skin);
-        table.add(costLabel);
+        table.add(costLabel).colspan(2).left();
 
         // cost amount
         String tmp_text = "";
@@ -111,7 +119,88 @@ public class PlaceTowerHUD extends SideHUD {
             tmp_text = "";
         }
         costAmount = new Label(tmp_text, game.skin);
-        table.add(costAmount).colspan(4).right();
+        table.add(costAmount).colspan(3).right();
+
+        // damage label
+        table.row();
+
+        damageLabel = new Label("Damage:", game.skin);
+        table.add(damageLabel).colspan(2).left();
+
+        // damage amount
+        tmp_text = "";
+        try {
+            tmp_text = selectedTower.getField("damage").getInt(null) + "";
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        }
+        damageAmount = new Label(tmp_text, game.skin);
+        table.add(damageAmount).colspan(3).right();
+
+        // range label
+        table.row();
+
+        rangeLabel = new Label("Range:", game.skin);
+        table.add(rangeLabel).colspan(2).left();
+
+        // range amount
+        tmp_text = "";
+        try {
+            tmp_text = selectedTower.getField("range").getInt(null) + "";
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        }
+        rangeAmount = new Label(tmp_text, game.skin);
+        table.add(rangeAmount).colspan(3).right();
+
+        // speed label
+        table.row();
+
+        speedLabel = new Label("Speed:", game.skin);
+        table.add(speedLabel).colspan(2).left();
+
+        // speed amount
+        tmp_text = "";
+        try {
+            tmp_text = selectedTower.getField("speed").getInt(null) + "";
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        }
+        speedAmount = new Label(tmp_text, game.skin);
+        table.add(speedAmount).colspan(3).right();
+
+        // hp label
+        table.row();
+
+        HPLabel = new Label("HP:", game.skin);
+        table.add(HPLabel).colspan(2).left();
+
+        // hp amount
+        tmp_text = "";
+        try {
+            tmp_text = selectedTower.getField("maxHP").getInt(null) + "";
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        }
+        HPAmount = new Label(tmp_text, game.skin);
+        table.add(HPAmount).colspan(3).right();
+
 
         // hud - place tower button
         navigationGroup = new HorizontalGroup();
