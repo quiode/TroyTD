@@ -190,7 +190,6 @@ public class PlaceTowerHUD extends SideHUD {
             }
         }
         this.selectedTower = selectedTower;
-        // https://stackoverflow.com/questions/6577089/declaring-static-generic-variables-in-a-generic-class
     }
 
     /**
