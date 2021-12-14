@@ -3,6 +3,8 @@ package com.troytd.maps;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
+import com.troytd.towers.DebugTower;
+import com.troytd.towers.Spearthrower;
 import com.troytd.towers.Tower;
 
 public class Map1 extends Map {
@@ -15,8 +17,7 @@ public class Map1 extends Map {
      * @param enemies
      * @param towers
      */
-    public Map1(TroyTD game, byte maxRounds, String name, Class<? extends Enemy>[] enemies,
-                Class<? extends Tower>[] towers) {
+    public Map1(TroyTD game) {
         super(game, "map/Map1.jpg", new Vector2[]{
                 new Vector2(560, 1536 - 1446),
                 new Vector2(552, 1536 - 1000),
@@ -35,6 +36,6 @@ public class Map1 extends Map {
                 new Vector2(970, 1536 - 686), new Vector2(1536, 1536 - 738), new Vector2(1662, 1536 - 910),
                 new Vector2(1638, 1536 - 1050), new Vector2(1304, 1536 - 1136), new Vector2(0, 1536 - 1288),
                 new Vector2(-68, 1536 - 1300)
-        }, (byte) 5, "Map1", enemies, towers);
+        }, (byte) 5, "Map1", new Class[]{}, new Class[]{Spearthrower.class, DebugTower.class});
     }
 }
