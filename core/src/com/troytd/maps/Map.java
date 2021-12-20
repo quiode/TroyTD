@@ -13,6 +13,8 @@ import com.troytd.screens.GameScreen;
 import com.troytd.screens.LoadingScreen;
 import com.troytd.towers.Tower;
 
+import java.util.ArrayList;
+
 /**
  * A Map with a texture, it's path, and the places where towers can be placed
  */
@@ -20,11 +22,11 @@ public abstract class Map implements Loadable {
     /**
      * enemies that spawn with this map
      */
-    public final Class<? extends Enemy>[] enemies;
+    public final ArrayList<Class<? extends Enemy>> enemies;
     /**
      * towers that can be used with this map
      */
-    public final Class<? extends Tower>[] towers;
+    public final ArrayList<Class<? extends Tower>> towers;
     /**
      * the amount of rounds needed to win
      */
@@ -73,8 +75,8 @@ public abstract class Map implements Loadable {
      * @param towers      the towers that can be used with this map
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
-               byte maxRounds, final String name, final Class<? extends Enemy>[] enemies,
-               final Class<? extends Tower>[] towers) {
+               byte maxRounds, final String name, final ArrayList<Class<? extends Enemy>> enemies,
+               final ArrayList<Class<? extends Tower>> towers) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 

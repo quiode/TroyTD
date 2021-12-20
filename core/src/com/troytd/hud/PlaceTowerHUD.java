@@ -46,6 +46,40 @@ public class PlaceTowerHUD extends SideHUD {
 
         // hud - previous button
         previousButton = new ImageButton(game.skin, "navigationPrevious");
+        previousButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int index = map.towers.indexOf(selectedTower);
+                leftTower.setDrawable(middleTower.getDrawable());
+                if (index > 0) {
+                    setSelectedTower(map.towers.get(index - 1));
+                    middleTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(index - 1).getSimpleName() + ".png",
+                                                  Texture.class)));
+                    if (index - 1 > 0) {
+                        rightTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(index - 2).getSimpleName() + ".png",
+                                                      Texture.class)));
+                    } else {
+                        rightTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get(
+                                        "towers/" + map.towers.get(map.towers.size() - 1).getSimpleName() +
+                                                ".png",
+                                        Texture.class)));
+                    }
+                } else {
+                    setSelectedTower(map.towers.get(map.towers.size() - 1));
+                    middleTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(map.towers.size() - 1).getSimpleName() +
+                                                          ".png",
+                                                  Texture.class)));
+                    rightTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(map.towers.size() - 2).getSimpleName() +
+                                                          ".png",
+                                                  Texture.class)));
+                }
+            }
+        });
         table.add(previousButton)
                 .size(icon_size, (float) (icon_size))
                 .left()
@@ -55,23 +89,24 @@ public class PlaceTowerHUD extends SideHUD {
 
         // left tower
         leftTower = new Image(new TextureRegionDrawable(
-                game.assetManager.get("towers/" + map.towers[0].getSimpleName() + ".png", Texture.class)), Scaling.fit);
+                game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png", Texture.class)),
+                              Scaling.fit);
         table.add(leftTower)
                 .size(icon_size, icon_size)
                 .padTop(icon_size / 2f)
                 .padBottom(icon_size / 2f)
                 .padLeft(icon_size / 10f);
         // middle tower
-        if (map.towers.length > 1) {
+        if (map.towers.size() > 1) {
             middleTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + map.towers[1].getSimpleName() + ".png", Texture.class)),
+                    game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() + ".png", Texture.class)),
                                     Scaling.fit);
-            setSelectedTower(map.towers[1]);
+            setSelectedTower(map.towers.get(1));
         } else {
             middleTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + map.towers[0].getSimpleName() + ".png", Texture.class)),
+                    game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png", Texture.class)),
                                     Scaling.fit);
-            setSelectedTower(map.towers[0]);
+            setSelectedTower(map.towers.get(0));
         }
         table.add(middleTower)
                 .size(icon_size * 2, icon_size * 2)
@@ -79,13 +114,13 @@ public class PlaceTowerHUD extends SideHUD {
                 .padRight(icon_size / 10f)
                 .expandX();
         // right tower
-        if (map.towers.length > 2) {
+        if (map.towers.size() > 2) {
             rightTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + map.towers[2].getSimpleName() + ".png", Texture.class)),
+                    game.assetManager.get("towers/" + map.towers.get(2).getSimpleName() + ".png", Texture.class)),
                                    Scaling.fit);
         } else {
             rightTower = new Image(new TextureRegionDrawable(
-                    game.assetManager.get("towers/" + map.towers[0].getSimpleName() + ".png", Texture.class)),
+                    game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png", Texture.class)),
                                    Scaling.fit);
         }
         table.add(rightTower)
@@ -95,6 +130,41 @@ public class PlaceTowerHUD extends SideHUD {
                 .padRight(icon_size / 10f);
         // hud - next button
         nextButton = new ImageButton(game.skin, "navigationNext");
+        nextButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int index = map.towers.indexOf(selectedTower);
+                int maxIndex = map.towers.size() - 1;
+                rightTower.setDrawable(middleTower.getDrawable());
+                if (index < maxIndex) {
+                    setSelectedTower(map.towers.get(index + 1));
+                    middleTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(index + 1).getSimpleName() + ".png",
+                                                  Texture.class)));
+                    if (index + 1 < maxIndex) {
+                        leftTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(index + 2).getSimpleName() + ".png",
+                                                      Texture.class)));
+                    } else {
+                        leftTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get(
+                                        "towers/" + map.towers.get(0).getSimpleName() +
+                                                ".png",
+                                        Texture.class)));
+                    }
+                } else {
+                    setSelectedTower(map.towers.get(0));
+                    middleTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() +
+                                                          ".png",
+                                                  Texture.class)));
+                    leftTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() +
+                                                          ".png",
+                                                  Texture.class)));
+                }
+            }
+        });
         table.add(nextButton)
                 .size(icon_size, (float) (icon_size))
                 .right()
@@ -269,7 +339,7 @@ public class PlaceTowerHUD extends SideHUD {
         cancelButton.pad(5);
         navigationGroup.addActor(cancelButton);
 
-        table.debug();
+        //table.debug();
     }
 
     /**
@@ -290,6 +360,10 @@ public class PlaceTowerHUD extends SideHUD {
         if (costAmount != null) {
             try {
                 costAmount.setText(selectedTower.getField("cost").getInt(null) + "");
+                damageAmount.setText(selectedTower.getField("damage").getInt(null) + "");
+                rangeAmount.setText(selectedTower.getField("range").getInt(null) + "");
+                speedAmount.setText(selectedTower.getField("speed").getInt(null) + "");
+                HPAmount.setText(selectedTower.getField("maxHP").getInt(null) + "");
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {

@@ -18,7 +18,7 @@ public class Tower {
     protected final TroyTD game;
     private final String name;
     public int kills = 0;
-    protected int hp = maxHP;
+    public int hp = maxHP;
     protected Sprite towerSprite;
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
