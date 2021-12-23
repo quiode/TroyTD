@@ -49,18 +49,13 @@ public abstract class Map implements Loadable {
      */
     protected TowerPlace[] towerPlaces;
     /**
-     * the points where the path is
-     */
-    protected Vector2[] pathPoints;
-    // Assets
-    /**
-     * the path for the enemies to follow
-     */
-    protected CatmullRomSpline<Vector2> path;
-    /**
      * the texture of the map
      */
     protected Sprite mapSprite = null;
+    /**
+     * calculated path points with a precision of 100000 (100000 points for the line)
+     */
+    protected final Vector2[] pathPointsCalculated = new Vector2[100000];
 
     /**
      * A Map with a texture, it's path, and the places where towers can be placed on the map
@@ -96,10 +91,17 @@ public abstract class Map implements Loadable {
         for (int i = 0; i < towerPlaces.length; i++) {
             this.towerPlaces[i] = new TowerPlace(towerPlaces[i], null);
         }
-        this.pathPoints = pathPoints;
         this.name = name;
         this.enemies = enemies;
         this.towers = towers;
+
+        // calculated path points
+        final int precision = pathPointsCalculated.length;
+        CatmullRomSpline<Vector2> myCatmull = new CatmullRomSpline<Vector2>(pathPoints, true);
+        for (int i = 0; i < precision; ++i) {
+            pathPointsCalculated[i] = new Vector2();
+            myCatmull.valueAt(pathPointsCalculated[i], ((float) i) / ((float) precision - 1));
+        }
     }
 
 
@@ -131,12 +133,10 @@ public abstract class Map implements Loadable {
                 (float) game.settingPreference.getInteger("height") / mapSprite.getTexture().getHeight());
 
         // map has a new size so points on map have to be recalculated
-        for (Vector2 pathPoint : pathPoints) {
+        for (Vector2 pathPoint : pathPointsCalculated) {
             pathPoint.x *= mapDistortion.x;
             pathPoint.y *= mapDistortion.y;
         }
-
-        this.path = new CatmullRomSpline<Vector2>(pathPoints, false);
 
         // recalculate the tower places
         for (TowerPlace place : towerPlaces) {

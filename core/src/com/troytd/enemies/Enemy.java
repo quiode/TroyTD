@@ -1,54 +1,82 @@
 package com.troytd.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+
+import java.util.ArrayList;
 
 /**
  * an enemy with its texture, health and other related properties
  */
 public abstract class Enemy {
     protected final static short hp = 100;
-    protected final static short speed = 100;
+    protected final static int speed = 1;
     protected final static short damage = 10;
+    protected final static short spawnSpeed = 1;
+    protected final Vector2[] path;
+    /**
+     * t in [0,1] in path
+     */
+    protected int position_on_path;
+    private boolean draw = true;
     protected final byte line;
     protected final TroyTD game;
     protected Sprite enemySprite;
-    protected Rectangle form;
-    protected Vector2 position;
 
     /**
      * @param line     the line where the enemy is located, 0 is the top line, 1 is the middle line, 2 is the bottom line
      * @param game     the game instance
      * @param position the position of the enemy
+     * @param path     the path the enemy will follow, in precalculated points
      */
-    public Enemy(byte line, final TroyTD game, final Vector2 position) {
+    public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture,
+                 final Vector2 distortion, Vector2[] path) {
         this.line = line;
         this.game = game;
-        this.position = position;
-    }
-
-    /**
-     * @param line the line where the enemy is located, 0 is the top line, 1 is the middle line, 2 is the bottom line
-     * @param game the game instance
-     */
-    public Enemy(byte line, final TroyTD game) {
-        this(line, game, new Vector2(0, 0));
+        this.enemySprite = new Sprite(texture);
+        this.path = path;
+        enemySprite.setPosition(position.x, position.y);
+        enemySprite.setSize(enemySprite.getWidth() * distortion.x, enemySprite.getHeight() * distortion.y);
     }
 
     public static void loadAssets() {
     }
 
     public Vector2 getPosition() {
-        return position;
+        return enemySprite.getBoundingRectangle().getPosition(new Vector2());
     }
 
     public void setPosition(Vector2 position) {
-        this.position = position;
+        enemySprite.setPosition(position.x, position.y);
     }
 
     public void dispose() {
         enemySprite.getTexture().dispose();
+    }
+
+    public void hide() {
+        draw = false;
+    }
+
+    public void show() {
+        draw = true;
+    }
+
+    public void draw() {
+        if (draw)
+            enemySprite.draw(game.batch);
+    }
+
+    public void update(final ArrayList<Enemy> enemies) {
+        position_on_path += speed;
+
+        if (position_on_path < path.length) {
+            enemySprite.setPosition(path[position_on_path].x + line, path[position_on_path].y + line);
+        } else {// TODO: delete enemy
+            enemies.remove(this);
+        }
     }
 }
