@@ -155,6 +155,14 @@ public class GameScreen implements Screen {
                 com.badlogic.gdx.Input.Keys.ESCAPE) && screenSwitchDelta < System.currentTimeMillis() - 100) {
             game.setScreen(new PauseScreen(game, this));
         }
+
+        if (map.lost) {
+            game.setScreen(new LoseScreen());
+            this.dispose();
+        } else if (map.won) {
+            game.setScreen(new WinScreen());
+            this.dispose();
+        }
     }
 
     /**

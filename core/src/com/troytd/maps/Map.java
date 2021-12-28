@@ -12,7 +12,9 @@ import com.troytd.helpers.Loadable;
 import com.troytd.screens.GameScreen;
 import com.troytd.screens.LoadingScreen;
 import com.troytd.towers.Tower;
+import com.troytd.waves.Wave;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -36,14 +38,38 @@ public abstract class Map implements Loadable {
      */
     public final String name;
     /**
+     * All waives of the map
+     */
+    protected final ArrayList<Class<? extends Wave>> waves;
+    /**
      * game instance
      */
     protected final TroyTD game;
     protected final String pathName;
     /**
+     * calculated path points with a precision of 100000 (100000 points for the line)
+     */
+    protected final Vector2[] pathPointsCalculated = new Vector2[100000];
+    /**
+     * true if game is won
+     */
+    public boolean won = false;
+    /**
+     * true if game is lost
+     */
+    public boolean lost = false;
+    /**
      * the vector by which the map is scaled
      */
     public Vector2 mapDistortion;
+    /**
+     * instance of the current wave
+     */
+    protected Wave currentWave;
+    /**
+     * the index of the current wave in the waves list
+     */
+    protected short currentWaveIndex;
     /**
      * the places where towers can be placed and the tower
      */
@@ -52,10 +78,6 @@ public abstract class Map implements Loadable {
      * the texture of the map
      */
     protected Sprite mapSprite = null;
-    /**
-     * calculated path points with a precision of 100000 (100000 points for the line)
-     */
-    protected final Vector2[] pathPointsCalculated = new Vector2[100000];
 
     /**
      * A Map with a texture, it's path, and the places where towers can be placed on the map
@@ -71,7 +93,7 @@ public abstract class Map implements Loadable {
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
                byte maxRounds, final String name, final ArrayList<Class<? extends Enemy>> enemies,
-               final ArrayList<Class<? extends Tower>> towers) {
+               final ArrayList<Class<? extends Tower>> towers, ArrayList<Class<? extends Wave>> waves) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 
@@ -94,6 +116,7 @@ public abstract class Map implements Loadable {
         this.name = name;
         this.enemies = enemies;
         this.towers = towers;
+        this.waves = waves;
 
         // calculated path points
         final int precision = pathPointsCalculated.length;
@@ -101,6 +124,22 @@ public abstract class Map implements Loadable {
         for (int i = 0; i < precision; ++i) {
             pathPointsCalculated[i] = new Vector2();
             myCatmull.valueAt(pathPointsCalculated[i], ((float) i) / ((float) precision - 1));
+        }
+
+        // set first wave
+        currentWaveIndex = 0;
+        try {
+            currentWave = waves.get(currentWaveIndex)
+                    .getConstructor(TroyTD.class, Vector2.class, Vector2[].class)
+                    .newInstance(game, mapDistortion, pathPointsCalculated);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
     }
 
@@ -115,7 +154,9 @@ public abstract class Map implements Loadable {
             mapSprite.draw(batch);
         }
 
+        updateTowers();
         drawTowers();
+        updateEnemies();
         drawEnemies();
     }
 
@@ -209,6 +250,39 @@ public abstract class Map implements Loadable {
         }
     }
 
-    private void drawEnemies() {}
+    private void drawEnemies() {
+        if (currentWave != null) {
+            currentWave.draw();
+        }
+    }
+
+    private void updateTowers() {}
+
+    private void updateEnemies() {
+        if (currentWave != null) {
+            if (currentWave.isFinished()) {
+                if (++currentWaveIndex < waves.size()) {
+                    try {
+                        currentWave = waves.get(currentWaveIndex)
+                                .getConstructor(TroyTD.class, Vector2.class, Vector2[].class)
+                                .newInstance(game, mapDistortion, pathPointsCalculated);
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    currentWave = null;
+                    won = true;
+                }
+            } else {
+                currentWave.update();
+            }
+        }
+    }
 }
 

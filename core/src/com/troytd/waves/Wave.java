@@ -1,6 +1,5 @@
-package com.troytd.maps;
+package com.troytd.waves;
 
-import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
@@ -19,25 +18,26 @@ public abstract class Wave {
     /**
      * enemies that can spawn
      */
-    public static final ArrayList<enemyAmount> enemyList = new ArrayList<>();
+    protected final ArrayList<enemyAmount> enemyList;
     /**
      * the current spawned enemies
      */
-    public final ArrayList<Enemy> activeEnemies = new ArrayList<>();
+    protected final ArrayList<Enemy> activeEnemies = new ArrayList<>();
     /**
      * the path the enemies traverse
      */
-    protected final CatmullRomSpline<Vector2> path;
+    protected final Vector2[] path;
 
     /**
      * @param game          game instance
      * @param mapDistortion the distortion of the map
-     * @param path
+     * @param enemyList     the enemies that can spawn
+     * @param path          the path the enemies traverse
      */
-    public Wave(TroyTD game, Vector2 mapDistortion,
-                CatmullRomSpline<Vector2> path) {
+    public Wave(TroyTD game, Vector2 mapDistortion, ArrayList<enemyAmount> enemyList, Vector2[] path) {
         this.game = game;
         this.mapDistortion = mapDistortion;
+        this.enemyList = enemyList;
         this.path = path;
     }
 
@@ -47,10 +47,10 @@ public abstract class Wave {
      * @param position the position to spawn
      * @return the spawned enemy
      */
-    protected Enemy spawnEnemy(Class<? extends Enemy> enemy, byte line, Vector2 position) {
+    private Enemy spawnEnemy(Class<? extends Enemy> enemy, byte line, Vector2 position) {
         try {
             Constructor<? extends Enemy> ctor = enemy.getConstructor(byte.class, TroyTD.class, Vector2.class,
-                                                                     Vector2.class, CatmullRomSpline.class);
+                                                                     Vector2.class, Vector2[].class);
             Enemy enemyInstance = ctor.newInstance(line, game, position, mapDistortion, path);
             activeEnemies.add(enemyInstance);
             return enemyInstance;
@@ -66,11 +66,15 @@ public abstract class Wave {
         return null;
     }
 
-    protected void spawnEnemy(Class<? extends Enemy> enemy, byte line) {
-        Enemy spawnedEnemy = spawnEnemy(enemy, line, new Vector2());
+    private void spawnEnemy(Class<? extends Enemy> enemy, byte line) {
+        Enemy spawnedEnemy = spawnEnemy(enemy, line, path[0]);
         if (spawnedEnemy != null) {
             spawnedEnemy.hide();
         }
+    }
+
+    private void spawnEnemy(enemyAmount enemyAmount) {
+        if (enemyAmount.spawn()) spawnEnemy(enemyAmount.enemy, enemyAmount.getLine());
     }
 
     public void draw() {
@@ -79,10 +83,27 @@ public abstract class Wave {
         }
     }
 
-    public void update() {
+    private void updateEnemies() {
         for (Enemy enemy : activeEnemies) {
             enemy.update(activeEnemies);
         }
+    }
+
+    private void updateWave() {
+        for (enemyAmount enemyAmount : enemyList) {
+            if (enemyAmount.allSpawned())
+                enemyList.remove(enemyAmount); // remove the enemyAmount if all enemies spawned
+            if (enemyAmount.readyToSpawn()) spawnEnemy(enemyAmount);
+        }
+    }
+
+    public void update() {
+        updateWave();
+        updateEnemies();
+    }
+
+    public boolean isFinished() {
+        return activeEnemies.isEmpty() && enemyList.isEmpty();
     }
 }
 

@@ -3,9 +3,9 @@ package com.troytd.maps;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
-import com.troytd.towers.DebugTower;
 import com.troytd.towers.Spearthrower;
 import com.troytd.towers.Tower;
+import com.troytd.waves.Wave;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,11 +14,7 @@ public class Map1 extends Map {
     /**
      * A Map with a texture, it's path, and the places where towers can be placed on the map
      *
-     * @param game      the game instance
-     * @param maxRounds the amount of rounds needed to win
-     * @param name      the name of the map
-     * @param enemies
-     * @param towers
+     * @param game the game instance
      */
     public Map1(TroyTD game) {
         super(game, "map/Map1.jpg", new Vector2[]{
@@ -34,12 +30,21 @@ public class Map1 extends Map {
                       new Vector2(376, 1536 - 616),
                       new Vector2(680, 1536 - 124)
               }, new Vector2[]{
-                      new Vector2(924, 1536 + 46), new Vector2(940, 1536), new Vector2(936, 1536 - 166),
-                      new Vector2(860, 1536 - 292), new Vector2(670, 1536 - 386), new Vector2(650, 1536 - 564),
-                      new Vector2(970, 1536 - 686), new Vector2(1536, 1536 - 738), new Vector2(1662, 1536 - 910),
-                      new Vector2(1638, 1536 - 1050), new Vector2(1304, 1536 - 1136), new Vector2(0, 1536 - 1288),
+                      new Vector2(924, 1536 + 46),
+                      new Vector2(940, 1536),
+                      new Vector2(936, 1536 - 166),
+                      new Vector2(860, 1536 - 292),
+                      new Vector2(670, 1536 - 386),
+                      new Vector2(650, 1536 - 564),
+                      new Vector2(970, 1536 - 686),
+                      new Vector2(1536, 1536 - 738),
+                      new Vector2(1662, 1536 - 910),
+                      new Vector2(1638, 1536 - 1050),
+                      new Vector2(1304, 1536 - 1136),
+                      new Vector2(0, 1536 - 1288),
                       new Vector2(-68, 1536 - 1300)
               }, (byte) 5, "Map1", new ArrayList<Class<? extends Enemy>>(),
-              new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class)));
+              new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class)),
+              new ArrayList<Class<? extends Wave>>());
     }
 }
