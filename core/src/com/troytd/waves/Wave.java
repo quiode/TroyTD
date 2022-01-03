@@ -78,9 +78,11 @@ public abstract class Wave {
 
     private void spawnEnemy(Class<? extends Enemy> enemy, byte line) {
         Enemy spawnedEnemy = spawnEnemy(enemy, line, path[0]);
+        /*
         if (spawnedEnemy != null) {
             spawnedEnemy.hide();
         }
+         */
     }
 
     private void spawnEnemy(enemyAmount enemyAmount) {

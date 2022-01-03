@@ -13,16 +13,17 @@ import java.util.ArrayList;
 public abstract class Enemy {
     public final static short spawnSpeed = 2000;
     protected final static short hp = 100;
-    protected final static int speed = 1;
+    protected final static int speed = 50;
     protected final static short damage = 10;
+    protected final static float sizeModifier = 0.1f;
     protected final Vector2[] path;
     protected final byte line;
     protected final TroyTD game;
+    final protected Sprite enemySprite;
     /**
      * t in [0,1] in path
      */
     protected int position_on_path;
-    protected Sprite enemySprite;
     private boolean draw = true;
 
     /**
@@ -35,10 +36,17 @@ public abstract class Enemy {
                  Vector2[] path) {
         this.line = line;
         this.game = game;
-        this.enemySprite = new Sprite(texture);
+        this.enemySprite = new Sprite(texture) {
+            @Override
+            public void setPosition(float x, float y) {
+                super.setPosition(x - game.settingPreference.getInteger("width") / 2f,
+                                  y - game.settingPreference.getInteger("height") / 2f);
+            }
+        };
         this.path = path;
         enemySprite.setPosition(position.x, position.y);
-        enemySprite.setSize(enemySprite.getWidth() * distortion.x, enemySprite.getHeight() * distortion.y);
+        enemySprite.setSize(enemySprite.getWidth() * distortion.x * sizeModifier,
+                            enemySprite.getHeight() * distortion.y * sizeModifier);
     }
 
     public static void loadAssets() {
@@ -69,10 +77,12 @@ public abstract class Enemy {
     }
 
     public void update(final ArrayList<Enemy> enemies) {
-        position_on_path += speed;
+        position_on_path += speed; // TODO: adjust to framerate
 
         if (position_on_path < path.length) {
-            enemySprite.setPosition(path[position_on_path].x, path[position_on_path].y + line * 5);
+            enemySprite.setPosition(path[position_on_path].x,
+                                    path[position_on_path].y - line * game.settingPreference.getInteger(
+                                            "height") / 20f);
         } else {
             enemies.remove(this);
         }

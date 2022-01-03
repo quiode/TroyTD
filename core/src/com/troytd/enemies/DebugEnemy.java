@@ -10,9 +10,7 @@ import com.troytd.game.TroyTD;
 public class DebugEnemy extends Enemy {
     public final static short spawnSpeed = 5000;
 
-    public DebugEnemy(byte line, final TroyTD game, Vector2 position, final Vector2 distortion, final
-    Vector2[] path) {
-        super(line, game, position, game.assetManager.get("enemies/DebugEnemy.png", Texture.class),
-              distortion, path);
+    public DebugEnemy(byte line, final TroyTD game, Vector2 position, final Vector2 distortion, final Vector2[] path) {
+        super(line, game, position, game.assetManager.get("enemies/DebugEnemy.png", Texture.class), distortion, path);
     }
 }
