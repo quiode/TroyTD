@@ -13,7 +13,13 @@ import java.util.ArrayList;
  * Stores the enemies and the amount of enemies that spawn in a wave
  */
 public abstract class Wave {
+    /**
+     * game instance
+     */
     protected final TroyTD game;
+    /**
+     * how much map is stretched
+     */
     protected final Vector2 mapDistortion;
     /**
      * enemies that can spawn
@@ -39,6 +45,10 @@ public abstract class Wave {
         this.mapDistortion = mapDistortion;
         this.enemyList = enemyList;
         this.path = path;
+    }
+
+    public static Class<? extends Enemy>[] getEnemyList() {
+        return new Class[]{};
     }
 
     /**
@@ -91,8 +101,10 @@ public abstract class Wave {
 
     private void updateWave() {
         for (enemyAmount enemyAmount : enemyList) {
-            if (enemyAmount.allSpawned())
+            if (enemyAmount.allSpawned()) {
                 enemyList.remove(enemyAmount); // remove the enemyAmount if all enemies spawned
+                return;
+            }
             if (enemyAmount.readyToSpawn()) spawnEnemy(enemyAmount);
         }
     }

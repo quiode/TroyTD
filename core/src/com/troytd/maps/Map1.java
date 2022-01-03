@@ -1,7 +1,6 @@
 package com.troytd.maps;
 
 import com.badlogic.gdx.math.Vector2;
-import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.towers.Spearthrower;
 import com.troytd.towers.Tower;
@@ -43,7 +42,7 @@ public class Map1 extends Map {
                       new Vector2(1304, 1536 - 1136),
                       new Vector2(0, 1536 - 1288),
                       new Vector2(-68, 1536 - 1300)
-              }, (byte) 5, "Map1", new ArrayList<Class<? extends Enemy>>(),
+              }, (byte) 5, "Map1",
               new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class)),
               new ArrayList<Class<? extends Wave>>());
     }

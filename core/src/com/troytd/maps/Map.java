@@ -22,10 +22,6 @@ import java.util.ArrayList;
  */
 public abstract class Map implements Loadable {
     /**
-     * enemies that spawn with this map
-     */
-    public final ArrayList<Class<? extends Enemy>> enemies;
-    /**
      * towers that can be used with this map
      */
     public final ArrayList<Class<? extends Tower>> towers;
@@ -88,17 +84,29 @@ public abstract class Map implements Loadable {
      * @param pathPoints  the points that make up the path
      * @param maxRounds   the amount of rounds needed to win
      * @param name        the name of the map
-     * @param enemies     the enemies that spawn with this map
      * @param towers      the towers that can be used with this map
+     * @param waves       the waves of the map
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
-               byte maxRounds, final String name, final ArrayList<Class<? extends Enemy>> enemies,
-               final ArrayList<Class<? extends Tower>> towers, ArrayList<Class<? extends Wave>> waves) {
+               byte maxRounds, final String name, final ArrayList<Class<? extends Tower>> towers,
+               ArrayList<Class<? extends Wave>> waves) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 
-        for (Class<? extends Enemy> enemy : enemies) {
-            game.assetManager.load("enemies/" + enemy.getSimpleName() + ".png", Texture.class);
+        // load enemy textures
+        for (Class<? extends Wave> wave : waves) {
+            try {
+                for (Class<? extends Enemy> enemy : (Class<? extends Enemy>[]) wave.getMethod("getEnemyList", null)
+                        .invoke(null, null)) {
+                    game.assetManager.load("enemies/" + enemy.getSimpleName() + ".png", Texture.class);
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
         }
 
         for (Class<? extends Tower> tower : towers) {
@@ -114,7 +122,6 @@ public abstract class Map implements Loadable {
             this.towerPlaces[i] = new TowerPlace(towerPlaces[i], null);
         }
         this.name = name;
-        this.enemies = enemies;
         this.towers = towers;
         this.waves = waves;
 
@@ -124,22 +131,6 @@ public abstract class Map implements Loadable {
         for (int i = 0; i < precision; ++i) {
             pathPointsCalculated[i] = new Vector2();
             myCatmull.valueAt(pathPointsCalculated[i], ((float) i) / ((float) precision - 1));
-        }
-
-        // set first wave
-        currentWaveIndex = 0;
-        try {
-            currentWave = waves.get(currentWaveIndex)
-                    .getConstructor(TroyTD.class, Vector2.class, Vector2[].class)
-                    .newInstance(game, mapDistortion, pathPointsCalculated);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
         }
     }
 
@@ -183,6 +174,22 @@ public abstract class Map implements Loadable {
         for (TowerPlace place : towerPlaces) {
             place.place.x *= mapDistortion.x;
             place.place.y *= mapDistortion.y;
+        }
+
+        // set first wave
+        currentWaveIndex = 0;
+        try {
+            currentWave = waves.get(currentWaveIndex)
+                    .getConstructor(TroyTD.class, Vector2.class, Vector2[].class)
+                    .newInstance(game, mapDistortion, pathPointsCalculated);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
     }
 

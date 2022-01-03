@@ -1,8 +1,6 @@
 package com.troytd.maps;
 
 import com.badlogic.gdx.math.Vector2;
-import com.troytd.enemies.DebugEnemy;
-import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.towers.*;
 import com.troytd.waves.DebugWave;
@@ -61,7 +59,7 @@ public class DebugMap extends Map {
                       new Vector2(1258, 128),
                       new Vector2(1280, 120),
                       new Vector2(1330, 133)
-              }, (byte) 3, "Debugger Map", new ArrayList<Class<? extends Enemy>>(Collections.singleton(DebugEnemy.class)),
+              }, (byte) 3, "Debugger Map",
               new ArrayList<Class<? extends Tower>>(
                       Arrays.asList(DebugTower.class, DebugTower2.class, DebugTower3.class, DebugTower4.class,
                                     DebugTower5.class)),
