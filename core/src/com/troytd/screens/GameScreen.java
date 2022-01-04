@@ -23,9 +23,11 @@ import com.troytd.hud.UpgradeTowerHUD;
 import com.troytd.maps.DebugMap;
 import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
+import com.troytd.shots.Shot;
+
+import java.util.ArrayList;
 
 public class GameScreen implements Screen {
-
     // settings Icon
     public final ImageButton pauseButton;
     // stage for this screen
@@ -38,6 +40,10 @@ public class GameScreen implements Screen {
     private final Camera camera;
     // assets
     private final Map map;
+    /**
+     * list of all shots
+     */
+    private final ArrayList<Shot> shots = new ArrayList<>();
     // stats
     public short money = 200;
     public short kills;

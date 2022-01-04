@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+import com.troytd.shots.Shot;
 
-public class Tower {
+import java.lang.reflect.InvocationTargetException;
+
+public abstract class Tower {
     public final static int size = 100;
     public final static int cost = 100;
     public final static int damage = 100;
@@ -21,10 +24,11 @@ public class Tower {
     private final String name;
     public int kills = 0;
     public int hp = maxHP;
+    protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
-                 Vector2 distortion) {
+                 Vector2 distortion, Class<? extends Shot> shotClass) {
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
@@ -32,7 +36,7 @@ public class Tower {
         this.name = name;
         this.type = type;
         this.distortion = distortion;
-
+        this.shotClass = shotClass;
     }
 
     public void dispose() {
@@ -41,10 +45,6 @@ public class Tower {
 
     public Rectangle getRect() {
         return towerSprite.getBoundingRectangle();
-    }
-
-    public void setPosition(Vector2 position) {
-        towerSprite.setPosition(position.x, position.y);
     }
 
     public void draw() {
@@ -57,5 +57,35 @@ public class Tower {
 
     public Texture getTexture() {
         return towerSprite.getTexture();
+    }
+
+    /**
+     * shoots a shot
+     *
+     * @return a new shot instance
+     */
+    public Shot shoot() {
+        try {
+            return shotClass.getConstructor(TroyTD.class, Tower.class).newInstance(game, this);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Vector2 getPosition() {
+        Vector2 position = new Vector2();
+        towerSprite.getBoundingRectangle().getPosition(position);
+        return position;
+    }
+
+    public void setPosition(Vector2 position) {
+        towerSprite.setPosition(position.x, position.y);
     }
 }

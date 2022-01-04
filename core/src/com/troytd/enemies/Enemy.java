@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
+import com.troytd.shots.Shot;
 
 import java.util.ArrayList;
 
