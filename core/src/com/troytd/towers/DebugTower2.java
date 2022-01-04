@@ -3,6 +3,7 @@ package com.troytd.towers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+import com.troytd.shots.DebugShot;
 
 public class DebugTower2 extends Tower {
     public static final String name = "DebugTower2";
@@ -12,6 +13,6 @@ public class DebugTower2 extends Tower {
                        Vector2 distortion) {
         super(game, position, game.assetManager.get("towers/" + name + ".png", Texture.class), name,
               TowerTypes.SINGLE_TARGET,
-              distortion);
+              distortion, DebugShot.class);
     }
 }

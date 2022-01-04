@@ -3,6 +3,7 @@ package com.troytd.towers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+import com.troytd.shots.DebugShot;
 
 public class Spearthrower extends Tower{
     public final static int cost = 80;
@@ -13,6 +14,7 @@ public class Spearthrower extends Tower{
     public final static float atspeed = 1f;
     public Spearthrower(TroyTD game, Vector2 position, Texture texture, String name, TowerTypes type,
                         Vector2 distortion) {
-        super(game, position, new Texture("towers/range.jpg"), "Spearthrower", TowerTypes.SINGLE_TARGET, distortion);
+        super(game, position, new Texture("towers/range.jpg"), "Spearthrower", TowerTypes.SINGLE_TARGET, distortion,
+              DebugShot.class);
     }
 }

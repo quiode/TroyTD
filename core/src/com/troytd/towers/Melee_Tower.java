@@ -3,6 +3,7 @@ package com.troytd.towers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+import com.troytd.shots.DebugShot;
 
 public class Melee_Tower extends Tower{
     public final static int cost = 100;
@@ -13,7 +14,7 @@ public class Melee_Tower extends Tower{
     public final static float atspeed = 0.5f;
     public Melee_Tower(TroyTD game, Vector2 position, Texture texture, String name, TowerTypes type,
                         Vector2 distortion) {
-        super(game, position, new Texture("towers/range.jpg"), "Swordsmen", TowerTypes.MELEE, distortion);
+        super(game, position, new Texture("towers/range.jpg"), "Swordsmen", TowerTypes.MELEE, distortion, DebugShot.class);
     }
 
 
