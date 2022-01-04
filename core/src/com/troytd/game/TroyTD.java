@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +20,7 @@ public class TroyTD extends Game {
     public Skin skin;
     public Preferences settingPreference;
     public AssetManager assetManager;
+    public Music music;
 
     public void create() {        // preferences
         settingPreference = Gdx.app.getPreferences("TroyTD-settings");
@@ -58,6 +60,11 @@ public class TroyTD extends Game {
 
         // set window title and icon
         Gdx.graphics.setTitle("TroyTD");
+
+        // play music
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/background_music.mp3"));
+        music.play();
+        music.setVolume(0.5f);
     }
 
     public void render() {
@@ -68,5 +75,6 @@ public class TroyTD extends Game {
         batch.dispose();
         font.dispose();
         assetManager.dispose();
+        music.dispose();
     }
 }
