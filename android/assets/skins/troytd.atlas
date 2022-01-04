@@ -217,175 +217,217 @@ filter: Linear, Linear
 repeat: none
 white-pixel
   rotate: false
-  xy: 1023, 1937
+  xy: 1537, 1012
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 240px-Eo_circle_grey_pause
   rotate: false
-  xy: 509, 753
+  xy: 751, 157
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
 240px-Eo_circle_white_pause
   rotate: false
-  xy: 1, 26
+  xy: 509, 157
   size: 240, 240
   orig: 240, 240
   offset: 0, 0
   index: -1
 Bullpen3D
   rotate: false
-  xy: 1, 919
+  xy: 1029, 920
   size: 506, 93
   orig: 506, 93
   offset: 0, 0
   index: -1
 Bullpen3D(2)
   rotate: false
-  xy: 515, 1845
+  xy: 1, 406
   size: 506, 93
   orig: 506, 93
   offset: 0, 0
   index: -1
 Montserrat-Bold
   rotate: false
-  xy: 1, 494
+  xy: 1029, 424
   size: 505, 67
   orig: 505, 67
   offset: 0, 0
   index: -1
 Montserrat-Bold(1)
   rotate: false
-  xy: 1, 713
+  xy: 1029, 714
   size: 506, 204
   orig: 506, 204
   offset: 0, 0
   index: -1
 Montserrat-Bold(2)
   rotate: false
-  xy: 515, 1639
+  xy: 1, 200
   size: 506, 204
   orig: 506, 204
   offset: 0, 0
   index: -1
 Montserrat-Bold(7)_3
   rotate: false
-  xy: 1, 1528
+  xy: 1, 1529
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Bold(7)_4
   rotate: false
-  xy: 1, 1014
+  xy: 1, 1015
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Montserrat-Regular
   rotate: false
-  xy: 515, 1574
+  xy: 1029, 558
   size: 505, 63
   orig: 505, 63
   offset: 0, 0
   index: -1
 Montserrat-Regular(1)
   rotate: false
-  xy: 1537, 1977
+  xy: 1029, 493
   size: 505, 63
   orig: 505, 63
   offset: 0, 0
   index: -1
 Montserrat-Regular(2)
   rotate: false
-  xy: 1029, 1951
+  xy: 1029, 623
   size: 506, 89
   orig: 506, 89
   offset: 0, 0
   index: -1
 Montserrat-Regular(3)
   rotate: false
-  xy: 1, 563
+  xy: 1, 50
   size: 506, 148
   orig: 506, 148
   offset: 0, 0
   index: -1
+checkbox
+  rotate: false
+  xy: 1029, 1529
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+checkbox-checked
+  rotate: false
+  xy: 1, 501
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+checkbox-checked-grey
+  rotate: false
+  xy: 515, 1427
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+checkbox-gray-checked
+  rotate: false
+  xy: 1029, 1015
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+checkbox-white
+  rotate: false
+  xy: 515, 913
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+checkbox-white-checked
+  rotate: false
+  xy: 515, 399
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 gamepad-vector-clipart
   rotate: false
-  xy: 1, 268
+  xy: 1543, 1238
   size: 360, 224
   orig: 360, 224
   offset: 0, 0
   index: -1
 noun_back button_251451
   rotate: false
-  xy: 509, 653
+  xy: 509, 57
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 noun_back button_251451-light-gray
   rotate: false
-  xy: 751, 895
+  xy: 1543, 1021
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 noun_back button_251451-white
   rotate: false
-  xy: 243, 168
+  xy: 1905, 1364
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 rounded-rectangle-512-thin
   rotate: false
-  xy: 515, 1940
+  xy: 515, 1941
   size: 512, 100
   orig: 512, 100
   offset: 0, 0
   index: -1
 x22
   rotate: false
-  xy: 363, 317
+  xy: 1645, 1178
   size: 50, 58
   orig: 50, 58
   offset: 0, 0
   index: -1
 x22-big
   rotate: false
-  xy: 363, 377
+  xy: 1543, 1121
   size: 100, 115
   orig: 100, 115
   offset: 0, 0
   index: -1
 x22-bigger
   rotate: false
-  xy: 515, 995
+  xy: 1543, 1464
   size: 500, 577
   orig: 500, 577
   offset: 0, 0
   index: -1
 x22-mute1
   rotate: false
-  xy: 509, 593
+  xy: 609, 97
   size: 50, 58
   orig: 50, 58
   offset: 0, 0
   index: -1
 x22-mute2
   rotate: false
-  xy: 243, 108
+  xy: 1905, 1304
   size: 50, 58
   orig: 50, 58
   offset: 0, 0
   index: -1
 x22-small
   rotate: false
-  xy: 1537, 1963
+  xy: 1, 36
   size: 10, 12
   orig: 10, 12
   offset: 0, 0

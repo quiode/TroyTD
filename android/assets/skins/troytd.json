@@ -203,6 +203,14 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		checkedOver: x22-mute1
 		checkedDown: x22
 	}
+	screen: {
+		up: checkbox-white
+		down: checkbox-white-checked
+		over: checkbox-gray-checked
+		checked: checkbox-white-checked
+		checkedOver: checkbox-gray-checked
+		checkedDown: checkbox-white
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {

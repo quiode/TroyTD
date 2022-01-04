@@ -26,6 +26,7 @@ public class SettingsScreen implements Screen {
     private final TextField screenResolutionTextField2;
     private final Screen lastScreen;
     private final Slider volumeSlider;
+    private final Button fullScreenCheckBox;
     private Dialog dialog;
 
     public SettingsScreen(final TroyTD game, final Screen lastScreen) {
@@ -154,6 +155,7 @@ public class SettingsScreen implements Screen {
                 }
             }
         });
+        muteButton.setChecked(game.music.getVolume() == 0);
         volumeSlider.setValue(game.settingPreference.getFloat("volume"));
         volumeSlider.addListener(new ChangeListener() {
             @Override
@@ -162,6 +164,9 @@ public class SettingsScreen implements Screen {
                 muteButton.setChecked(false);
             }
         });
+        Label fullScreenLabel = new Label("Full Screen:", game.skin, "settings");
+        fullScreenCheckBox = new ImageButton(game.skin, "screen");
+        fullScreenCheckBox.setChecked(game.settingPreference.getBoolean("fullscreen"));
         table.row();
         table.add(screenResolutionLabel);
         table.add(screenResolutionTextField1).right();
@@ -171,6 +176,9 @@ public class SettingsScreen implements Screen {
         table.add(volumeLabel);
         table.add(muteButton).size(50 / 1.5f, 58 / 1.5f);
         table.add(volumeSlider).colspan(10).fillX().padLeft(25).padRight(25);
+        table.row();
+        table.add(fullScreenLabel);
+        table.add(fullScreenCheckBox).size(52, 52);
         table.row();
         table.add(submitButton).colspan(4).pad(10).center();
         table.row();
@@ -259,6 +267,12 @@ public class SettingsScreen implements Screen {
                                                               Integer.parseInt(screenResolutionTextField1.getText()));
                             game.settingPreference.putInteger("height",
                                                               Integer.parseInt(screenResolutionTextField2.getText()));
+                            if (volumeSlider.getValue() >= 0 && volumeSlider.getValue() <= 1) {
+                                if (game.settingPreference.getFloat("volume") != volumeSlider.getValue()) {
+                                    game.settingPreference.putFloat("volume", volumeSlider.getValue());
+                                }
+                            }
+                            game.settingPreference.putBoolean("fullscreen", fullScreenCheckBox.isChecked());
                             game.settingPreference.flush();
                             Gdx.app.exit();
                         } else {
@@ -281,6 +295,24 @@ public class SettingsScreen implements Screen {
                 dialog.text("Please enter a valid resolution.", game.skin.get("error", Label.LabelStyle.class));
                 dialog.button("OK", true, game.skin.get("error", TextButton.TextButtonStyle.class));
             }
+        } else if (fullScreenCheckBox.isChecked() != game.settingPreference.getBoolean("fullscreen")) {
+            dialog = new Dialog("", game.skin, "info") {
+                public void result(Object object) {
+                    if (object.equals(true)) {
+                        game.settingPreference.putBoolean("fullscreen", fullScreenCheckBox.isChecked());
+                        game.settingPreference.flush();
+                        Gdx.app.exit();
+                    } else {
+                        game.setScreen(lastScreen);
+                        dispose();
+                    }
+                }
+            };
+            dialog.text(
+                    "The application must restart to\napply the fullscreen change.\nDo you still want to change it?",
+                    game.skin.get("info", Label.LabelStyle.class));
+            dialog.button("Yes", true, game.skin.get("info", TextButton.TextButtonStyle.class));
+            dialog.button("No", false, game.skin.get("error", TextButton.TextButtonStyle.class));
         } else {
             if (volumeSlider.getValue() >= 0 && volumeSlider.getValue() <= 1) {
                 if (game.settingPreference.getFloat("volume") != volumeSlider.getValue()) {
@@ -309,7 +341,6 @@ public class SettingsScreen implements Screen {
                 dialog.text("No changes have been made.", game.skin.get("info", Label.LabelStyle.class));
                 dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
             }
-
         }
 
         dialog.center();

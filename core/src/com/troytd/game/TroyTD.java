@@ -67,6 +67,7 @@ public class TroyTD extends Game {
 
         // set window title and icon
         Gdx.graphics.setTitle("TroyTD");
+        if (settingPreference.getBoolean("fullscreen")) Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
         // play music
         music = Gdx.audio.newMusic(Gdx.files.internal("music/background_music.mp3"));
