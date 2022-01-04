@@ -13,6 +13,8 @@ public class Tower {
     public final static int range = 100;
     public final static int speed = 100;
     public final static int maxHP = 100;
+    public final static float atspeed = 0.5f;
+    public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
     protected final TroyTD game;
