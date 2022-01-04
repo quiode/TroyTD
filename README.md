@@ -5,6 +5,7 @@
 2. [Build Guide](#build-guide)
 3. [Controls](#controls)
 4. [Screenshots](#screenshots)
+5. [Sources](#sources)
 ## Usage
 [Download the latest release.](https://github.com/quiode/TroyTD/releases)  
 For android, move the apk file to your phone and open in.  
@@ -44,3 +45,9 @@ gh repo clone https://github.com/quiode/TroyTD
 ## In-Game
 - **<ESC\>**: Pause
 # Screenshots
+![image](./screenshots/Screenshot%20from%202022-01-04%2013-56-29.png)
+![image](./screenshots/Screenshot%20from%202022-01-04%2013-56-34.png)
+![image](./screenshots/Screenshot%20from%202022-01-04%2013-56-43.png)
+
+# Sources
+- Sound Effects: [Chosic](https://www.chosic.com/)
