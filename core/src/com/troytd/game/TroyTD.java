@@ -26,6 +26,7 @@ public class TroyTD extends Game {
         settingPreference = Gdx.app.getPreferences("TroyTD-settings");
 
         assetManager = new AssetManager();
+        float volume;
 
         // standard values
         if (!settingPreference.contains("width")) {
@@ -42,6 +43,12 @@ public class TroyTD extends Game {
         }
         if (!settingPreference.contains("difficulty")) {
             settingPreference.putInteger("difficulty", 1); // 0 = easy, 1 = normal, 2 = hard
+        }
+        if (!settingPreference.contains("volume")) {
+            settingPreference.putFloat("volume", 0.5f);
+            volume = 0.5f;
+        } else {
+            volume = settingPreference.getFloat("volume");
         }
 
         settingPreference.flush();
@@ -64,7 +71,7 @@ public class TroyTD extends Game {
         // play music
         music = Gdx.audio.newMusic(Gdx.files.internal("music/background_music.mp3"));
         music.play();
-        music.setVolume(0.5f);
+        music.setVolume(volume);
     }
 
     public void render() {
