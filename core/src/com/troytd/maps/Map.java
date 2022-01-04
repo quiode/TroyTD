@@ -127,7 +127,7 @@ public abstract class Map implements Loadable {
 
         // calculated path points
         final int precision = pathPointsCalculated.length;
-        CatmullRomSpline<Vector2> myCatmull = new CatmullRomSpline<Vector2>(pathPoints, true);
+        CatmullRomSpline<Vector2> myCatmull = new CatmullRomSpline<Vector2>(pathPoints, false);
         for (int i = 0; i < precision; ++i) {
             pathPointsCalculated[i] = new Vector2();
             myCatmull.valueAt(pathPointsCalculated[i], ((float) i) / ((float) precision - 1));
@@ -180,8 +180,8 @@ public abstract class Map implements Loadable {
         currentWaveIndex = 0;
         try {
             currentWave = waves.get(currentWaveIndex)
-                    .getConstructor(TroyTD.class, Vector2.class, Vector2[].class)
-                    .newInstance(game, mapDistortion, pathPointsCalculated);
+                    .getConstructor(TroyTD.class, Vector2.class, Vector2[].class, Map.class)
+                    .newInstance(game, mapDistortion, pathPointsCalculated, this);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

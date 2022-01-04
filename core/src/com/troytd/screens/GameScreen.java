@@ -157,10 +157,10 @@ public class GameScreen implements Screen {
         }
 
         if (map.lost) {
-            game.setScreen(new LoseScreen());
+            game.setScreen(new MessageScreen(game, "You lost!", "error"));
             this.dispose();
         } else if (map.won) {
-            game.setScreen(new WinScreen());
+            game.setScreen(new MessageScreen(game, "You won!", "good"));
             this.dispose();
         }
     }

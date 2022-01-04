@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+import com.troytd.maps.Map;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public abstract class Enemy {
     protected final byte line;
     protected final TroyTD game;
     final protected Sprite enemySprite;
+    protected final Map map;
     /**
      * t in [0,1] in path
      */
@@ -33,9 +35,10 @@ public abstract class Enemy {
      * @param path     the path the enemy will follow, in precalculated points
      */
     public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture, final Vector2 distortion,
-                 Vector2[] path) {
+                 Vector2[] path, final Map map) {
         this.line = line;
         this.game = game;
+        this.map = map;
         this.enemySprite = new Sprite(texture) {
             @Override
             public void setPosition(float x, float y) {
@@ -85,6 +88,7 @@ public abstract class Enemy {
                                             "height") / 20f);
         } else {
             enemies.remove(this);
+            map.lost = true;
         }
     }
 }
