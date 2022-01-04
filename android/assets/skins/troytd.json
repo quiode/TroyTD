@@ -94,6 +94,15 @@ com.badlogic.gdx.graphics.Color: {
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	rectangle-red: {
+		name: rect1153
+		color: {
+			r: 1
+			g: 0
+			b: 0
+			a: 1
+		}
+	}
 	green: {
 		name: white-pixel
 		color: GREEN
@@ -186,6 +195,14 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		checkedOver: triangle_black_white-left
 		checkedDown: triangle_black_white-left
 	}
+	mute: {
+		up: x22
+		down: x22-mute2
+		over: x22-mute1
+		checked: x22-mute2
+		checkedOver: x22-mute1
+		checkedDown: x22
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
@@ -216,6 +233,13 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: {
 		background: white
 		knobBefore: green
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	volume: {
+		background: rect1153
+		knob: red
+		knobBefore: rectangle-red
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {

@@ -25,6 +25,7 @@ public class SettingsScreen implements Screen {
     private final TextField screenResolutionTextField1;
     private final TextField screenResolutionTextField2;
     private final Screen lastScreen;
+    private final Slider volumeSlider;
     private Dialog dialog;
 
     public SettingsScreen(final TroyTD game, final Screen lastScreen) {
@@ -140,11 +141,36 @@ public class SettingsScreen implements Screen {
                 dialog.show(stage);
             }
         });
+        final Label volumeLabel = new Label("Volume:", game.skin, "settings");
+        volumeSlider = new Slider(0, 1, 0.05f, false, game.skin, "volume");
+        final ImageButton muteButton = new ImageButton(game.skin, "mute");
+        muteButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (muteButton.isChecked()) {
+                    game.music.setVolume(0);
+                } else {
+                    game.music.setVolume(volumeSlider.getValue());
+                }
+            }
+        });
+        volumeSlider.setValue(game.settingPreference.getFloat("volume"));
+        volumeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.music.setVolume(volumeSlider.getValue());
+                muteButton.setChecked(false);
+            }
+        });
         table.row();
         table.add(screenResolutionLabel);
         table.add(screenResolutionTextField1).right();
         table.add(screenResolutionLabel2);
         table.add(screenResolutionTextField2).left();
+        table.row();
+        table.add(volumeLabel);
+        table.add(muteButton).size(50 / 1.5f, 58 / 1.5f);
+        table.add(volumeSlider).colspan(10).fillX().padLeft(25).padRight(25);
         table.row();
         table.add(submitButton).colspan(4).pad(10).center();
         table.row();
@@ -220,6 +246,7 @@ public class SettingsScreen implements Screen {
     }
 
     private void putData() {
+        boolean changes = false;
         if (Integer.parseInt(screenResolutionTextField1.getText()) != game.settingPreference.getInteger(
                 "width") || Integer.parseInt(screenResolutionTextField2.getText()) != game.settingPreference.getInteger(
                 "height")) {
@@ -255,15 +282,36 @@ public class SettingsScreen implements Screen {
                 dialog.button("OK", true, game.skin.get("error", TextButton.TextButtonStyle.class));
             }
         } else {
-            dialog = new Dialog("", game.skin, "info") {
-                public void result(Object object) {
-                    game.setScreen(lastScreen);
-                    dispose();
+            if (volumeSlider.getValue() >= 0 && volumeSlider.getValue() <= 1) {
+                if (game.settingPreference.getFloat("volume") != volumeSlider.getValue()) {
+                    game.settingPreference.putFloat("volume", volumeSlider.getValue());
+                    game.settingPreference.flush();
+                    changes = true;
                 }
-            };
-            dialog.text("No changes have been made.", game.skin.get("info", Label.LabelStyle.class));
-            dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
+            }
+            if (changes) {
+                dialog = new Dialog("", game.skin, "info") {
+                    public void result(Object object) {
+                        game.setScreen(lastScreen);
+                        dispose();
+                    }
+                };
+                dialog.text("Changes have been made.", game.skin.get("info", Label.LabelStyle.class));
+                dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
+            } else {
+
+                dialog = new Dialog("", game.skin, "info") {
+                    public void result(Object object) {
+                        game.setScreen(lastScreen);
+                        dispose();
+                    }
+                };
+                dialog.text("No changes have been made.", game.skin.get("info", Label.LabelStyle.class));
+                dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
+            }
+
         }
+
         dialog.center();
         if (dialog.getButtonTable().getCells().size > 1) dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
         dialog.getContentTable().pad(0, 25, 25, 25);

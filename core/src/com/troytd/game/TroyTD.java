@@ -72,6 +72,7 @@ public class TroyTD extends Game {
         music = Gdx.audio.newMusic(Gdx.files.internal("music/background_music.mp3"));
         music.play();
         music.setVolume(volume);
+        music.setLooping(true);
     }
 
     public void render() {
