@@ -11,6 +11,7 @@ import com.troytd.game.TroyTD;
 import com.troytd.helpers.Loadable;
 import com.troytd.screens.GameScreen;
 import com.troytd.screens.LoadingScreen;
+import com.troytd.shots.Shot;
 import com.troytd.towers.Tower;
 import com.troytd.waves.Wave;
 
@@ -46,6 +47,7 @@ public abstract class Map implements Loadable {
      * calculated path points with a precision of 100000 (100000 points for the line)
      */
     protected final Vector2[] pathPointsCalculated = new Vector2[100000];
+    private final ArrayList<? extends Shot> shots;
     /**
      * true if game is won
      */
@@ -89,7 +91,7 @@ public abstract class Map implements Loadable {
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
                byte maxRounds, final String name, final ArrayList<Class<? extends Tower>> towers,
-               ArrayList<Class<? extends Wave>> waves) {
+               ArrayList<Class<? extends Wave>> waves, ArrayList<? extends Shot> shots) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 
@@ -124,6 +126,7 @@ public abstract class Map implements Loadable {
         this.name = name;
         this.towers = towers;
         this.waves = waves;
+        this.shots = shots;
 
         // calculated path points
         final int precision = pathPointsCalculated.length;

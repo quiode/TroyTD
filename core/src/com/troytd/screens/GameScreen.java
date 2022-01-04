@@ -25,6 +25,7 @@ import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
 import com.troytd.shots.Shot;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
@@ -57,10 +58,29 @@ public class GameScreen implements Screen {
     // time when this screen was switched to
     private long screenSwitchDelta = -1;
 
-    public GameScreen(final TroyTD game, final Map map) {
+    public GameScreen(final TroyTD game, final Class<? extends Map> map) {
         this.game = game;
-        this.map = map;
-        this.maxRounds = (byte) (map.maxRounds * game.settingPreference.getInteger("difficulty", 1));
+        Map temp1;
+        try {
+            temp1 = map.getConstructor(TroyTD.class, ArrayList.class).newInstance(game, shots);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            temp1 = new DebugMap(game, shots);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            temp1 = new DebugMap(game, shots);
+
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            temp1 = new DebugMap(game, shots);
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            temp1 = new DebugMap(game, shots);
+
+        }
+        this.map = temp1;
+        this.maxRounds = (byte) (this.map.maxRounds * game.settingPreference.getInteger("difficulty", 1));
         money += (short) (money * game.settingPreference.getInteger("difficulty", 0));
 
         // create stage
@@ -100,10 +120,6 @@ public class GameScreen implements Screen {
         InfoTowerHUD.loadAssets(game);
         PlaceTowerHUD.loadAssets(game);
         UpgradeTowerHUD.loadAssets(game);
-    }
-
-    public GameScreen(final TroyTD game) {
-        this(game, new DebugMap(game));
     }
 
     /**

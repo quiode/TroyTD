@@ -2,6 +2,7 @@ package com.troytd.maps;
 
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+import com.troytd.shots.Shot;
 import com.troytd.towers.*;
 import com.troytd.waves.DebugWave;
 import com.troytd.waves.Wave;
@@ -16,7 +17,7 @@ public class DebugMap extends Map {
      *
      * @param game the game instance
      */
-    public DebugMap(TroyTD game) {
+    public DebugMap(TroyTD game, ArrayList<? extends Shot> shots) {
         super(game, "maps/Map-Prototyp-1.png", new Vector2[]{
                       new Vector2(146, 170),
                       new Vector2(71, 450),
@@ -59,10 +60,9 @@ public class DebugMap extends Map {
                       new Vector2(1258, 128),
                       new Vector2(1280, 120),
                       new Vector2(1330, 133)
-              }, (byte) 3, "Debugger Map",
-              new ArrayList<Class<? extends Tower>>(
+              }, (byte) 3, "Debugger Map", new ArrayList<Class<? extends Tower>>(
                       Arrays.asList(DebugTower.class, DebugTower2.class, DebugTower3.class, DebugTower4.class,
                                     DebugTower5.class)),
-              new ArrayList<Class<? extends Wave>>(Collections.singleton(DebugWave.class)));
+              new ArrayList<Class<? extends Wave>>(Collections.singleton(DebugWave.class)), shots);
     }
 }
