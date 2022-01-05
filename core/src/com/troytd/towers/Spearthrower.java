@@ -15,7 +15,7 @@ public class Spearthrower extends Tower {
 
     public Spearthrower(TroyTD game, Vector2 position, Texture texture, String name, TowerTypes type,
                         Vector2 distortion) {
-        super(game, position, new Texture("towers/range.jpg"), "Spearthrower", TowerTypes.SINGLE_TARGET, distortion,
+        super(game, position, new Texture("towers/range.jpg"), "Spearthrower", TowerTypes.SINGLE, distortion,
               DebugShot.class);
     }
 }

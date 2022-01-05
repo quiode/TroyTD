@@ -24,6 +24,7 @@ public abstract class Tower {
     public String name = "Tower";
     public int kills = 0;
     public int hp = maxHP;
+    public int totalDamage = 0;
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
 
@@ -87,5 +88,9 @@ public abstract class Tower {
 
     public void setPosition(Vector2 position) {
         towerSprite.setPosition(position.x, position.y);
+    }
+
+    public String getType(){
+        return type.toString();
     }
 }

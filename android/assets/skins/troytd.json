@@ -296,6 +296,12 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		cursor: white
 		selection: YELLOW
 	}
+	small: {
+		font: Montserrat-Regular-20-white
+		fontColor: WHITE
+		cursor: white
+		selection: YELLOW
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
