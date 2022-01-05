@@ -5,13 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.shots.DebugShot;
 
-public class Spearthrower extends Tower{
+public class Spearthrower extends Tower {
     public final static int cost = 80;
     public final static int damage = 40;
     public final static int range = 160;
     public final static int speed = 100;
     public final static int maxHP = 100;
     public final static float atspeed = 1f;
+
     public Spearthrower(TroyTD game, Vector2 position, Texture texture, String name, TowerTypes type,
                         Vector2 distortion) {
         super(game, position, new Texture("towers/range.jpg"), "Spearthrower", TowerTypes.SINGLE_TARGET, distortion,

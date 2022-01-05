@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.shots.DebugShot;
 
-public class Zeus extends Tower{
+public class Zeus extends Tower {
     public final static int cost = 130;
     public final static int damage = 50;
     public final static int range = 120;

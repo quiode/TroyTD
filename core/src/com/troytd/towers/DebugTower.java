@@ -10,10 +10,10 @@ import com.troytd.shots.DebugShot;
  * Class for debugging towers.
  */
 public class DebugTower extends Tower {
-    public static final String name = "DebugTower";
 
     public DebugTower(TroyTD game, Vector2 position, Vector2 distortion) {
-        super(game, position, game.assetManager.get("towers/" + name + ".png", Texture.class), name, TowerTypes.MELEE,
+        super(game, position, game.assetManager.get("towers/DebugTower.png", Texture.class), "DebugTower",
+              TowerTypes.MELEE,
               distortion, DebugShot.class);
     }
 }

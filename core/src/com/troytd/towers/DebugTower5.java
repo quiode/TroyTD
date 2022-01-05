@@ -10,7 +10,6 @@ import com.troytd.shots.DebugShot;
  * Class for debugging towers.
  */
 public class DebugTower5 extends Tower {
-    public static final String name = "DebugTower5";
     public final static int cost = 24;
     public final static int damage = 53;
     public final static int range = 45;
@@ -18,7 +17,7 @@ public class DebugTower5 extends Tower {
     public final static int maxHP = 234;
 
     public DebugTower5(TroyTD game, Vector2 position, Vector2 distortion) {
-        super(game, position, game.assetManager.get("towers/" + name + ".png", Texture.class), name, TowerTypes.MELEE,
-              distortion, DebugShot.class);
+        super(game, position, game.assetManager.get("towers/DebugTower5.png", Texture.class), "DebugTower5",
+              TowerTypes.MELEE, distortion, DebugShot.class);
     }
 }

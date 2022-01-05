@@ -21,7 +21,7 @@ public abstract class Tower {
     protected final Vector2 distortion;
     protected final TowerTypes type;
     protected final TroyTD game;
-    private final String name;
+    public String name = "Tower";
     public int kills = 0;
     public int hp = maxHP;
     protected Class<? extends Shot> shotClass;
