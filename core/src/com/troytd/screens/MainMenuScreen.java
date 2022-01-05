@@ -31,8 +31,10 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final TroyTD game) {
         this.game = game;
 
-        camera = new OrthographicCamera(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"));
-        viewport = new FitViewport(game.settingPreference.getInteger("width"), game.settingPreference.getInteger("height"), camera);
+        camera = new OrthographicCamera(game.settingPreference.getInteger("width"),
+                                        game.settingPreference.getInteger("height"));
+        viewport = new FitViewport(game.settingPreference.getInteger("width"),
+                                   game.settingPreference.getInteger("height"), camera);
 
         // UI
         // initialize
@@ -40,6 +42,7 @@ public class MainMenuScreen implements Screen {
         menuGroup = new VerticalGroup();
         toGameButton = new TextButton("Play", game.skin);
         toSettingsButton = new TextButton("Settings", game.skin);
+        TextButton exitButton = new TextButton("Exit", game.skin);
 
         // positioning
         menuGroup.center();
@@ -50,6 +53,7 @@ public class MainMenuScreen implements Screen {
 
         menuGroup.addActor(toGameButton);
         menuGroup.addActor(toSettingsButton);
+        menuGroup.addActor(exitButton);
 
         stage.addActor(menuGroup);
 
@@ -65,6 +69,12 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new SettingsScreen(game, MainMenuScreen.this));
+            }
+        });
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
             }
         });
 
