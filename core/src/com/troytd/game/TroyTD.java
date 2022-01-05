@@ -50,6 +50,13 @@ public class TroyTD extends Game {
         } else {
             volume = settingPreference.getFloat("volume");
         }
+        if (!settingPreference.contains("mute")) {
+            settingPreference.putBoolean("mute", false);
+        } else {
+            if (settingPreference.getBoolean("mute")) {
+                volume = 0;
+            }
+        }
 
         settingPreference.flush();
 

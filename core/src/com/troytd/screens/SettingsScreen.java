@@ -27,6 +27,7 @@ public class SettingsScreen implements Screen {
     private final Screen lastScreen;
     private final Slider volumeSlider;
     private final Button fullScreenCheckBox;
+    private final ImageButton muteButton;
     private Dialog dialog;
 
     public SettingsScreen(final TroyTD game, final Screen lastScreen) {
@@ -144,7 +145,7 @@ public class SettingsScreen implements Screen {
         });
         final Label volumeLabel = new Label("Volume:", game.skin, "settings");
         volumeSlider = new Slider(0, 1, 0.05f, false, game.skin, "volume");
-        final ImageButton muteButton = new ImageButton(game.skin, "mute");
+        muteButton = new ImageButton(game.skin, "mute");
         muteButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -155,7 +156,7 @@ public class SettingsScreen implements Screen {
                 }
             }
         });
-        muteButton.setChecked(game.music.getVolume() == 0);
+        muteButton.setChecked(game.music.getVolume() == 0 || game.settingPreference.getBoolean("mute"));
         volumeSlider.setValue(game.settingPreference.getFloat("volume"));
         volumeSlider.addListener(new ChangeListener() {
             @Override
@@ -273,6 +274,7 @@ public class SettingsScreen implements Screen {
                                 }
                             }
                             game.settingPreference.putBoolean("fullscreen", fullScreenCheckBox.isChecked());
+                            game.settingPreference.putBoolean("mute", muteButton.isChecked());
                             game.settingPreference.flush();
                             Gdx.app.exit();
                         } else {
@@ -300,6 +302,7 @@ public class SettingsScreen implements Screen {
                 public void result(Object object) {
                     if (object.equals(true)) {
                         game.settingPreference.putBoolean("fullscreen", fullScreenCheckBox.isChecked());
+                        game.settingPreference.putBoolean("mute", muteButton.isChecked());
                         game.settingPreference.flush();
                         Gdx.app.exit();
                     } else {
@@ -314,9 +317,14 @@ public class SettingsScreen implements Screen {
             dialog.button("Yes", true, game.skin.get("info", TextButton.TextButtonStyle.class));
             dialog.button("No", false, game.skin.get("error", TextButton.TextButtonStyle.class));
         } else {
-            if (volumeSlider.getValue() >= 0 && volumeSlider.getValue() <= 1) {
+            if (volumeSlider.getValue() >= 0 && volumeSlider.getValue() <= 1 || muteButton.isChecked() != game.settingPreference.getBoolean(
+                    "mute")) {
                 if (game.settingPreference.getFloat("volume") != volumeSlider.getValue()) {
                     game.settingPreference.putFloat("volume", volumeSlider.getValue());
+                    game.settingPreference.flush();
+                    changes = true;
+                } else if (game.settingPreference.getBoolean("mute") != muteButton.isChecked()) {
+                    game.settingPreference.putBoolean("mute", muteButton.isChecked());
                     game.settingPreference.flush();
                     changes = true;
                 }
@@ -331,7 +339,6 @@ public class SettingsScreen implements Screen {
                 dialog.text("Changes have been made.", game.skin.get("info", Label.LabelStyle.class));
                 dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
             } else {
-
                 dialog = new Dialog("", game.skin, "info") {
                     public void result(Object object) {
                         game.setScreen(lastScreen);
