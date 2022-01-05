@@ -32,4 +32,8 @@ public class TowerPlace {
         this.tower.setPosition(new Vector2(-width / 2 + place.x - this.tower.getRect().height / 2,
                                            -height / 2 + place.y - this.tower.getRect().height / 2));
     }
+
+    public void removeTower() {
+        this.tower = null;
+    }
 }

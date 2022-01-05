@@ -46,7 +46,7 @@ public class GameScreen implements Screen {
      */
     private final ArrayList<Shot> shots = new ArrayList<>();
     // stats
-    public short money = 200;
+    public int money = 200;
     public short kills;
     public short health;
     public byte round;
