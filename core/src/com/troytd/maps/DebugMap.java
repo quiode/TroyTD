@@ -18,7 +18,7 @@ public class DebugMap extends Map {
      * @param game the game instance
      */
     public DebugMap(TroyTD game, ArrayList<? extends Shot> shots) {
-        super(game, "maps/Map-Prototyp-1.png", new Vector2[]{
+        super(game, "maps/DebugMap.png", new Vector2[]{
                       new Vector2(146, 170),
                       new Vector2(71, 450),
                       new Vector2(102, 690),

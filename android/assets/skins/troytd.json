@@ -211,6 +211,9 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		checkedOver: checkbox-gray-checked
 		checkedDown: checkbox-white
 	}
+	white: {
+		over: white
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {

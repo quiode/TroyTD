@@ -60,7 +60,8 @@ public class MainMenuScreen implements Screen {
         toGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new ChooseMapScreen(game));
+                game.setScreen(new LoadingScreen(game, new ChooseMapScreen(game)));
+                dispose();
             }
         });
 
@@ -140,7 +141,6 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void hide() {
-
     }
 
     /**

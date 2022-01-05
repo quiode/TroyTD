@@ -2,19 +2,29 @@ package com.troytd.screens;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.troytd.game.TroyTD;
+import com.troytd.helpers.Loadable;
 import com.troytd.maps.DebugMap;
 import com.troytd.maps.Map;
 import com.troytd.maps.Map1;
 
-public class ChooseMapScreen implements Screen {
+public class ChooseMapScreen implements Screen, Loadable {
     private final TroyTD game;
     private final Stage stage;
+    private final Table mapMenu;
 
     private final Class<? extends Map>[] mapList = new Class[]{DebugMap.class, Map1.class};
 
@@ -30,13 +40,14 @@ public class ChooseMapScreen implements Screen {
         stage = new Stage(viewport);
 
         // map menu
-        HorizontalGroup mapMenu = new HorizontalGroup();
+        mapMenu = new Table();
         mapMenu.setFillParent(true);
+        mapMenu.center();
         stage.addActor(mapMenu);
 
         // map buttons
         for (Class<? extends Map> map : mapList) {
-            // TODO: add map buttons
+            game.assetManager.load("maps/" + map.getSimpleName() + ".png", Texture.class);
         }
     }
 
@@ -45,6 +56,7 @@ public class ChooseMapScreen implements Screen {
      */
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
@@ -54,7 +66,10 @@ public class ChooseMapScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        ScreenUtils.clear(game.BACKGROUND_COLOR);
 
+        stage.act(delta);
+        stage.draw();
     }
 
     /**
@@ -97,5 +112,37 @@ public class ChooseMapScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void afterLoad() {
+        for (final Class<? extends Map> map : mapList) {
+            ImageButton mapButton = new ImageButton(new TextureRegionDrawable(
+                    game.assetManager.get("maps/" + map.getSimpleName() + ".png", Texture.class)));
+
+            mapButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    game.setScreen(new GameScreen(game, map));
+                }
+            });
+
+            mapMenu.add(mapButton)
+                    .width(game.settingPreference.getInteger("width") / (float) (mapList.length + 2))
+                    .height(game.settingPreference.getInteger("height") / (float) (mapList.length + 2))
+                    .pad(game.settingPreference.getInteger("width") / (float) (mapList.length + 2) / 8);
+
+        }
+
+        mapMenu.row();
+
+        for (Class<? extends Map> aClass : mapList) {
+            Label mapLabel = new Label(aClass.getSimpleName(), game.skin);
+            mapMenu.add(mapLabel)
+                    .center()
+                    .padLeft(game.settingPreference.getInteger("width") / (float) (mapList.length + 2) / 8)
+                    .padRight(game.settingPreference.getInteger("width") / (float) (mapList.length + 2) / 8);
+        }
+
+        //mapMenu.debug();
     }
 }

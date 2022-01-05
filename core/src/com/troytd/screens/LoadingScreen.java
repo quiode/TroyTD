@@ -71,10 +71,16 @@ public class LoadingScreen implements Screen {
 
     public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText) {
         this(game, calledScreen, loadingText, "Loading: ");
+        if (calledScreen instanceof Loadable) {
+            afterLoadObject = (Loadable) calledScreen;
+        }
     }
 
     public LoadingScreen(final TroyTD game, final Screen calledScreen) {
         this(game, calledScreen, "Loading...", "");
+        if (calledScreen instanceof Loadable) {
+            afterLoadObject = (Loadable) calledScreen;
+        }
     }
 
     public LoadingScreen(final TroyTD game, final Screen calledScreen, final String loadingText,
