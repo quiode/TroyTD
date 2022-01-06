@@ -45,13 +45,13 @@ gh repo clone https://github.com/quiode/TroyTD
 ## In-Game
 - **<ESC\>**: Pause
 # Screenshots
-##Main Menu
+## Main Menu
 ![image](./screenshots/Screenshot%20from%202022-01-04%2013-56-29.png)
-##Settings
+## Settings
 ![image](./screenshots/Screenshot%20from%202022-01-04%2013-56-34.png)
-##Game
+## Game
 ![image](./screenshots/Screenshot%20from%202022-01-04%2013-56-43.png)
-##Map Select
+## Map Select
 ![image](./screenshots/Screenshot%20from%202022-01-06%2010-24-49.png)
 # Sources
 - Sound Effects: [Chosic](https://www.chosic.com/)
