@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.shots.Shot;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 public abstract class Tower {
     public final static int size = 100;
@@ -16,7 +19,7 @@ public abstract class Tower {
     public final static int range = 100;
     public final static int speed = 100;
     public final static int maxHP = 100;
-    public final static float atspeed = 0.5f;
+    public final static int atspeed = 1000;
     public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
@@ -27,6 +30,7 @@ public abstract class Tower {
     public int totalDamage = 0;
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
+    private long lastShot = TimeUtils.millis();
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
                  Vector2 distortion, Class<? extends Shot> shotClass) {
@@ -65,9 +69,10 @@ public abstract class Tower {
      *
      * @return a new shot instance
      */
-    public Shot shoot() {
+    public Shot shoot(ArrayList<Enemy> enemies) {
         try {
-            return shotClass.getConstructor(TroyTD.class, Tower.class).newInstance(game, this);
+            return shotClass.getConstructor(TroyTD.class, Tower.class, Enemy.class)
+                    .newInstance(game, this, Enemy.getClosest(getPosition(), enemies));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -90,7 +95,30 @@ public abstract class Tower {
         towerSprite.setPosition(position.x, position.y);
     }
 
-    public String getType(){
+    public String getType() {
         return type.toString();
+    }
+
+    public void update(float delta, ArrayList<Enemy> enemies) {
+        if (enemies.isEmpty()) return;
+
+        try {
+            if (TimeUtils.timeSinceMillis(lastShot) > this.getClass().getField("atspeed").getInt(null)) {
+                shoot(enemies);
+                lastShot = TimeUtils.millis();
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
+                shoot(enemies);
+                lastShot = TimeUtils.millis();
+            }
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
+                shoot(enemies);
+                lastShot = TimeUtils.millis();
+            }
+        }
     }
 }

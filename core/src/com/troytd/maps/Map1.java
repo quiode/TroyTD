@@ -16,7 +16,7 @@ public class Map1 extends Map {
      *
      * @param game the game instance
      */
-    public Map1(TroyTD game, ArrayList<? extends Shot> shots) {
+    public Map1(TroyTD game, ArrayList<Shot> shots) {
         super(game, "maps/Map1.png", new Vector2[]{
                       new Vector2(560, 1536 - 1446),
                       new Vector2(552, 1536 - 1000),

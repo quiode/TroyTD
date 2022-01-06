@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
+import com.troytd.helpers.Helper;
 import com.troytd.maps.Map;
-import com.troytd.shots.Shot;
 
 import java.util.ArrayList;
 
@@ -57,6 +57,14 @@ public abstract class Enemy {
     }
 
     public static void loadAssets() {
+    }
+
+    public static Enemy getClosest(Vector2 position, ArrayList<Enemy> enemies) {
+        Vector2[] positions = new Vector2[enemies.size()];
+        for (int i = 0; i < positions.length; i++) {
+            positions[i] = enemies.get(i).getPosition();
+        }
+        return enemies.get(Helper.getClosest(position, positions));
     }
 
     public Vector2 getPosition() {

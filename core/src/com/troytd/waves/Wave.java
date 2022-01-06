@@ -131,5 +131,9 @@ public abstract class Wave {
     public boolean isFinished() {
         return activeEnemies.isEmpty() && enemyList.isEmpty();
     }
+
+    public ArrayList<Enemy> getEnemies(){
+        return activeEnemies;
+    }
 }
 

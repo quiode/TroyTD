@@ -23,6 +23,10 @@ public abstract class Shot {
      */
     private final TroyTD game;
     /**
+     * the target of the shot
+     */
+    private final Enemy target;
+    /**
      * the damage the shot does
      */
     private int damage;
@@ -31,9 +35,10 @@ public abstract class Shot {
      */
     private int speed;
 
-    public Shot(TroyTD game, Tower tower, Texture texture) {
+    public Shot(TroyTD game, Tower tower, final Enemy target) {
         this.tower = tower;
         this.game = game;
+        this.target = target;
         try {
             this.damage = tower.getClass().getField("damage").getInt(null);
             this.speed = tower.getClass().getField("speed").getInt(null);
@@ -42,16 +47,16 @@ public abstract class Shot {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        sprite = new Sprite(texture);
+        sprite = new Sprite(
+                game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));
         sprite.setPosition(tower.getPosition().x, tower.getPosition().y);
     }
 
     /**
-     * @param enemy the enemy the shot is shot at
      * @return true if the enemy was hit
      */
-    public boolean hitDetection(Enemy enemy) {
-        return enemy.getRectangle().overlaps(sprite.getBoundingRectangle());
+    public boolean hitDetection() {
+        return target.getRectangle().overlaps(sprite.getBoundingRectangle());
     }
 
     /**
@@ -60,7 +65,8 @@ public abstract class Shot {
      * @param delta the time since the last update
      */
     public void update(float delta) {
-        sprite.translate(speed * delta, speed * delta);
+        sprite.translate((target.getPosition().x - sprite.getX()) / speed * delta,
+                         (target.getPosition().y - sprite.getY()) / speed * delta);
     }
 
     /**

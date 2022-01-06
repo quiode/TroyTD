@@ -47,7 +47,10 @@ public abstract class Map implements Loadable {
      * calculated path points with a precision of 100000 (100000 points for the line)
      */
     protected final Vector2[] pathPointsCalculated = new Vector2[100000];
-    private final ArrayList<? extends Shot> shots;
+    /**
+     * list of all shots
+     */
+    private final ArrayList<Shot> shots;
     /**
      * true if game is won
      */
@@ -91,7 +94,7 @@ public abstract class Map implements Loadable {
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
                byte maxRounds, final String name, final ArrayList<Class<? extends Tower>> towers,
-               ArrayList<Class<? extends Wave>> waves, ArrayList<? extends Shot> shots) {
+               ArrayList<Class<? extends Wave>> waves, ArrayList<Shot> shots) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 
@@ -111,8 +114,10 @@ public abstract class Map implements Loadable {
             }
         }
 
+        // load tower textures and shot textures
         for (Class<? extends Tower> tower : towers) {
             game.assetManager.load("towers/" + tower.getSimpleName() + ".png", Texture.class);
+            game.assetManager.load("shots/" + tower.getSimpleName() + "Shot" + ".png", Texture.class);
         }
 
         // set values
@@ -141,17 +146,19 @@ public abstract class Map implements Loadable {
     /**
      * draws the map, the dowers, and the enemies
      */
-    public void draw(final SpriteBatch batch, final GameScreen gameScreen) {
+    public void draw(final SpriteBatch batch, final GameScreen gameScreen, float delta) {
         if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, gameScreen, this));
 
         if (mapSprite != null) {
             mapSprite.draw(batch);
         }
 
-        updateTowers();
+        if (currentWave != null) updateTowers(delta, currentWave.getEnemies());
         drawTowers();
         updateEnemies();
         drawEnemies();
+        updateShots(delta);
+        drawShots();
     }
 
     /**
@@ -266,7 +273,13 @@ public abstract class Map implements Loadable {
         }
     }
 
-    private void updateTowers() {}
+    private void updateTowers(float delta, ArrayList<Enemy> enemies) {
+        for (TowerPlace towerPlace : towerPlaces) {
+            if (towerPlace.getTower() != null) {
+                towerPlace.getTower().update(delta, enemies);
+            }
+        }
+    }
 
     private void updateEnemies() {
         if (currentWave != null) {
@@ -292,6 +305,18 @@ public abstract class Map implements Loadable {
             } else {
                 currentWave.update();
             }
+        }
+    }
+
+    private void updateShots(float delta) {
+        for (Shot shot : shots) {
+            shot.update(delta);
+        }
+    }
+
+    private void drawShots() {
+        for (Shot shot : shots) {
+            shot.draw();
         }
     }
 }

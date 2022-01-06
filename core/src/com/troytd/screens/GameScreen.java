@@ -168,7 +168,7 @@ public class GameScreen implements Screen {
 
         game.batch.begin();
         // Draw map
-        map.draw(game.batch, this);
+        map.draw(game.batch, this, delta);
         game.batch.end();
         // Draw HUD
         stage.draw();
