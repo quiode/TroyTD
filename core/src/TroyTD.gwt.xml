@@ -9,4 +9,9 @@
     <source path="com/troytd/maps"/>
     <source path="com/troytd/hud"/>
     <source path="com/troytd/helpers"/>
+    <source path="com/troytd/waves"/>
+    <source path="com/troytd/shots"/>
+
+    <!-- TODO: https://github-wiki-see.page/m/libgdx/libgdx/wiki/Reflection -->
+    <extend-configuration-property name="gdx.reflect.include" value="com.troytd.towers"/>
 </module>
