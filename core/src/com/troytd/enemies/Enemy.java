@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Helper;
 import com.troytd.maps.Map;
+import com.troytd.towers.Tower;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  */
 public abstract class Enemy {
     public final static short spawnSpeed = 2000;
-    protected final static short hp = 100;
+    protected final static short maxHp = 100;
     protected final static int speed = 50;
     protected final static short damage = 10;
     protected final static float sizeModifier = 0.1f;
@@ -31,6 +32,7 @@ public abstract class Enemy {
      */
     protected int position_on_path;
     private boolean draw = true;
+    private int hp = maxHp;
 
     /**
      * @param line     the line where the enemy is located, 0 is the top line, 1 is the middle line, 2 is the bottom line
@@ -106,5 +108,24 @@ public abstract class Enemy {
 
     public Rectangle getRectangle() {
         return new Rectangle(enemySprite.getBoundingRectangle());
+    }
+
+    /**
+     * takes damage and removes the enemy if its hp below 0
+     *
+     * @param damage  the damage to take
+     * @param enemies the enemies to remove the enemy from
+     * @param tower   the tower the shot was sent from
+     */
+    public void takeDamage(int damage, ArrayList<Enemy> enemies, Tower tower) {
+        hp -= damage;
+        if (hp <= 0) {
+            enemies.remove(this);
+            tower.kills++;
+        }
+    }
+
+    public boolean isDead() {
+        return hp <= 0;
     }
 }

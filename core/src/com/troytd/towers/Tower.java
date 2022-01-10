@@ -19,7 +19,7 @@ public abstract class Tower {
     public final static int range = 100;
     public final static int speed = 100;
     public final static int maxHP = 100;
-    public final static int atspeed = 1000;
+    public final static int atspeed = 100;
     public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
@@ -71,8 +71,8 @@ public abstract class Tower {
      */
     public Shot shoot(ArrayList<Enemy> enemies) {
         try {
-            return shotClass.getConstructor(TroyTD.class, Tower.class, Enemy.class)
-                    .newInstance(game, this, Enemy.getClosest(getPosition(), enemies));
+            return shotClass.getConstructor(TroyTD.class, Tower.class, Enemy.class, Vector2.class)
+                    .newInstance(game, this, Enemy.getClosest(getPosition(), enemies), distortion);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -99,24 +99,26 @@ public abstract class Tower {
         return type.toString();
     }
 
-    public void update(float delta, ArrayList<Enemy> enemies) {
+    public void update(float delta, ArrayList<Enemy> enemies, final ArrayList<Shot> shots) {
         if (enemies.isEmpty()) return;
 
         try {
-            if (TimeUtils.timeSinceMillis(lastShot) > this.getClass().getField("atspeed").getInt(null)) {
-                shoot(enemies);
+            if (TimeUtils.timeSinceMillis(lastShot) > 1 / (this.getClass()
+                    .getField("atspeed")
+                    .getInt(null) / 100000f)) {
+                shots.add(shoot(enemies));
                 lastShot = TimeUtils.millis();
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
-                shoot(enemies);
+                shots.add(shoot(enemies));
                 lastShot = TimeUtils.millis();
             }
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
             if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
-                shoot(enemies);
+                shots.add(shoot(enemies));
                 lastShot = TimeUtils.millis();
             }
         }

@@ -276,7 +276,7 @@ public abstract class Map implements Loadable {
     private void updateTowers(float delta, ArrayList<Enemy> enemies) {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.getTower() != null) {
-                towerPlace.getTower().update(delta, enemies);
+                towerPlace.getTower().update(delta, enemies, shots);
             }
         }
     }
@@ -309,8 +309,12 @@ public abstract class Map implements Loadable {
     }
 
     private void updateShots(float delta) {
-        for (Shot shot : shots) {
-            shot.update(delta);
+        for (int i = 0; i < shots.size(); i++) {
+            if (currentWave != null) {
+                shots.get(i).update(delta, shots, currentWave.getEnemies());
+            } else {
+                shots.clear();
+            }
         }
     }
 

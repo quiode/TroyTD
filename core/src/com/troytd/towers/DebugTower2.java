@@ -7,6 +7,7 @@ import com.troytd.shots.DebugShot;
 
 public class DebugTower2 extends Tower {
     public final static int cost = 200;
+    public final static int damage = 26;
 
     public DebugTower2(TroyTD game, Vector2 position, Vector2 distortion) {
         super(game, position, game.assetManager.get("towers/DebugTower2.png", Texture.class), "DebugTower2",

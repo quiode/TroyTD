@@ -33,6 +33,8 @@ public class PlaceTowerHUD extends SideHUD {
     final Label HPLabel;
     final Label HPAmount;
     final Label towerName;
+    final Label atSpeedLabel;
+    final Label atSpeedAmount;
     Image leftTower;
     Image rightTower;
     Image middleTower;
@@ -272,6 +274,26 @@ public class PlaceTowerHUD extends SideHUD {
         HPAmount = new Label(tmp_text, game.skin);
         table.add(HPAmount).colspan(3).right();
 
+        // attack speed label
+        table.row();
+
+        atSpeedLabel = new Label("Attack Speed:", game.skin);
+        table.add(atSpeedLabel).colspan(2).left();
+
+        // attack speed label
+        tmp_text = "";
+        try {
+            tmp_text = selectedTower.getField("atspeed").getInt(null) + "";
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            tmp_text = "";
+        }
+        atSpeedAmount = new Label(tmp_text, game.skin);
+        table.add(atSpeedAmount).colspan(3).right();
+
 
         // hud - place tower button
         navigationGroup = new HorizontalGroup();
@@ -365,6 +387,7 @@ public class PlaceTowerHUD extends SideHUD {
                 rangeAmount.setText(selectedTower.getField("range").getInt(null) + "");
                 speedAmount.setText(selectedTower.getField("speed").getInt(null) + "");
                 HPAmount.setText(selectedTower.getField("maxHP").getInt(null) + "");
+                atSpeedAmount.setText(selectedTower.getField("atSpeed").getInt(null) + "");
                 towerName.setText(selectedTower.getSimpleName());
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();

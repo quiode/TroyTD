@@ -181,7 +181,7 @@ public class InfoTowerHUD extends SideHUD {
             killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
             totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
             AOEAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("AOE").getInt(null)));
-            atspeedAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("atspeed").getFloat(null)));
+            atspeedAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("atspeed").getInt(null)));
             typeAmount.setText(towerPlace.getTower().getType());
             refundAmount.setText(
                     String.valueOf((towerPlace.getTower().getClass().getField("cost").getInt(null) / 3) * 2));
