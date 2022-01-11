@@ -99,7 +99,7 @@ public abstract class Tower {
         if (enemies.isEmpty()) return;
 
         try {
-            if (TimeUtils.timeSinceMillis(lastShot) > 1 / ( ClassReflection.getField(this.getClass(), "atspeed")
+            if (TimeUtils.timeSinceMillis(lastShot) > 1 / ((int) ClassReflection.getField(this.getClass(), "atspeed")
                     .get(null) / 100000f)) {
                 shots.add(shoot(enemies));
                 lastShot = TimeUtils.millis();
