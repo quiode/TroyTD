@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public abstract class Enemy {
     public final static short spawnSpeed = 2000;
-    protected final static short maxHp = 100;
+    protected final static int maxHp = 100;
     protected final static int speed = 50;
     protected final static short damage = 10;
     protected final static float sizeModifier = 0.1f;
@@ -39,7 +39,7 @@ public abstract class Enemy {
      */
     protected int position_on_path;
     private boolean draw = true;
-    private int hp = maxHp;
+    private int hp;
 
     /**
      * @param line     the line where the enemy is located, 0 is the top line, 1 is the middle line, 2 is the bottom line
@@ -49,6 +49,15 @@ public abstract class Enemy {
      */
     public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture, final Vector2 distortion,
                  Vector2[] path, final Map map, Stage stage) {
+        ProgressBar healthBar1;
+        try {
+            this.hp = (int) ((int) ClassReflection.getField(this.getClass(), "maxHP")
+                    .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
+                    .get(null) * 0.1f * game.settingPreference.getInteger("difficulty"));
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+            hp = maxHp;
+        }
         this.line = line;
         this.game = game;
         this.map = map;
@@ -63,7 +72,18 @@ public abstract class Enemy {
         enemySprite.setPosition(position.x, position.y);
         enemySprite.setSize(enemySprite.getWidth() * distortion.x * sizeModifier,
                             enemySprite.getHeight() * distortion.y * sizeModifier);
-        healthBar = new ProgressBar(0, maxHp, 1, false, game.skin, "enemy_health");
+        try {
+            healthBar1 = new ProgressBar(0, (int) ClassReflection.getField(this.getClass(), "maxHP")
+                    .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
+                    .get(null) * 0.1f * game.settingPreference.getInteger("difficulty"), 1, false, game.skin,
+                                         "enemy_health");
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+            healthBar1 = new ProgressBar(0, maxHp + maxHp * 0.1f * game.settingPreference.getInteger("difficulty"), 1,
+                                         false, game.skin, "enemy_health");
+        }
+        healthBar = healthBar1;
+
         healthBar.setValue(hp);
         healthBar.setSize(enemySprite.getWidth(), healthBar.getHeight());
         healthBar.setVisible(false);
@@ -115,12 +135,24 @@ public abstract class Enemy {
                                     path[position_on_path].y - line * game.settingPreference.getInteger(
                                             "height") / 20f);
 
-            if (hp < maxHp * 0.9f) {
-                healthBar.setVisible(true);
-                healthBar.setPosition(enemySprite.getX(), enemySprite.getY() - 2.5f);
-                healthBar.setValue(hp);
-            } else {
-                healthBar.setVisible(false);
+            try {
+                if (hp < ((int) ClassReflection.getField(this.getClass(), "maxHP")
+                        .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
+                        .get(null) * 0.1f * game.settingPreference.getInteger("difficulty")) * 0.9f) {
+                    healthBar.setVisible(true);
+                    healthBar.setPosition(enemySprite.getX(), enemySprite.getY() - 2.5f);
+                    healthBar.setValue(hp);
+                } else {
+                    healthBar.setVisible(false);
+                }
+            } catch (Exception e) {
+                if (hp < maxHp * 0.9f) {
+                    healthBar.setVisible(true);
+                    healthBar.setPosition(enemySprite.getX(), enemySprite.getY() - 2.5f);
+                    healthBar.setValue(hp);
+                } else {
+                    healthBar.setVisible(false);
+                }
             }
         } else {
             enemies.remove(this);
