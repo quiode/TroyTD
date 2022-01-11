@@ -8,7 +8,6 @@ import com.troytd.maps.Map;
 
 public class Poseidon extends Enemy {
     public final static short spawnSpeed = 2000;
-    public final static short hp = 600;
     public final static int speed = 50;
     public final static short damage = 50;
     public final static float sizeModifier = 0.1f;

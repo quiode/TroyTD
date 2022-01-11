@@ -12,6 +12,7 @@ import com.troytd.maps.Map;
 public class DebugEnemy extends Enemy {
     public final static short spawnSpeed = 5000;
     public final static int worth = 10;
+    public static int maxHP = 500;
 
     public DebugEnemy(byte line, final TroyTD game, Vector2 position, final Vector2 distortion, final Vector2[] path,
                       Map map, Stage stage) {

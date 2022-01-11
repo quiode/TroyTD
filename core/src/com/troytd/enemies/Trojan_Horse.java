@@ -8,7 +8,6 @@ import com.troytd.maps.Map;
 
 public class Trojan_Horse extends Enemy {
     public final static short spawnSpeed = 2000;
-    public final static short hp = 800;
     public final static int speed = 30;
     public final static short damage = 0;
     public final static float sizeModifier = 0.1f;

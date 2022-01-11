@@ -8,7 +8,6 @@ import com.troytd.maps.Map;
 
 public class Cart_Rider extends Enemy {
     public final static short spawnSpeed = 2000;
-    public final static short hp = 200;
     public final static int speed = 80;
     public final static short damage = 40;
     public final static float sizeModifier = 0.1f;
