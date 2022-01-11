@@ -29,6 +29,11 @@ public class MessageScreen implements Screen {
         textLabel.setFillParent(true);
         textLabel.setAlignment(1, 2);
         stage.addActor(textLabel);
+
+        // close on escape
+        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+        }
     }
 
     public MessageScreen(TroyTD game, String message) {
