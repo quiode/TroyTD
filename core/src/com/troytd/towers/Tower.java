@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.shots.Shot;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public abstract class Tower {
@@ -71,15 +72,10 @@ public abstract class Tower {
      */
     public Shot shoot(ArrayList<Enemy> enemies) {
         try {
-            return shotClass.getConstructor(TroyTD.class, Tower.class, Enemy.class, Vector2.class)
+            return (Shot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class, Enemy.class,
+                                                         Vector2.class)
                     .newInstance(game, this, Enemy.getClosest(getPosition(), enemies), distortion);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (ReflectionException e) {
             e.printStackTrace();
         }
         return null;
@@ -103,19 +99,12 @@ public abstract class Tower {
         if (enemies.isEmpty()) return;
 
         try {
-            if (TimeUtils.timeSinceMillis(lastShot) > 1 / (this.getClass()
-                    .getField("atspeed")
-                    .getInt(null) / 100000f)) {
+            if (TimeUtils.timeSinceMillis(lastShot) > 1 / ( ClassReflection.getField(this.getClass(), "atspeed")
+                    .get(null) / 100000f)) {
                 shots.add(shoot(enemies));
                 lastShot = TimeUtils.millis();
             }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
-                shots.add(shoot(enemies));
-                lastShot = TimeUtils.millis();
-            }
-        } catch (NoSuchFieldException e) {
+        } catch (ReflectionException e) {
             e.printStackTrace();
             if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
                 shots.add(shoot(enemies));
