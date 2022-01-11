@@ -1,6 +1,7 @@
 package com.troytd.waves;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
@@ -60,11 +61,12 @@ public abstract class Wave {
      * @param position the position to spawn
      * @return the spawned enemy
      */
-    private Enemy spawnEnemy(Class<? extends Enemy> enemy, byte line, Vector2 position) {
+    private Enemy spawnEnemy(Class<? extends Enemy> enemy, byte line, Vector2 position, Stage stage) {
         try {
             Enemy enemyInstance = (Enemy) ClassReflection.getConstructor(enemy, byte.class, TroyTD.class, Vector2.class,
-                                                                         Vector2.class, Vector2[].class, Map.class)
-                    .newInstance(line, game, position, mapDistortion, path, map);
+                                                                         Vector2.class, Vector2[].class, Map.class,
+                                                                         Stage.class)
+                    .newInstance(line, game, position, mapDistortion, path, map, stage);
             activeEnemies.add(enemyInstance);
             return enemyInstance;
         } catch (ReflectionException e) {
@@ -73,17 +75,12 @@ public abstract class Wave {
         return null;
     }
 
-    private void spawnEnemy(Class<? extends Enemy> enemy, byte line) {
-        Enemy spawnedEnemy = spawnEnemy(enemy, line, path[0]);
-        /*
-        if (spawnedEnemy != null) {
-            spawnedEnemy.hide();
-        }
-         */
+    private void spawnEnemy(Class<? extends Enemy> enemy, byte line, Stage stage) {
+        Enemy spawnedEnemy = spawnEnemy(enemy, line, path[0], stage);
     }
 
-    private void spawnEnemy(enemyAmount enemyAmount) {
-        if (enemyAmount.spawn()) spawnEnemy(enemyAmount.enemy, enemyAmount.getLine());
+    private void spawnEnemy(enemyAmount enemyAmount, Stage stage) {
+        if (enemyAmount.spawn()) spawnEnemy(enemyAmount.enemy, enemyAmount.getLine(), stage);
     }
 
     public void draw() {
@@ -102,7 +99,7 @@ public abstract class Wave {
         }
     }
 
-    private void updateWave() {
+    private void updateWave(Stage stage) {
         for (int i = enemyList.size() - 1; i >= 0; i--) {
             try {
                 enemyAmount enemyAmount = enemyList.get(i);
@@ -110,15 +107,15 @@ public abstract class Wave {
                     enemyList.remove(enemyAmount); // remove the enemyAmount if all enemies spawned
                     return;
                 }
-                if (enemyAmount.readyToSpawn()) spawnEnemy(enemyAmount);
+                if (enemyAmount.readyToSpawn()) spawnEnemy(enemyAmount, stage);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void update() {
-        updateWave();
+    public void update(Stage stage) {
+        updateWave(stage);
         updateEnemies();
     }
 

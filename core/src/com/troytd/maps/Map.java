@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
@@ -139,7 +140,7 @@ public abstract class Map implements Loadable {
     /**
      * draws the map, the dowers, and the enemies
      */
-    public void draw(final SpriteBatch batch, final GameScreen gameScreen, float delta) {
+    public void draw(final SpriteBatch batch, final GameScreen gameScreen, float delta, Stage stage) {
         if (!game.assetManager.isFinished()) game.setScreen(new LoadingScreen(game, gameScreen, this));
 
         if (mapSprite != null) {
@@ -148,7 +149,7 @@ public abstract class Map implements Loadable {
 
         if (currentWave != null) updateTowers(delta, currentWave.getEnemies());
         drawTowers();
-        updateEnemies();
+        updateEnemies(stage);
         drawEnemies();
         updateShots(delta, gameScreen);
         drawShots();
@@ -268,7 +269,7 @@ public abstract class Map implements Loadable {
         }
     }
 
-    private void updateEnemies() {
+    private void updateEnemies(Stage stage) {
         if (currentWave != null) {
             if (currentWave.isFinished()) {
                 if (++currentWaveIndex < waves.size()) {
@@ -284,7 +285,7 @@ public abstract class Map implements Loadable {
                     won = true;
                 }
             } else {
-                currentWave.update();
+                currentWave.update(stage);
             }
         }
     }

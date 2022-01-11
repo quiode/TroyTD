@@ -2,6 +2,7 @@ package com.troytd.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
 
@@ -13,8 +14,8 @@ public class DebugEnemy extends Enemy {
     public final static int worth = 10;
 
     public DebugEnemy(byte line, final TroyTD game, Vector2 position, final Vector2 distortion, final Vector2[] path,
-                      Map map) {
+                      Map map, Stage stage) {
         super(line, game, position, game.assetManager.get("enemies/DebugEnemy.png", Texture.class), distortion, path,
-              map);
+              map, stage);
     }
 }

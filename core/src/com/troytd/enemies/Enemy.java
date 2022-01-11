@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
@@ -31,6 +33,7 @@ public abstract class Enemy {
     protected final TroyTD game;
     final protected Sprite enemySprite;
     protected final Map map;
+    private final ProgressBar healthBar;
     /**
      * t in [0,1] in path
      */
@@ -45,7 +48,7 @@ public abstract class Enemy {
      * @param path     the path the enemy will follow, in precalculated points
      */
     public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture, final Vector2 distortion,
-                 Vector2[] path, final Map map) {
+                 Vector2[] path, final Map map, Stage stage) {
         this.line = line;
         this.game = game;
         this.map = map;
@@ -60,6 +63,10 @@ public abstract class Enemy {
         enemySprite.setPosition(position.x, position.y);
         enemySprite.setSize(enemySprite.getWidth() * distortion.x * sizeModifier,
                             enemySprite.getHeight() * distortion.y * sizeModifier);
+        healthBar = new ProgressBar(0, maxHp, 1, false, game.skin, "enemy_health");
+        healthBar.setValue(hp);
+        healthBar.setSize(enemySprite.getWidth(), healthBar.getHeight());
+        healthBar.setVisible(false);
     }
 
     public static void loadAssets() {
@@ -94,7 +101,10 @@ public abstract class Enemy {
     }
 
     public void draw() {
-        if (draw) enemySprite.draw(game.batch);
+        if (draw) {
+            enemySprite.draw(game.batch);
+            if (healthBar.isVisible()) healthBar.draw(game.batch, 1);
+        }
     }
 
     public void update(final ArrayList<Enemy> enemies) {
@@ -104,6 +114,14 @@ public abstract class Enemy {
             enemySprite.setPosition(path[position_on_path].x,
                                     path[position_on_path].y - line * game.settingPreference.getInteger(
                                             "height") / 20f);
+
+            if (hp < maxHp * 0.9f) {
+                healthBar.setVisible(true);
+                healthBar.setPosition(enemySprite.getX(), enemySprite.getY() - 2.5f);
+                healthBar.setValue(hp);
+            } else {
+                healthBar.setVisible(false);
+            }
         } else {
             enemies.remove(this);
             map.lost = true;

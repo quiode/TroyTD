@@ -245,6 +245,10 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 		background: white
 		knobBefore: green
 	}
+	enemy_health: {
+		background: grey
+		knobBefore: red
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	volume: {
