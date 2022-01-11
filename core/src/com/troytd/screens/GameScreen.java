@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
@@ -62,19 +64,8 @@ public class GameScreen implements Screen {
         this.game = game;
         Map temp1;
         try {
-            temp1 = map.getConstructor(TroyTD.class, ArrayList.class).newInstance(game, shots);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            temp1 = new DebugMap(game, shots);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            temp1 = new DebugMap(game, shots);
-
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            temp1 = new DebugMap(game, shots);
-
-        } catch (NoSuchMethodException e) {
+            temp1 = (Map) ClassReflection.getConstructor(map, TroyTD.class, ArrayList.class).newInstance(game, shots);
+        } catch (ReflectionException e) {
             e.printStackTrace();
             temp1 = new DebugMap(game, shots);
 

@@ -1,13 +1,13 @@
 package com.troytd.waves;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.enemyAmount;
 import com.troytd.maps.Map;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -62,18 +62,12 @@ public abstract class Wave {
      */
     private Enemy spawnEnemy(Class<? extends Enemy> enemy, byte line, Vector2 position) {
         try {
-            Constructor<? extends Enemy> ctor = enemy.getConstructor(byte.class, TroyTD.class, Vector2.class,
-                                                                     Vector2.class, Vector2[].class, Map.class);
-            Enemy enemyInstance = ctor.newInstance(line, game, position, mapDistortion, path, map);
+            Enemy enemyInstance = (Enemy) ClassReflection.getConstructor(enemy, byte.class, TroyTD.class, Vector2.class,
+                                                                         Vector2.class, Vector2[].class, Map.class)
+                    .newInstance(line, game, position, mapDistortion, path, map);
             activeEnemies.add(enemyInstance);
             return enemyInstance;
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (ReflectionException e) {
             e.printStackTrace();
         }
         return null;
@@ -132,7 +126,7 @@ public abstract class Wave {
         return activeEnemies.isEmpty() && enemyList.isEmpty();
     }
 
-    public ArrayList<Enemy> getEnemies(){
+    public ArrayList<Enemy> getEnemies() {
         return activeEnemies;
     }
 }

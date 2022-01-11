@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -34,7 +34,6 @@ public class TopHUD {
     private final GameScreen gameScreen;
     private final TroyTD game;
     private final Table topBar;
-    private final SimpleDateFormat formatter;
     private final Image moneyIcon;
     private final Image healthIcon;
     private final Label moneyLabel;
@@ -103,12 +102,11 @@ public class TopHUD {
         };
 
         // time label
-        formatter = new SimpleDateFormat("HH:mm");
         timeLabel = new Label("", game.skin) {
             @Override
             public void act(float delta) {
-                Date date = new Date();
-                this.setText(formatter.format(date));
+                Date date = new Date(TimeUtils.millis());
+                this.setText(date.getHours() + ":" + date.getMinutes());
             }
         };
 

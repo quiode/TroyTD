@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
-
-import java.lang.reflect.Constructor;
 
 public class PlaceTowerHUD extends SideHUD {
     // hud
@@ -183,11 +183,8 @@ public class PlaceTowerHUD extends SideHUD {
         // cost amount
         String tmp_text = "";
         try {
-            tmp_text = selectedTower.getField("cost").getInt(null) + "";
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        } catch (IllegalAccessException e) {
+            tmp_text = (int) ClassReflection.getField(selectedTower, "cost").get(null) + "";
+        } catch (ReflectionException e) {
             e.printStackTrace();
             tmp_text = "";
         }
@@ -203,11 +200,8 @@ public class PlaceTowerHUD extends SideHUD {
         // damage amount
         tmp_text = "";
         try {
-            tmp_text = selectedTower.getField("damage").getInt(null) + "";
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        } catch (IllegalAccessException e) {
+            tmp_text = (int) ClassReflection.getField(selectedTower, "damage").get(null) + "";
+        } catch (ReflectionException e) {
             e.printStackTrace();
             tmp_text = "";
         }
@@ -223,11 +217,8 @@ public class PlaceTowerHUD extends SideHUD {
         // range amount
         tmp_text = "";
         try {
-            tmp_text = selectedTower.getField("range").getInt(null) + "";
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        } catch (IllegalAccessException e) {
+            tmp_text = (int) ClassReflection.getField(selectedTower, "range").get(null) + "";
+        } catch (ReflectionException e) {
             e.printStackTrace();
             tmp_text = "";
         }
@@ -243,11 +234,8 @@ public class PlaceTowerHUD extends SideHUD {
         // speed amount
         tmp_text = "";
         try {
-            tmp_text = selectedTower.getField("speed").getInt(null) + "";
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        } catch (IllegalAccessException e) {
+            tmp_text = (int) ClassReflection.getField(selectedTower, "speed").get(null) + "";
+        } catch (ReflectionException e) {
             e.printStackTrace();
             tmp_text = "";
         }
@@ -263,11 +251,8 @@ public class PlaceTowerHUD extends SideHUD {
         // hp amount
         tmp_text = "";
         try {
-            tmp_text = selectedTower.getField("maxHP").getInt(null) + "";
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        } catch (IllegalAccessException e) {
+            tmp_text = (int) ClassReflection.getField(selectedTower, "maxHP").get(null) + "";
+        } catch (ReflectionException e) {
             e.printStackTrace();
             tmp_text = "";
         }
@@ -283,11 +268,8 @@ public class PlaceTowerHUD extends SideHUD {
         // attack speed label
         tmp_text = "";
         try {
-            tmp_text = selectedTower.getField("atspeed").getInt(null) + "";
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        } catch (IllegalAccessException e) {
+            tmp_text = (int) ClassReflection.getField(selectedTower, "atspeed").get(null) + "";
+        } catch (ReflectionException e) {
             e.printStackTrace();
             tmp_text = "";
         }
@@ -307,8 +289,8 @@ public class PlaceTowerHUD extends SideHUD {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    if (selectedTower.getField("cost").getInt(null) <= gameScreen.money) {
-                        gameScreen.money -= selectedTower.getField("cost").getInt(null);
+                    if ((int) ClassReflection.getField(selectedTower, "cost").get(null) <= gameScreen.money) {
+                        gameScreen.money -= (int) ClassReflection.getField(selectedTower, "cost").get(null);
                     } else {
                         Dialog errorDialog = new Dialog("", game.skin, "error") {
                             @Override
@@ -323,15 +305,14 @@ public class PlaceTowerHUD extends SideHUD {
                         close();
                         return;
                     }
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
+                } catch (ReflectionException e) {
                     e.printStackTrace();
                 }
                 try {
-                    Constructor<? extends Tower> ctor = getSelectedTower().getConstructor(TroyTD.class, Vector2.class,
-                                                                                          Vector2.class);
-                    towerPlace.setTower(ctor.newInstance(game, towerPlace.place, map.mapDistortion), game);
+                    towerPlace.setTower((Tower) ClassReflection.getConstructor(getSelectedTower(),
+                                                                               TroyTD.class, Vector2.class,
+                                                                               Vector2.class)
+                            .newInstance(game, towerPlace.place, map.mapDistortion), game);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Dialog errorDialog = new Dialog("", game.skin, "error") {
@@ -382,16 +363,14 @@ public class PlaceTowerHUD extends SideHUD {
     private void setSelectedTower(Class<? extends Tower> selectedTower) {
         if (costAmount != null) {
             try {
-                costAmount.setText(selectedTower.getField("cost").getInt(null) + "");
-                damageAmount.setText(selectedTower.getField("damage").getInt(null) + "");
-                rangeAmount.setText(selectedTower.getField("range").getInt(null) + "");
-                speedAmount.setText(selectedTower.getField("speed").getInt(null) + "");
-                HPAmount.setText(selectedTower.getField("maxHP").getInt(null) + "");
-                atSpeedAmount.setText(selectedTower.getField("atSpeed").getInt(null) + "");
+                costAmount.setText((int) ClassReflection.getField(selectedTower, "cost").get(null) + "");
+                damageAmount.setText((int) ClassReflection.getField(selectedTower, "damage").get(null) + "");
+                rangeAmount.setText((int) ClassReflection.getField(selectedTower, "range").get(null) + "");
+                speedAmount.setText((int) ClassReflection.getField(selectedTower, "speed").get(null) + "");
+                HPAmount.setText((int) ClassReflection.getField(selectedTower, "maxHP").get(null) + "");
+                atSpeedAmount.setText((int) ClassReflection.getField(selectedTower, "atspeed").get(null) + "");
                 towerName.setText(selectedTower.getSimpleName());
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (ReflectionException e) {
                 e.printStackTrace();
             }
         }

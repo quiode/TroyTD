@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Loadable;
@@ -15,7 +17,6 @@ import com.troytd.shots.Shot;
 import com.troytd.towers.Tower;
 import com.troytd.waves.Wave;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -101,15 +102,13 @@ public abstract class Map implements Loadable {
         // load enemy textures
         for (Class<? extends Wave> wave : waves) {
             try {
-                for (Class<? extends Enemy> enemy : (Class<? extends Enemy>[]) wave.getMethod("getEnemyList", null)
+                for (Class<? extends Enemy> enemy : (Class<? extends Enemy>[]) ClassReflection.getMethod(wave,
+                                                                                                         "getEnemyList",
+                                                                                                         null)
                         .invoke(null, null)) {
                     game.assetManager.load("enemies/" + enemy.getSimpleName() + ".png", Texture.class);
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
+            } catch (ReflectionException e) {
                 e.printStackTrace();
             }
         }
@@ -189,16 +188,10 @@ public abstract class Map implements Loadable {
         // set first wave
         currentWaveIndex = 0;
         try {
-            currentWave = waves.get(currentWaveIndex)
-                    .getConstructor(TroyTD.class, Vector2.class, Vector2[].class, Map.class)
+            currentWave = (Wave) ClassReflection.getConstructor(waves.get(currentWaveIndex), TroyTD.class,
+                                                                Vector2.class, Vector2[].class, Map.class)
                     .newInstance(game, mapDistortion, pathPointsCalculated, this);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (ReflectionException e) {
             e.printStackTrace();
         }
     }
@@ -286,16 +279,10 @@ public abstract class Map implements Loadable {
             if (currentWave.isFinished()) {
                 if (++currentWaveIndex < waves.size()) {
                     try {
-                        currentWave = waves.get(currentWaveIndex)
-                                .getConstructor(TroyTD.class, Vector2.class, Vector2[].class)
+                        currentWave = (Wave) ClassReflection.getConstructor(waves.get(currentWaveIndex), TroyTD.class,
+                                                                            Vector2.class, Vector2[].class)
                                 .newInstance(game, mapDistortion, pathPointsCalculated);
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
+                    } catch (ReflectionException e) {
                         e.printStackTrace();
                     }
                 } else {
