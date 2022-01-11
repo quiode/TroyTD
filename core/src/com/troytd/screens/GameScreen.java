@@ -27,7 +27,6 @@ import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
 import com.troytd.shots.Shot;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
@@ -35,7 +34,6 @@ public class GameScreen implements Screen {
     public final ImageButton pauseButton;
     // stage for this screen
     public final Stage stage;
-    public final byte maxRounds;
     private final TroyTD game;
     private final Container<ImageButton> container;
     // camera and viewport
@@ -51,7 +49,6 @@ public class GameScreen implements Screen {
     public int money = 200;
     public short kills;
     public short health;
-    public byte round;
     // HUDs
     private PlaceTowerHUD placeTowerHUD;
     private InfoTowerHUD infoTowerHUD;
@@ -71,7 +68,6 @@ public class GameScreen implements Screen {
 
         }
         this.map = temp1;
-        this.maxRounds = (byte) (this.map.maxRounds * game.settingPreference.getInteger("difficulty", 1));
         money += (short) (money * game.settingPreference.getInteger("difficulty", 0));
 
         // create stage
@@ -220,5 +216,9 @@ public class GameScreen implements Screen {
         infoTowerHUD.dispose();
         placeTowerHUD.dispose();
         upgradeTowerHUD.dispose();
+    }
+
+    public Map getMap() {
+        return map;
     }
 }

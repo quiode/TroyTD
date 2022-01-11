@@ -97,7 +97,7 @@ public class TopHUD {
         roundLabel = new Label("", game.skin) {
             @Override
             public void act(float delta) {
-                this.setText(String.valueOf(gameScreen.round) + "/" + String.valueOf(gameScreen.maxRounds));
+                this.setText(String.valueOf(gameScreen.getMap().currentWave()) + "/" + gameScreen.getMap().maxWaves());
             }
         };
 

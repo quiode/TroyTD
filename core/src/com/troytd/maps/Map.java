@@ -28,10 +28,6 @@ public abstract class Map implements Loadable {
      */
     public final ArrayList<Class<? extends Tower>> towers;
     /**
-     * the amount of rounds needed to win
-     */
-    public final byte maxRounds;
-    /**
      * The name of the map
      */
     public final String name;
@@ -88,13 +84,12 @@ public abstract class Map implements Loadable {
      * @param texturePath the path to the texture
      * @param towerPlaces the places where towers can be placed
      * @param pathPoints  the points that make up the path
-     * @param maxRounds   the amount of rounds needed to win
      * @param name        the name of the map
      * @param towers      the towers that can be used with this map
      * @param waves       the waves of the map
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
-               byte maxRounds, final String name, final ArrayList<Class<? extends Tower>> towers,
+               final String name, final ArrayList<Class<? extends Tower>> towers,
                ArrayList<Class<? extends Wave>> waves, ArrayList<Shot> shots) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
@@ -123,7 +118,6 @@ public abstract class Map implements Loadable {
         this.game = game;
         this.pathName = texturePath;
         this.towerPlaces = new TowerPlace[towerPlaces.length];
-        this.maxRounds = maxRounds;
         for (int i = 0; i < towerPlaces.length; i++) {
             this.towerPlaces[i] = new TowerPlace(towerPlaces[i], null);
         }
@@ -309,6 +303,14 @@ public abstract class Map implements Loadable {
         for (Shot shot : shots) {
             shot.draw();
         }
+    }
+
+    public int maxWaves() {
+        return waves.size();
+    }
+
+    public short currentWave() {
+        return currentWaveIndex;
     }
 }
 

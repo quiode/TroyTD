@@ -43,8 +43,7 @@ public class Map1 extends Map {
                       new Vector2(1304, 1536 - 1136),
                       new Vector2(0, 1536 - 1288),
                       new Vector2(-68, 1536 - 1300)
-              }, (byte) 5, "Map1",
-              new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class)),
+              }, "Map1", new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class)),
               new ArrayList<Class<? extends Wave>>(), shots);
     }
 }

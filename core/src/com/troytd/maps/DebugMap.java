@@ -60,7 +60,7 @@ public class DebugMap extends Map {
                       new Vector2(1258, 128),
                       new Vector2(1280, 120),
                       new Vector2(1330, 133)
-              }, (byte) 3, "Debugger Map", new ArrayList<Class<? extends Tower>>(
+              }, "Debugger Map", new ArrayList<Class<? extends Tower>>(
                       Arrays.asList(DebugTower.class, DebugTower2.class, DebugTower3.class, DebugTower4.class,
                                     DebugTower5.class)),
               new ArrayList<Class<? extends Wave>>(Collections.singleton(DebugWave.class)), shots);
