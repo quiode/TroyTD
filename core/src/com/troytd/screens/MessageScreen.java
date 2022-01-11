@@ -1,6 +1,7 @@
 package com.troytd.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,10 +31,6 @@ public class MessageScreen implements Screen {
         textLabel.setAlignment(1, 2);
         stage.addActor(textLabel);
 
-        // close on escape
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
     }
 
     public MessageScreen(TroyTD game, String message) {
@@ -55,6 +52,11 @@ public class MessageScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        // close on keypress
+        if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+            Gdx.app.exit();
+        }
+
         ScreenUtils.clear(game.BACKGROUND_COLOR);
 
         stage.act(delta);
