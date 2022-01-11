@@ -1,6 +1,8 @@
 package com.troytd.helpers;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 
 /**
@@ -55,10 +57,9 @@ public class enemyAmount {
      */
     public boolean readyToSpawn() {
         try {
-            return TimeUtils.timeSinceMillis(lastSpawn) > enemy.getField("spawnSpeed").getInt(new Object());
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
+            return TimeUtils.timeSinceMillis(lastSpawn) > (short) ClassReflection.getField(enemy, "spawnSpeed")
+                    .get(null);
+        } catch (ReflectionException e) {
             e.printStackTrace();
         }
         return false;

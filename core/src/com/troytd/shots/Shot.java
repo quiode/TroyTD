@@ -3,6 +3,8 @@ package com.troytd.shots;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.towers.Tower;
@@ -43,11 +45,9 @@ public abstract class Shot {
         this.game = game;
         this.target = target;
         try {
-            this.damage = tower.getClass().getField("damage").getInt(null);
-            this.speed = tower.getClass().getField("speed").getInt(null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+            this.damage = (int) ClassReflection.getField(tower.getClass(), "damage").get(null);
+            this.speed = (int) ClassReflection.getField(tower.getClass(), "speed").get(null);
+        } catch (ReflectionException e) {
             e.printStackTrace();
         }
         sprite = new Sprite(

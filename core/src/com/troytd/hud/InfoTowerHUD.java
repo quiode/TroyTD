@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
@@ -117,7 +119,8 @@ public class InfoTowerHUD extends SideHUD {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    gameScreen.money += (towerPlace.getTower().getClass().getField("cost").getInt(null) / 3) * 2;
+                    gameScreen.money += ((int) ClassReflection.getField(towerPlace.getTower().getClass(), "cost")
+                            .get(null) / 3) * 2;
                     towerPlace.removeTower();
                     close();
                     Dialog dialog = new Dialog("", game.skin, "info") {
@@ -138,9 +141,7 @@ public class InfoTowerHUD extends SideHUD {
                     dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f,
                                        Gdx.graphics.getHeight() / 2f, Align.center);
                     dialog.show(stage);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
+                } catch (ReflectionException e) {
                     e.printStackTrace();
                 }
             }
@@ -173,21 +174,25 @@ public class InfoTowerHUD extends SideHUD {
         towerImage.setDrawable(new TextureRegionDrawable(towerPlace.getTower().getTexture()));
         towerName.setText(towerPlace.getTower().name);
         try {
-            damageAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("damage").getInt(null)));
-            rangeAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("range").getInt(null)));
-            speedAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("speed").getInt(null)));
+            damageAmount.setText(String.valueOf(
+                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "damage").get(null)));
+            rangeAmount.setText(String.valueOf(
+                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "range").get(null)));
+            speedAmount.setText(String.valueOf(
+                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "speed").get(null)));
             HPAmount.setText(String.valueOf(towerPlace.getTower().hp));
-            maxHPAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("maxHP").getInt(null)));
+            maxHPAmount.setText(String.valueOf(
+                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "maxHP").get(null)));
             killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
             totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
-            AOEAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("AOE").getInt(null)));
-            atspeedAmount.setText(String.valueOf(towerPlace.getTower().getClass().getField("atspeed").getInt(null)));
+            AOEAmount.setText(
+                    String.valueOf((int) ClassReflection.getField(towerPlace.getTower().getClass(), "AOE").get(null)));
+            atspeedAmount.setText(String.valueOf(
+                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "atspeed").get(null)));
             typeAmount.setText(towerPlace.getTower().getType());
-            refundAmount.setText(
-                    String.valueOf((towerPlace.getTower().getClass().getField("cost").getInt(null) / 3) * 2));
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
+            refundAmount.setText(String.valueOf(
+                    ((int) ClassReflection.getField(towerPlace.getTower().getClass(), "cost").get(null) / 3) * 2));
+        } catch (ReflectionException e) {
             e.printStackTrace();
         }
     }
