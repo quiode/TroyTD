@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
+import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public abstract class Shot {
      *
      * @param delta the time since the last update
      */
-    public void update(float delta, final ArrayList<Shot> shots, final ArrayList<Enemy> enemies) {
+    public void update(float delta, final ArrayList<Shot> shots, final ArrayList<Enemy> enemies, GameScreen gameScreen) {
         Vector2 vectorToTarget = new Vector2(
                 (target.getPosition().x + target.getRectangle().width / 2f) - (sprite.getX() + sprite.getWidth() / 2f),
                 (target.getPosition().y + target.getRectangle().height / 2f) - (sprite.getY() + sprite.getHeight() / 2f));
@@ -86,7 +87,7 @@ public abstract class Shot {
 
         // if target was hit, deal damage to it and remove the shot
         if (hitDetection()) {
-            target.takeDamage(damage, enemies, tower);
+            target.takeDamage(damage, enemies, tower, gameScreen);
             shots.remove(this);
         }
 

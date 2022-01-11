@@ -156,7 +156,7 @@ public abstract class Map implements Loadable {
         drawTowers();
         updateEnemies();
         drawEnemies();
-        updateShots(delta);
+        updateShots(delta, gameScreen);
         drawShots();
     }
 
@@ -295,10 +295,10 @@ public abstract class Map implements Loadable {
         }
     }
 
-    private void updateShots(float delta) {
+    private void updateShots(float delta, GameScreen gameScreen) {
         for (int i = 0; i < shots.size(); i++) {
             if (currentWave != null) {
-                shots.get(i).update(delta, shots, currentWave.getEnemies());
+                shots.get(i).update(delta, shots, currentWave.getEnemies(), gameScreen);
             } else {
                 shots.clear();
             }

@@ -4,9 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Helper;
 import com.troytd.maps.Map;
+import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public abstract class Enemy {
     protected final static float sizeModifier = 0.1f;
     protected final static float atspeed = 0.5f;
     protected final static short range = 100;
+    protected final static int worth = 100;
     protected final Vector2[] path;
     protected final byte line;
     protected final TroyTD game;
@@ -117,11 +121,17 @@ public abstract class Enemy {
      * @param enemies the enemies to remove the enemy from
      * @param tower   the tower the shot was sent from
      */
-    public void takeDamage(int damage, ArrayList<Enemy> enemies, Tower tower) {
+    public void takeDamage(int damage, ArrayList<Enemy> enemies, Tower tower, GameScreen gameScreen) {
         hp -= damage;
         if (hp <= 0) {
             enemies.remove(this);
             tower.kills++;
+            try {
+                gameScreen.money += (int) ClassReflection.getField(this.getClass(), "worth").get(null);
+            } catch (ReflectionException e) {
+                e.printStackTrace();
+                gameScreen.money += worth;
+            }
         }
     }
 
