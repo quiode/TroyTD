@@ -42,6 +42,7 @@ public abstract class Wave {
      * @param mapDistortion the distortion of the map
      * @param enemyList     the enemies that can spawn
      * @param path          the path the enemies traverse
+     * @param map           the map
      */
     public Wave(TroyTD game, Vector2 mapDistortion, ArrayList<enemyAmount> enemyList, Vector2[] path, Map map) {
         this.game = game;
