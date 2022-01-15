@@ -17,13 +17,13 @@ public class Poseidon extends Enemy {
      * @param line       the line where the enemy is located, 0 is the top line, 1 is the middle line, 2 is the bottom line
      * @param game       the game instance
      * @param position   the position of the enemy
-     * @param texture
      * @param distortion
      * @param path       the path the enemy will follow, in precalculated points
      * @param map
      */
-    public Poseidon(byte line, TroyTD game, Vector2 position, Texture texture, Vector2 distortion, Vector2[] path,
-                    Map map, Stage stage) {
-        super(line, game, position, new Texture("towers/range.jpg"), distortion, path, map, stage);
+    public Poseidon(byte line, TroyTD game, Vector2 position, Vector2 distortion, Vector2[] path, Map map,
+                    Stage stage) {
+        super(line, game, position, game.assetManager.get("enemies/Poseidon.png", Texture.class), distortion,
+              path, map, stage);
     }
 }

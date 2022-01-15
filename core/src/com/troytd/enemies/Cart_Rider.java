@@ -22,8 +22,8 @@ public class Cart_Rider extends Enemy {
      * @param path       the path the enemy will follow, in precalculated points
      * @param map
      */
-    public Cart_Rider(byte line, TroyTD game, Vector2 position, Texture texture, Vector2 distortion, Vector2[] path,
-                      Map map, Stage stage) {
+    public Cart_Rider(byte line, TroyTD game, Vector2 position, Vector2 distortion, Vector2[] path, Map map,
+                      Stage stage) {
         super(line, game, position, new Texture("towers/range.jpg"), distortion, path, map, stage);
     }
 }

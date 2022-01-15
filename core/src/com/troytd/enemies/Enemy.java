@@ -54,7 +54,6 @@ public abstract class Enemy {
                     .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
                     .get(null) * 0.1f * game.settingPreference.getInteger("difficulty"));
         } catch (ReflectionException e) {
-            e.printStackTrace();
             hp = maxHp;
         }
         this.line = line;
@@ -77,7 +76,6 @@ public abstract class Enemy {
                     .get(null) * 0.1f * game.settingPreference.getInteger("difficulty"), 1, false, game.skin,
                                          "enemy_health");
         } catch (ReflectionException e) {
-            e.printStackTrace();
             healthBar1 = new ProgressBar(0, maxHp + maxHp * 0.1f * game.settingPreference.getInteger("difficulty"), 1,
                                          false, game.skin, "enemy_health");
         }
