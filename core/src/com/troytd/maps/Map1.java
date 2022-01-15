@@ -5,6 +5,7 @@ import com.troytd.game.TroyTD;
 import com.troytd.shots.Shot;
 import com.troytd.towers.Spearthrower;
 import com.troytd.towers.Tower;
+import com.troytd.waves.ArcherWave;
 import com.troytd.waves.Wave;
 
 import java.util.ArrayList;
@@ -44,6 +45,6 @@ public class Map1 extends Map {
                       new Vector2(0, 1536 - 1288),
                       new Vector2(-68, 1536 - 1300)
               }, "Map1", new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class)),
-              new ArrayList<Class<? extends Wave>>(), shots);
+              new ArrayList<Class<? extends Wave>>(Arrays.asList(ArcherWave.class)), shots);
     }
 }
