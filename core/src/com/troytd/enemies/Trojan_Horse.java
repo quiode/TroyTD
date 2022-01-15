@@ -11,7 +11,6 @@ public class Trojan_Horse extends Enemy {
     public final static int speed = 30;
     public final static short damage = 0;
     public final static float sizeModifier = 0.1f;
-    public final static float atspeed = 0.5f;
     public final static short range = 0;
 
     /**

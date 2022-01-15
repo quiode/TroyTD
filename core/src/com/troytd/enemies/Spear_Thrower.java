@@ -11,7 +11,6 @@ public class Spear_Thrower extends Enemy {
     public final static int speed = 60;
     public final static short damage = 30;
     public final static float sizeModifier = 0.1f;
-    public final static float atspeed = 1f;
     public final static short range = 120;
 
     /**

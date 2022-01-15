@@ -11,7 +11,6 @@ public class Horseman extends Enemy {
     public final static int speed = 90;
     public final static short damage = 30;
     public final static float sizeModifier = 0.1f;
-    public final static float atspeed = 0.5f;
     public final static short range = 20;
 
     /**

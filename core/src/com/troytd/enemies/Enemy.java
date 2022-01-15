@@ -25,7 +25,6 @@ public abstract class Enemy {
     protected final static int speed = 50;
     protected final static short damage = 10;
     protected final static float sizeModifier = 0.1f;
-    protected final static float atspeed = 0.5f;
     protected final static short range = 100;
     protected final static int worth = 100;
     protected final Vector2[] path;

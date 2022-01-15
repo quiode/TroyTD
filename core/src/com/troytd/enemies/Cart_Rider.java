@@ -11,7 +11,6 @@ public class Cart_Rider extends Enemy {
     public final static int speed = 80;
     public final static short damage = 40;
     public final static float sizeModifier = 0.1f;
-    public final static float atspeed = 0.5f;
     public final static short range = 40;
 
     /**

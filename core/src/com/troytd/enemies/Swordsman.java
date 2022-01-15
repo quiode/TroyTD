@@ -11,7 +11,6 @@ public class Swordsman extends Enemy {
     public final static int speed = 50;
     public final static short damage = 20;
     public final static float sizeModifier = 0.1f;
-    public final static float atspeed = 0.5f;
     public final static short range = 20;
 
     /**
