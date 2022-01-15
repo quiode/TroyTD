@@ -7,7 +7,6 @@ import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
 
 public class Horseman extends Enemy {
-    public final static short spawnSpeed = 2000;
     public final static int speed = 90;
     public final static short damage = 30;
     public final static float sizeModifier = 0.1f;

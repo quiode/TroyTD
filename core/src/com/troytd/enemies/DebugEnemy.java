@@ -10,7 +10,7 @@ import com.troytd.maps.Map;
  * Class for debugging enemies
  */
 public class DebugEnemy extends Enemy {
-    public final static short spawnSpeed = 5000;
+    public final static short spawnSpeed = 50;
     public final static int worth = 10;
     public static int maxHP = 500;
 

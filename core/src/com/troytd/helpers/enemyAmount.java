@@ -57,7 +57,7 @@ public class enemyAmount {
      */
     public boolean readyToSpawn() {
         try {
-            return TimeUtils.timeSinceMillis(lastSpawn) > (short) ClassReflection.getField(enemy, "spawnSpeed")
+            return TimeUtils.timeSinceMillis(lastSpawn) > 200000 / (short) ClassReflection.getField(enemy, "spawnSpeed")
                     .get(null);
         } catch (ReflectionException e) {
             e.printStackTrace();

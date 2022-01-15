@@ -28,7 +28,6 @@ public class TowerPlace {
         this.tower = tower;
         float width = game.settingPreference.getInteger("width");
         float height = game.settingPreference.getInteger("height");
-        this.tower.setSize(Tower.size, Tower.size);
         this.tower.setPosition(new Vector2(-width / 2 + place.x - this.tower.getRect().height / 2,
                                            -height / 2 + place.y - this.tower.getRect().height / 2));
     }

@@ -7,7 +7,7 @@ import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
 
 public class Archer extends Enemy {
-    public final static short spawnSpeed = 2000;
+    public final static short spawnSpeed = 20;
     public final static int speed = 50;
     public final static short damage = 20;
     public final static float sizeModifier = 0.1f;

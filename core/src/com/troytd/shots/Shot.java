@@ -55,7 +55,9 @@ public abstract class Shot {
                 game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,
                            tower.getPosition().y + tower.getRect().height);
-        sprite.setSize(sprite.getWidth() * distortion.x, sprite.getHeight() * distortion.y);
+        float sizeModifier = game.settingPreference.getInteger("width") * 0.0025f / sprite.getWidth();
+        sprite.setSize(sprite.getWidth() * sizeModifier, sprite.getHeight() * sizeModifier); // scales
+        // the enemy
     }
 
     /**
@@ -70,7 +72,8 @@ public abstract class Shot {
      *
      * @param delta the time since the last update
      */
-    public void update(float delta, final ArrayList<Shot> shots, final ArrayList<Enemy> enemies, GameScreen gameScreen) {
+    public void update(float delta, final ArrayList<Shot> shots, final ArrayList<Enemy> enemies,
+                       GameScreen gameScreen) {
         Vector2 vectorToTarget = new Vector2(
                 (target.getPosition().x + target.getRectangle().width / 2f) - (sprite.getX() + sprite.getWidth() / 2f),
                 (target.getPosition().y + target.getRectangle().height / 2f) - (sprite.getY() + sprite.getHeight() / 2f));

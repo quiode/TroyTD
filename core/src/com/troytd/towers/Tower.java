@@ -14,7 +14,6 @@ import com.troytd.shots.Shot;
 import java.util.ArrayList;
 
 public abstract class Tower {
-    public final static int size = 100;
     public final static int cost = 100;
     public final static int damage = 100;
     public final static int range = 100;
@@ -38,11 +37,15 @@ public abstract class Tower {
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
-        towerSprite.setSize(towerSprite.getWidth() * distortion.x, towerSprite.getHeight() * distortion.y);
+        towerSprite.setSize(getSize(game), getSize(game));
         this.name = name;
         this.type = type;
         this.distortion = distortion;
         this.shotClass = shotClass;
+    }
+
+    static public float getSize(TroyTD game) {
+        return game.settingPreference.getInteger("width") * 0.075f;
     }
 
     public void dispose() {
@@ -55,10 +58,6 @@ public abstract class Tower {
 
     public void draw() {
         towerSprite.draw(game.batch);
-    }
-
-    public void setSize(float width, float height) {
-        towerSprite.setSize(width * distortion.x, height * distortion.y);
     }
 
     public Texture getTexture() {

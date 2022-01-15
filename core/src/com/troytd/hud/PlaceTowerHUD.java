@@ -54,28 +54,55 @@ public class PlaceTowerHUD extends SideHUD {
             public void changed(ChangeEvent event, Actor actor) {
                 int index = map.towers.indexOf(selectedTower);
                 leftTower.setDrawable(middleTower.getDrawable());
-                if (index > 0) {
-                    setSelectedTower(map.towers.get(index - 1));
-                    middleTower.setDrawable(new TextureRegionDrawable(
-                            game.assetManager.get("towers/" + map.towers.get(index - 1).getSimpleName() + ".png",
-                                                  Texture.class)));
-                    if (index - 1 > 0) {
-                        rightTower.setDrawable(new TextureRegionDrawable(
-                                game.assetManager.get("towers/" + map.towers.get(index - 2).getSimpleName() + ".png",
+                if (map.towers.size() > 2) {
+                    if (index > 0) {
+                        setSelectedTower(map.towers.get(index - 1));
+                        middleTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(index - 1).getSimpleName() + ".png",
                                                       Texture.class)));
+                        if (index - 1 > 0) {
+                            rightTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
+                                    "towers/" + map.towers.get(index - 2).getSimpleName() + ".png", Texture.class)));
+                        } else {
+                            rightTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
+                                    "towers/" + map.towers.get(map.towers.size() - 1).getSimpleName() + ".png",
+                                    Texture.class)));
+                        }
                     } else {
-                        rightTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
+                        setSelectedTower(map.towers.get(map.towers.size() - 1));
+                        middleTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
                                 "towers/" + map.towers.get(map.towers.size() - 1).getSimpleName() + ".png",
                                 Texture.class)));
+                        rightTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
+                                "towers/" + map.towers.get(map.towers.size() - 2).getSimpleName() + ".png",
+                                Texture.class)));
+                    }
+                } else if (map.towers.size() > 1) {
+                    if (index != 0) {
+                        selectedTower = map.towers.get(0);
+                        middleTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
+                                                      Texture.class)));
+                        rightTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() + ".png",
+                                                      Texture.class)));
+                    } else {
+                        selectedTower = map.towers.get(1);
+                        middleTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() + ".png",
+                                                      Texture.class)));
+                        rightTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
+                                                      Texture.class)));
                     }
                 } else {
-                    setSelectedTower(map.towers.get(map.towers.size() - 1));
-                    middleTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
-                            "towers/" + map.towers.get(map.towers.size() - 1).getSimpleName() + ".png",
-                            Texture.class)));
-                    rightTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
-                            "towers/" + map.towers.get(map.towers.size() - 2).getSimpleName() + ".png",
-                            Texture.class)));
+                    selectedTower = map.towers.get(0);
+                    middleTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
+                                                  Texture.class)));
+                    rightTower.setDrawable(new TextureRegionDrawable(
+                            game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
+                                                  Texture.class)));
                 }
             }
         });
@@ -135,27 +162,54 @@ public class PlaceTowerHUD extends SideHUD {
                 int index = map.towers.indexOf(selectedTower);
                 int maxIndex = map.towers.size() - 1;
                 rightTower.setDrawable(middleTower.getDrawable());
-                if (index < maxIndex) {
-                    setSelectedTower(map.towers.get(index + 1));
-                    middleTower.setDrawable(new TextureRegionDrawable(
-                            game.assetManager.get("towers/" + map.towers.get(index + 1).getSimpleName() + ".png",
-                                                  Texture.class)));
-                    if (index + 1 < maxIndex) {
+                if (map.towers.size() > 2) {
+                    if (index < maxIndex) {
+                        setSelectedTower(map.towers.get(index + 1));
+                        middleTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(index + 1).getSimpleName() + ".png",
+                                                      Texture.class)));
+                        if (index + 1 < maxIndex) {
+                            leftTower.setDrawable(new TextureRegionDrawable(game.assetManager.get(
+                                    "towers/" + map.towers.get(index + 2).getSimpleName() + ".png", Texture.class)));
+                        } else {
+                            leftTower.setDrawable(new TextureRegionDrawable(
+                                    game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
+                                                          Texture.class)));
+                        }
+                    } else {
+                        setSelectedTower(map.towers.get(0));
+                        middleTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
+                                                      Texture.class)));
                         leftTower.setDrawable(new TextureRegionDrawable(
-                                game.assetManager.get("towers/" + map.towers.get(index + 2).getSimpleName() + ".png",
+                                game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() + ".png",
+                                                      Texture.class)));
+                    }
+                } else if (map.towers.size() > 1) {
+                    if (index != 0) {
+                        selectedTower = map.towers.get(0);
+                        middleTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
+                                                      Texture.class)));
+                        leftTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() + ".png",
                                                       Texture.class)));
                     } else {
+                        selectedTower = map.towers.get(1);
+                        middleTower.setDrawable(new TextureRegionDrawable(
+                                game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() + ".png",
+                                                      Texture.class)));
                         leftTower.setDrawable(new TextureRegionDrawable(
                                 game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
                                                       Texture.class)));
                     }
                 } else {
-                    setSelectedTower(map.towers.get(0));
+                    selectedTower = map.towers.get(0);
                     middleTower.setDrawable(new TextureRegionDrawable(
                             game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
                                                   Texture.class)));
                     leftTower.setDrawable(new TextureRegionDrawable(
-                            game.assetManager.get("towers/" + map.towers.get(1).getSimpleName() + ".png",
+                            game.assetManager.get("towers/" + map.towers.get(0).getSimpleName() + ".png",
                                                   Texture.class)));
                 }
             }
@@ -309,10 +363,10 @@ public class PlaceTowerHUD extends SideHUD {
                     e.printStackTrace();
                 }
                 try {
-                    towerPlace.setTower((Tower) ClassReflection.getConstructor(getSelectedTower(),
-                                                                               TroyTD.class, Vector2.class,
-                                                                               Vector2.class)
-                            .newInstance(game, towerPlace.place, map.mapDistortion), game);
+                    towerPlace.setTower(
+                            (Tower) ClassReflection.getConstructor(getSelectedTower(), TroyTD.class, Vector2.class,
+                                                                   Vector2.class)
+                                    .newInstance(game, towerPlace.place, map.mapDistortion), game);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Dialog errorDialog = new Dialog("", game.skin, "error") {

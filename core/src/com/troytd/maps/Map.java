@@ -237,8 +237,9 @@ public abstract class Map implements Loadable {
                 towerPlaceRectangle.x += game.settingPreference.getInteger("width") / 2f;
                 towerPlaceRectangle.y += game.settingPreference.getInteger("height") / 2f;
             } else {
-                towerPlaceRectangle = new Rectangle(towerPlace.place.x - Tower.size / 2f,
-                                                    towerPlace.place.y - Tower.size / 2f, Tower.size, Tower.size);
+                towerPlaceRectangle = new Rectangle(towerPlace.place.x - Tower.getSize(game) / 2f,
+                                                    towerPlace.place.y - Tower.getSize(game) / 2f, Tower.getSize(game),
+                                                    Tower.getSize(game));
             }
             if (clickPositionRectangle.overlaps(towerPlaceRectangle)) {
                 return towerPlace;

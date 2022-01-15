@@ -20,11 +20,10 @@ import java.util.ArrayList;
  * an enemy with its texture, health and other related properties
  */
 public abstract class Enemy {
-    public final static short spawnSpeed = 2000;
+    public final static short spawnSpeed = 100;
     protected final static int maxHp = 100;
     protected final static int speed = 50;
     protected final static short damage = 10;
-    protected final static float sizeModifier = 0.1f;
     protected final static short range = 100;
     protected final static int worth = 100;
     protected final Vector2[] path;
@@ -68,8 +67,9 @@ public abstract class Enemy {
         };
         this.path = path;
         enemySprite.setPosition(position.x, position.y);
-        enemySprite.setSize(enemySprite.getWidth() * distortion.x * sizeModifier,
-                            enemySprite.getHeight() * distortion.y * sizeModifier);
+        float sizeModifier = game.settingPreference.getInteger("width") * 0.025f / enemySprite.getWidth();
+        enemySprite.setSize(enemySprite.getWidth() * sizeModifier, enemySprite.getHeight() * sizeModifier); // scales
+        // the enemy
         try {
             healthBar1 = new ProgressBar(0, (int) ClassReflection.getField(this.getClass(), "maxHP")
                     .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
@@ -176,7 +176,6 @@ public abstract class Enemy {
             try {
                 gameScreen.money += (int) ClassReflection.getField(this.getClass(), "worth").get(null);
             } catch (ReflectionException e) {
-                e.printStackTrace();
                 gameScreen.money += worth;
             }
         }

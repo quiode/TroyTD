@@ -13,9 +13,10 @@ public class Melee_Tower extends Tower {
     public final static int maxHP = 100;
     public final static int atspeed = 200;
 
-    public Melee_Tower(TroyTD game, Vector2 position, Texture texture, String name, TowerTypes type,
+    public Melee_Tower(TroyTD game, Vector2 position,
                        Vector2 distortion) {
-        super(game, position, new Texture("towers/range.jpg"), "Swordsmen", TowerTypes.MELEE, distortion,
+        super(game, position, game.assetManager.get("towers/Melee_Tower.png", Texture.class), "Swordsmen",
+              TowerTypes.MELEE, distortion,
               DebugShot.class);
     }
 
