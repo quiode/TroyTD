@@ -32,6 +32,7 @@ public abstract class Shot {
      * the target of the shot
      */
     private final Enemy target;
+    Vector2 vectorToTarget;
     /**
      * the damage the shot does
      */
@@ -74,9 +75,11 @@ public abstract class Shot {
      */
     public void update(float delta, final ArrayList<Shot> shots, final ArrayList<Enemy> enemies,
                        GameScreen gameScreen) {
-        Vector2 vectorToTarget = new Vector2(
+        if (vectorToTarget == null) vectorToTarget = new Vector2();
+        vectorToTarget.set(
                 (target.getPosition().x + target.getRectangle().width / 2f) - (sprite.getX() + sprite.getWidth() / 2f),
                 (target.getPosition().y + target.getRectangle().height / 2f) - (sprite.getY() + sprite.getHeight()));
+
 
         float tmp_speed = speed * delta; // speed modified to be the same speed regardless of the performance of
         // the computer
