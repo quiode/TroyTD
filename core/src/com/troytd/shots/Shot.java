@@ -55,7 +55,7 @@ public abstract class Shot {
                 game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,
                            tower.getPosition().y + tower.getRect().height);
-        float sizeModifier = game.settingPreference.getInteger("width") * 0.0025f / sprite.getWidth();
+        float sizeModifier = game.settingPreference.getInteger("width") * 0.0035f / sprite.getWidth();
         sprite.setSize(sprite.getWidth() * sizeModifier, sprite.getHeight() * sizeModifier); // scales
         // the enemy
     }
@@ -76,7 +76,7 @@ public abstract class Shot {
                        GameScreen gameScreen) {
         Vector2 vectorToTarget = new Vector2(
                 (target.getPosition().x + target.getRectangle().width / 2f) - (sprite.getX() + sprite.getWidth() / 2f),
-                (target.getPosition().y + target.getRectangle().height / 2f) - (sprite.getY() + sprite.getHeight() / 2f));
+                (target.getPosition().y + target.getRectangle().height / 2f) - (sprite.getY() + sprite.getHeight()));
 
         float tmp_speed = speed * delta; // speed modified to be the same speed regardless of the performance of
         // the computer
