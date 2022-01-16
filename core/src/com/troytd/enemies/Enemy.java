@@ -126,7 +126,7 @@ public abstract class Enemy {
     }
 
     public void update(final ArrayList<Enemy> enemies) {
-        position_on_path += speed * Gdx.graphics.getDeltaTime();
+        position_on_path += speed * Gdx.graphics.getDeltaTime() * 50;
 
         if (position_on_path < path.length) {
             enemySprite.setPosition(path[position_on_path].x,
