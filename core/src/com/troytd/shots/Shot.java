@@ -77,8 +77,8 @@ public abstract class Shot {
                        GameScreen gameScreen) {
         if (vectorToTarget == null) vectorToTarget = new Vector2();
         vectorToTarget.set(
-                (target.getPosition().x + target.getRectangle().width / 2f) - (sprite.getX() + sprite.getWidth() / 2f),
-                (target.getPosition().y + target.getRectangle().height / 2f) - (sprite.getY() + sprite.getHeight()));
+                (target.getPosition().x + target.getRectangle().width / 2f) - (sprite.getBoundingRectangle().x + sprite.getBoundingRectangle().width / 2f),
+                (target.getPosition().y + target.getRectangle().height / 2f) - (sprite.getBoundingRectangle().y + sprite.getBoundingRectangle().height));
 
 
         float tmp_speed = speed * delta; // speed modified to be the same speed regardless of the performance of
