@@ -30,6 +30,7 @@ public abstract class Tower {
     public int totalDamage = 0;
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
+    Vector2 position;
     private long lastShot = TimeUtils.millis();
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
@@ -81,7 +82,7 @@ public abstract class Tower {
     }
 
     public Vector2 getPosition() {
-        Vector2 position = new Vector2();
+        if (position == null) position = new Vector2();
         towerSprite.getBoundingRectangle().getPosition(position);
         return position;
     }
