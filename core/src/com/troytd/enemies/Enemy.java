@@ -1,5 +1,6 @@
 package com.troytd.enemies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -125,7 +126,7 @@ public abstract class Enemy {
     }
 
     public void update(final ArrayList<Enemy> enemies) {
-        position_on_path += speed; // TODO: adjust to framerate
+        position_on_path += speed * Gdx.graphics.getDeltaTime();
 
         if (position_on_path < path.length) {
             enemySprite.setPosition(path[position_on_path].x,
