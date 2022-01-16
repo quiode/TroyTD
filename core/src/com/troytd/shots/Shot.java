@@ -55,7 +55,7 @@ public abstract class Shot {
         sprite = new Sprite(
                 game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,
-                           tower.getPosition().y + tower.getRect().height);
+                           tower.getPosition().y + tower.getRect().height / 2f);
         float sizeModifier = game.settingPreference.getInteger("width") * 0.0035f / sprite.getWidth();
         sprite.setSize(sprite.getWidth() * sizeModifier, sprite.getHeight() * sizeModifier); // scales
         // the enemy
