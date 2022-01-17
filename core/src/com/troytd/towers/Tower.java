@@ -68,13 +68,15 @@ public abstract class Tower {
     /**
      * shoots a shot
      *
-     * @return a new shot instance
+     * @return a new shot instance or null if no shot can be made
      */
     public Shot shoot(ArrayList<Enemy> enemies) {
         try {
+            Enemy target = Enemy.getClosest(getPosition(), enemies);
+            float distanceToTarget = target.getPosition().dst(getPosition());
+            if (distanceToTarget > range) return null;
             return (Shot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class, Enemy.class,
-                                                         Vector2.class)
-                    .newInstance(game, this, Enemy.getClosest(getPosition(), enemies), distortion);
+                                                         Vector2.class).newInstance(game, this, target, distortion);
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
@@ -101,14 +103,20 @@ public abstract class Tower {
         try {
             if (TimeUtils.timeSinceMillis(lastShot) > 1 / ((int) ClassReflection.getField(this.getClass(), "atspeed")
                     .get(null) / 100000f)) {
-                shots.add(shoot(enemies));
-                lastShot = TimeUtils.millis();
+                Shot shot = shoot(enemies);
+                if (shot != null) {
+                    shots.add(shot);
+                    lastShot = TimeUtils.millis();
+                }
             }
         } catch (ReflectionException e) {
             e.printStackTrace();
             if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
-                shots.add(shoot(enemies));
-                lastShot = TimeUtils.millis();
+                Shot shot = shoot(enemies);
+                if (shot != null) {
+                    shots.add(shot);
+                    lastShot = TimeUtils.millis();
+                }
             }
         }
     }
