@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
-import com.troytd.shots.Shot;
+import com.troytd.towers.shots.single.Shot;
 
 import java.util.ArrayList;
 

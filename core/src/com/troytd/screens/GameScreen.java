@@ -25,7 +25,7 @@ import com.troytd.hud.UpgradeTowerHUD;
 import com.troytd.maps.DebugMap;
 import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
-import com.troytd.shots.Shot;
+import com.troytd.towers.shots.single.Shot;
 
 import java.util.ArrayList;
 

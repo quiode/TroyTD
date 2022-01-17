@@ -1,4 +1,4 @@
-package com.troytd.shots;
+package com.troytd.towers.shots.single;
 
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.enemies.Enemy;

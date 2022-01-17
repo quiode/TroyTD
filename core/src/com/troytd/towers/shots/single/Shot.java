@@ -1,4 +1,4 @@
-package com.troytd.shots;
+package com.troytd.towers.shots.single;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,6 +9,7 @@ import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
+import com.troytd.towers.shots.ShotType;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
  * shot class which represents a single shot
  */
 public abstract class Shot {
+    private static final ShotType shotType = ShotType.SINGLE;
     /**
      * tower the shot was shot from
      */

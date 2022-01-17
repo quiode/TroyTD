@@ -14,7 +14,7 @@ import com.troytd.game.TroyTD;
 import com.troytd.helpers.Loadable;
 import com.troytd.screens.GameScreen;
 import com.troytd.screens.LoadingScreen;
-import com.troytd.shots.Shot;
+import com.troytd.towers.shots.single.Shot;
 import com.troytd.towers.Tower;
 import com.troytd.waves.Wave;
 

@@ -2,7 +2,7 @@ package com.troytd.maps;
 
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
-import com.troytd.shots.Shot;
+import com.troytd.towers.shots.single.Shot;
 import com.troytd.towers.*;
 import com.troytd.waves.DebugWave;
 import com.troytd.waves.Wave;

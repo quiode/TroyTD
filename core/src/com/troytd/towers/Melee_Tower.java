@@ -3,7 +3,7 @@ package com.troytd.towers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
-import com.troytd.shots.DebugShot;
+import com.troytd.towers.shots.single.DebugShot;
 
 public class Melee_Tower extends Tower {
     public final static int cost = 100;
