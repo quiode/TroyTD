@@ -1,4 +1,4 @@
-package com.troytd.helpers;
+package com.troytd.enemies;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
