@@ -131,7 +131,7 @@ public abstract class Enemy {
         if (position_on_path < path.length) {
             enemySprite.setPosition(path[position_on_path].x,
                                     path[position_on_path].y - line * game.settingPreference.getInteger(
-                                            "height") / 20f);
+                                            "height") / 24f);
 
             try {
                 if (hp < ((int) ClassReflection.getField(this.getClass(), "maxHP")

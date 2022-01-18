@@ -21,7 +21,7 @@ public class ArcherWave extends Wave {
      * @param map           the map
      */
     public ArcherWave(TroyTD game, Vector2 mapDistortion, Vector2[] path, Map map) {
-        super(game, mapDistortion, new ArrayList<enemyAmount>(Arrays.asList(new enemyAmount(2, Archer.class))),
+        super(game, mapDistortion, new ArrayList<enemyAmount>(Arrays.asList(new enemyAmount(5, Archer.class))),
               path, map);
     }
 
