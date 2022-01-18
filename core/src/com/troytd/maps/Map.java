@@ -112,7 +112,7 @@ public abstract class Map implements Loadable {
         // load tower textures and shot textures
         for (Class<? extends Tower> tower : towers) {
             game.assetManager.load("towers/" + tower.getSimpleName() + ".png", Texture.class);
-            game.assetManager.load("singleShots/" + tower.getSimpleName() + "SingleShot" + ".png", Texture.class);
+            game.assetManager.load("shots/" + tower.getSimpleName() + "Shot" + ".png", Texture.class);
         }
 
         // set values
