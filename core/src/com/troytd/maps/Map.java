@@ -14,8 +14,8 @@ import com.troytd.game.TroyTD;
 import com.troytd.helpers.Loadable;
 import com.troytd.screens.GameScreen;
 import com.troytd.screens.LoadingScreen;
-import com.troytd.towers.shots.single.SingleShot;
 import com.troytd.towers.Tower;
+import com.troytd.towers.shots.Shot;
 import com.troytd.waves.Wave;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public abstract class Map implements Loadable {
     /**
      * list of all singleShots
      */
-    private final ArrayList<SingleShot> singleShots;
+    private final ArrayList<Shot> shots;
     /**
      * true if game is won
      */
@@ -91,7 +91,7 @@ public abstract class Map implements Loadable {
      */
     public Map(final TroyTD game, final String texturePath, final Vector2[] towerPlaces, final Vector2[] pathPoints,
                final String name, final ArrayList<Class<? extends Tower>> towers,
-               ArrayList<Class<? extends Wave>> waves, ArrayList<SingleShot> singleShots) {
+               ArrayList<Class<? extends Wave>> waves, ArrayList<Shot> shots) {
         // Load assets
         game.assetManager.load(texturePath, Texture.class);
 
@@ -125,7 +125,7 @@ public abstract class Map implements Loadable {
         this.name = name;
         this.towers = towers;
         this.waves = waves;
-        this.singleShots = singleShots;
+        this.shots = shots;
 
         // calculated path points
         final int precision = pathPointsCalculated.length;
@@ -265,7 +265,7 @@ public abstract class Map implements Loadable {
     private void updateTowers(float delta, ArrayList<Enemy> enemies) {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.getTower() != null) {
-                towerPlace.getTower().update(delta, enemies, singleShots);
+                towerPlace.getTower().update(delta, enemies, shots);
             }
         }
     }
@@ -292,18 +292,18 @@ public abstract class Map implements Loadable {
     }
 
     private void updateShots(float delta, GameScreen gameScreen) {
-        for (int i = 0; i < singleShots.size(); i++) {
+        for (int i = 0; i < shots.size(); i++) {
             if (currentWave != null) {
-                singleShots.get(i).update(delta, singleShots, currentWave.getEnemies(), gameScreen);
+                shots.get(i).update(delta, shots, currentWave.getEnemies(), gameScreen);
             } else {
-                singleShots.clear();
+                shots.clear();
             }
         }
     }
 
     private void drawShots() {
-        for (SingleShot singleShot : singleShots) {
-            singleShot.draw();
+        for (Shot shot : shots) {
+            shot.draw();
         }
     }
 

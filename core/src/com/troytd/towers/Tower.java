@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
+import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.single.SingleShot;
 
 import java.util.ArrayList;
@@ -76,7 +77,8 @@ public abstract class Tower {
             float distanceToTarget = target.getPosition().dst(getPosition());
             if (distanceToTarget > range) return null;
             return (SingleShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class, Enemy.class,
-                                                               Vector2.class).newInstance(game, this, target, distortion);
+                                                               Vector2.class)
+                    .newInstance(game, this, target, distortion);
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
@@ -97,7 +99,7 @@ public abstract class Tower {
         return type.toString();
     }
 
-    public void update(float delta, ArrayList<Enemy> enemies, final ArrayList<SingleShot> singleShots) {
+    public void update(float delta, ArrayList<Enemy> enemies, final ArrayList<Shot> shots) {
         if (enemies.isEmpty()) return;
 
         try {
@@ -105,7 +107,7 @@ public abstract class Tower {
                     .get(null) / 100000f)) {
                 SingleShot singleShot = shoot(enemies);
                 if (singleShot != null) {
-                    singleShots.add(singleShot);
+                    shots.add(singleShot);
                     lastShot = TimeUtils.millis();
                 }
             }
@@ -114,7 +116,7 @@ public abstract class Tower {
             if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
                 SingleShot singleShot = shoot(enemies);
                 if (singleShot != null) {
-                    singleShots.add(singleShot);
+                    shots.add(singleShot);
                     lastShot = TimeUtils.millis();
                 }
             }

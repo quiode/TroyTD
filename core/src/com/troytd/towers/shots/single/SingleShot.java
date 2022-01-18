@@ -9,6 +9,7 @@ import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
+import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.ShotType;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 /**
  * shot class which represents a single shot
  */
-public abstract class SingleShot {
+public abstract class SingleShot implements Shot {
     private static final ShotType shotType = ShotType.SINGLE;
     /**
      * tower the shot was shot from
@@ -54,8 +55,8 @@ public abstract class SingleShot {
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
-        sprite = new Sprite(
-                game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "SingleShot" + ".png", Texture.class));
+        sprite = new Sprite(game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "SingleShot" + ".png",
+                                                  Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,
                            tower.getPosition().y + tower.getRect().height / 2f);
         float sizeModifier = game.settingPreference.getInteger("width") * 0.0035f / sprite.getWidth();
@@ -75,7 +76,7 @@ public abstract class SingleShot {
      *
      * @param delta the time since the last update
      */
-    public void update(float delta, final ArrayList<SingleShot> singleShots, final ArrayList<Enemy> enemies,
+    public void update(float delta, final ArrayList<Shot> shots, final ArrayList<Enemy> enemies,
                        GameScreen gameScreen) {
         if (vectorToTarget == null) vectorToTarget = new Vector2();
         vectorToTarget.set(
@@ -96,12 +97,12 @@ public abstract class SingleShot {
         // if target was hit, deal damage to it and remove the shot
         if (hitDetection()) {
             target.takeDamage(damage, enemies, tower, gameScreen);
-            singleShots.remove(this);
+            shots.remove(this);
         }
 
         // if the target is dead, remove the shot
         if (target.isDead()) {
-            singleShots.remove(this);
+            shots.remove(this);
         }
     }
 
@@ -110,5 +111,9 @@ public abstract class SingleShot {
      */
     public void draw() {
         sprite.draw(game.batch);
+    }
+
+    public ShotType getShotType() {
+        return shotType;
     }
 }

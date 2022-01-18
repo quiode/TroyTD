@@ -4,11 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
+import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.ShotType;
 
 import java.util.ArrayList;
 
-public abstract class ConnectingShot {
+public abstract class ConnectingShot implements Shot {
     private static final ShotType shotType = ShotType.CONNECTING;
     /**
      * amount of enemies to connect
@@ -25,5 +26,9 @@ public abstract class ConnectingShot {
     public ConnectingShot(TroyTD game, Texture texture) {
         this.game = game;
 
+    }
+
+    public ShotType getShotType() {
+        return shotType;
     }
 }
