@@ -7,8 +7,8 @@ import com.troytd.towers.Tower;
 
 import java.util.ArrayList;
 
-public class Lightning extends ConnectingShot {
-    public Lightning(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
+public class DebugConnectingShot extends ConnectingShot {
+    public DebugConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
         super(game, tower, enemies, gameScreen);
     }
 }

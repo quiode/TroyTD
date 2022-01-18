@@ -98,6 +98,40 @@ public abstract class Enemy {
         return enemies.get(Helper.getClosest(position, positions));
     }
 
+    /**
+     * gets the closest n amount of enemies to the position
+     *
+     * @param position the position to check
+     * @param enemies  the enemies to check
+     * @param n        the amount of enemies to check
+     * @return an array of the closest n positions from enemies or an array of all position of enemies if n is bigger
+     * than the amount of enemies
+     */
+    public static Enemy[] getClosestN(Vector2 position, ArrayList<Enemy> enemies, int n) {
+        if (n >= enemies.size()) {
+            return enemies.toArray(new Enemy[0]);
+        }
+        Vector2[] enemyPositions = new Vector2[enemies.size()];
+        for (int i = 0; i < enemyPositions.length; i++) {
+            enemyPositions[i] = enemies.get(i).getPosition();
+        }
+        Vector2[] positions = new Vector2[n + 1];
+        positions[0] = position;
+        for (int i = 1; i < n; i++) {
+            positions[i + 1] = enemies.get(Helper.getClosest(positions[i], enemyPositions)).getPosition();
+        }
+        Enemy[] result = new Enemy[n];
+        for (int i = 0; i < n; i++) {
+            for (Enemy enemy : enemies) {
+                if (enemy.getPosition().equals(positions[i + 1])) {
+                    result[i] = enemy;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
     public Vector2 getPosition() {
         return enemySprite.getBoundingRectangle().getPosition(new Vector2());
     }

@@ -55,8 +55,8 @@ public abstract class SingleShot implements Shot {
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
-        sprite = new Sprite(game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png",
-                                                  Texture.class));
+        sprite = new Sprite(
+                game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,
                            tower.getPosition().y + tower.getRect().height / 2f);
         float sizeModifier = game.settingPreference.getInteger("width") * 0.0035f / sprite.getWidth();
@@ -97,6 +97,7 @@ public abstract class SingleShot implements Shot {
         // if target was hit, deal damage to it and remove the shot
         if (hitDetection()) {
             target.takeDamage(damage, enemies, tower, gameScreen);
+            tower.totalDamage += damage;
             shots.remove(this);
         }
 

@@ -13,7 +13,7 @@ public class DebugTower extends Tower {
 
     public DebugTower(TroyTD game, Vector2 position, Vector2 distortion) {
         super(game, position, game.assetManager.get("towers/DebugTower.png", Texture.class), "DebugTower",
-              TowerTypes.MELEE,
+              TowerTypes.SINGLE,
               distortion, DebugShot.class);
     }
 }

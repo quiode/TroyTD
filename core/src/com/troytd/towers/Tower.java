@@ -9,7 +9,9 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
+import com.troytd.screens.GameScreen;
 import com.troytd.towers.shots.Shot;
+import com.troytd.towers.shots.connecting.ConnectingShot;
 import com.troytd.towers.shots.single.SingleShot;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public abstract class Tower {
     public final static int speed = 100;
     public final static int maxHP = 100;
     public final static int atspeed = 100;
+    public final static short enemyAmount = 1;
     public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
@@ -29,13 +32,13 @@ public abstract class Tower {
     public int kills = 0;
     public int hp = maxHP;
     public int totalDamage = 0;
-    protected Class<? extends SingleShot> shotClass;
+    protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
     Vector2 position;
     private long lastShot = TimeUtils.millis();
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
-                 Vector2 distortion, Class<? extends SingleShot> shotClass) {
+                 Vector2 distortion, Class<? extends Shot> shotClass) {
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
@@ -71,18 +74,32 @@ public abstract class Tower {
      *
      * @return a new shot instance or null if no shot can be made
      */
-    public SingleShot shoot(ArrayList<Enemy> enemies) {
-        try {
-            Enemy target = Enemy.getClosest(getPosition(), enemies);
-            float distanceToTarget = target.getPosition().dst(getPosition());
-            if (distanceToTarget > range) return null;
-            return (SingleShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class, Enemy.class,
-                                                               Vector2.class)
-                    .newInstance(game, this, target, distortion);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
+    public Shot shoot(ArrayList<Enemy> enemies, GameScreen gameScreen) {
+        switch (type) {
+            case SINGLE:
+                try {
+                    Enemy target = Enemy.getClosest(getPosition(), enemies);
+                    float distanceToTarget = target.getPosition().dst(getPosition());
+                    if (distanceToTarget > range) return null;
+                    return (SingleShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
+                                                                       Enemy.class, Vector2.class)
+                            .newInstance(game, this, target, distortion);
+                } catch (ReflectionException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            case AOE:
+                try {
+                    return (ConnectingShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
+                                                                           ArrayList.class, GameScreen.class)
+                            .newInstance(game, this, enemies, gameScreen);
+                } catch (ReflectionException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            default:
+                return null;
         }
-        return null;
     }
 
     public Vector2 getPosition() {
@@ -99,24 +116,24 @@ public abstract class Tower {
         return type.toString();
     }
 
-    public void update(float delta, ArrayList<Enemy> enemies, final ArrayList<Shot> shots) {
+    public void update(float delta, ArrayList<Enemy> enemies, final ArrayList<Shot> shots, GameScreen gameScreen) {
         if (enemies.isEmpty()) return;
 
         try {
             if (TimeUtils.timeSinceMillis(lastShot) > 1 / ((int) ClassReflection.getField(this.getClass(), "atspeed")
                     .get(null) / 100000f)) {
-                SingleShot singleShot = shoot(enemies);
-                if (singleShot != null) {
-                    shots.add(singleShot);
+                Shot shot = shoot(enemies, gameScreen);
+                if (shot != null) {
+                    shots.add(shot);
                     lastShot = TimeUtils.millis();
                 }
             }
         } catch (ReflectionException e) {
             e.printStackTrace();
             if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
-                SingleShot singleShot = shoot(enemies);
-                if (singleShot != null) {
-                    shots.add(singleShot);
+                Shot shot = shoot(enemies, gameScreen);
+                if (shot != null) {
+                    shots.add(shot);
                     lastShot = TimeUtils.millis();
                 }
             }
