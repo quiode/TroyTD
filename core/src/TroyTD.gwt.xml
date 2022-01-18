@@ -10,7 +10,7 @@
     <source path="com/troytd/hud"/>
     <source path="com/troytd/helpers"/>
     <source path="com/troytd/waves"/>
-    <source path="com/troytd/singleShots"/>
+    <source path="com/troytd/shots"/>
 
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.towers"/>
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.game"/>
@@ -20,5 +20,5 @@
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.hud"/>
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.helpers"/>
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.waves"/>
-    <extend-configuration-property name="gdx.reflect.include" value="com.troytd.singleShots"/>
+    <extend-configuration-property name="gdx.reflect.include" value="com.troytd.shots"/>
 </module>

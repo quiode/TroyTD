@@ -55,7 +55,7 @@ public abstract class SingleShot implements Shot {
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
-        sprite = new Sprite(game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "SingleShot" + ".png",
+        sprite = new Sprite(game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png",
                                                   Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,
                            tower.getPosition().y + tower.getRect().height / 2f);
