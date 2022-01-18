@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * shot class which represents a single shot
  */
-public abstract class Shot {
+public abstract class SingleShot {
     private static final ShotType shotType = ShotType.SINGLE;
     /**
      * tower the shot was shot from
@@ -44,7 +44,7 @@ public abstract class Shot {
      */
     private int speed;
 
-    public Shot(TroyTD game, Tower tower, final Enemy target, Vector2 distortion) {
+    public SingleShot(TroyTD game, Tower tower, final Enemy target, Vector2 distortion) {
         this.tower = tower;
         this.game = game;
         this.target = target;
@@ -55,7 +55,7 @@ public abstract class Shot {
             e.printStackTrace();
         }
         sprite = new Sprite(
-                game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));
+                game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "SingleShot" + ".png", Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,
                            tower.getPosition().y + tower.getRect().height / 2f);
         float sizeModifier = game.settingPreference.getInteger("width") * 0.0035f / sprite.getWidth();
@@ -75,7 +75,7 @@ public abstract class Shot {
      *
      * @param delta the time since the last update
      */
-    public void update(float delta, final ArrayList<Shot> shots, final ArrayList<Enemy> enemies,
+    public void update(float delta, final ArrayList<SingleShot> singleShots, final ArrayList<Enemy> enemies,
                        GameScreen gameScreen) {
         if (vectorToTarget == null) vectorToTarget = new Vector2();
         vectorToTarget.set(
@@ -96,12 +96,12 @@ public abstract class Shot {
         // if target was hit, deal damage to it and remove the shot
         if (hitDetection()) {
             target.takeDamage(damage, enemies, tower, gameScreen);
-            shots.remove(this);
+            singleShots.remove(this);
         }
 
         // if the target is dead, remove the shot
         if (target.isDead()) {
-            shots.remove(this);
+            singleShots.remove(this);
         }
     }
 

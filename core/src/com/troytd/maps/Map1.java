@@ -2,7 +2,7 @@ package com.troytd.maps;
 
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
-import com.troytd.towers.shots.single.Shot;
+import com.troytd.towers.shots.single.SingleShot;
 import com.troytd.towers.Spearthrower;
 import com.troytd.towers.Tower;
 import com.troytd.waves.ArcherWave;
@@ -17,7 +17,7 @@ public class Map1 extends Map {
      *
      * @param game the game instance
      */
-    public Map1(TroyTD game, ArrayList<Shot> shots) {
+    public Map1(TroyTD game, ArrayList<SingleShot> singleShots) {
         super(game, "maps/Map1.png", new Vector2[]{
                       new Vector2(560, 1536 - 1446),
                       new Vector2(552, 1536 - 1000),
@@ -45,6 +45,6 @@ public class Map1 extends Map {
                       new Vector2(0, 1536 - 1288),
                       new Vector2(-68, 1536 - 1300)
               }, "Map1", new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class)),
-              new ArrayList<Class<? extends Wave>>(Arrays.asList(ArcherWave.class)), shots);
+              new ArrayList<Class<? extends Wave>>(Arrays.asList(ArcherWave.class)), singleShots);
     }
 }

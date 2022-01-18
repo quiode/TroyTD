@@ -25,7 +25,7 @@ import com.troytd.hud.UpgradeTowerHUD;
 import com.troytd.maps.DebugMap;
 import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
-import com.troytd.towers.shots.single.Shot;
+import com.troytd.towers.shots.single.SingleShot;
 
 import java.util.ArrayList;
 
@@ -42,9 +42,9 @@ public class GameScreen implements Screen {
     // assets
     private final Map map;
     /**
-     * list of all shots
+     * list of all singleShots
      */
-    private final ArrayList<Shot> shots = new ArrayList<>();
+    private final ArrayList<SingleShot> singleShots = new ArrayList<>();
     // stats
     public int money = 200;
     public short kills;
@@ -61,10 +61,11 @@ public class GameScreen implements Screen {
         this.game = game;
         Map temp1;
         try {
-            temp1 = (Map) ClassReflection.getConstructor(map, TroyTD.class, ArrayList.class).newInstance(game, shots);
+            temp1 = (Map) ClassReflection.getConstructor(map, TroyTD.class, ArrayList.class).newInstance(game,
+                                                                                                         singleShots);
         } catch (ReflectionException e) {
             e.printStackTrace();
-            temp1 = new DebugMap(game, shots);
+            temp1 = new DebugMap(game, singleShots);
 
         }
         this.map = temp1;
