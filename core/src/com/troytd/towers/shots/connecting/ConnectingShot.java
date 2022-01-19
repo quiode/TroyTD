@@ -84,7 +84,7 @@ public abstract class ConnectingShot implements Shot {
         }
 
         for (Enemy enemy : this.enemies) {
-            if (enemy == null) {
+            if (enemy == null || enemy.isDead()) {
                 shots.remove(this);
                 return;
             }
@@ -119,8 +119,8 @@ public abstract class ConnectingShot implements Shot {
 
     @Override
     public void draw() {
-        for (Sprite sprite : sprites) {
-            sprite.draw(game.batch);
+        for (int i = 0; i < this.enemies.length; i++) {
+            sprites[i].draw(game.batch);
         }
     }
 }
