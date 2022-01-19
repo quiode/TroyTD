@@ -21,7 +21,6 @@ import com.troytd.game.TroyTD;
 import com.troytd.hud.InfoTowerHUD;
 import com.troytd.hud.PlaceTowerHUD;
 import com.troytd.hud.TopHUD;
-import com.troytd.hud.UpgradeTowerHUD;
 import com.troytd.maps.DebugMap;
 import com.troytd.maps.Map;
 import com.troytd.maps.TowerPlace;
@@ -52,7 +51,6 @@ public class GameScreen implements Screen {
     // HUDs
     private PlaceTowerHUD placeTowerHUD;
     private InfoTowerHUD infoTowerHUD;
-    private UpgradeTowerHUD upgradeTowerHUD;
     private TopHUD topHUD;
     // time when this screen was switched to
     private long screenSwitchDelta = -1;
@@ -61,8 +59,7 @@ public class GameScreen implements Screen {
         this.game = game;
         Map temp1;
         try {
-            temp1 = (Map) ClassReflection.getConstructor(map, TroyTD.class, ArrayList.class).newInstance(game,
-                                                                                                         shots);
+            temp1 = (Map) ClassReflection.getConstructor(map, TroyTD.class, ArrayList.class).newInstance(game, shots);
         } catch (ReflectionException e) {
             e.printStackTrace();
             temp1 = new DebugMap(game, shots);
@@ -107,7 +104,6 @@ public class GameScreen implements Screen {
         TopHUD.loadAssets(game);
         InfoTowerHUD.loadAssets(game);
         PlaceTowerHUD.loadAssets(game);
-        UpgradeTowerHUD.loadAssets(game);
     }
 
     /**
@@ -119,11 +115,10 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         if (!game.assetManager.isFinished()) {
             game.setScreen(new LoadingScreen(game, this));
-        } else if (topHUD == null || infoTowerHUD == null || placeTowerHUD == null || upgradeTowerHUD == null) {
+        } else if (topHUD == null || infoTowerHUD == null || placeTowerHUD == null) {
             if (topHUD == null) topHUD = new TopHUD(this, game);
             if (infoTowerHUD == null) infoTowerHUD = new InfoTowerHUD(game, stage, map, topHUD.height, this);
             if (placeTowerHUD == null) placeTowerHUD = new PlaceTowerHUD(game, stage, topHUD.height, map, this);
-            if (upgradeTowerHUD == null) upgradeTowerHUD = new UpgradeTowerHUD(game, stage, map, topHUD.height, this);
         }
     }
 
@@ -216,7 +211,6 @@ public class GameScreen implements Screen {
         topHUD.dispose();
         infoTowerHUD.dispose();
         placeTowerHUD.dispose();
-        upgradeTowerHUD.dispose();
     }
 
     public Map getMap() {
