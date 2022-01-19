@@ -66,9 +66,8 @@ public abstract class Wave {
     private Enemy spawnEnemy(Class<? extends Enemy> enemy, byte line, Vector2 position, Stage stage) {
         try {
             Enemy enemyInstance = (Enemy) ClassReflection.getConstructor(enemy, byte.class, TroyTD.class, Vector2.class,
-                                                                         Vector2.class, Vector2[].class, Map.class,
-                                                                         Stage.class)
-                    .newInstance(line, game, position, mapDistortion, path, map, stage);
+                                                                         Vector2[].class, Map.class)
+                    .newInstance(line, game, position, path, map);
             activeEnemies.add(enemyInstance);
             return enemyInstance;
         } catch (ReflectionException e) {

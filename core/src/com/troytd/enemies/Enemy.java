@@ -5,28 +5,35 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Helper;
+import com.troytd.helpers.Stat;
 import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * an enemy with its texture, health and other related properties
  */
 public abstract class Enemy {
-    public final static short spawnSpeed = 100;
-    protected final static int maxHp = 100;
-    protected final static int speed = 50;
-    protected final static short damage = 100;
-    protected final static short range = 100;
-    protected final static int worth = 100;
+    public final static HashMap<String, Stat> defaultStats = new HashMap<>();
+
+    static {
+        defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 100));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 100));
+        defaultStats.put("speed", new Stat<>("speed", 50));
+        defaultStats.put("damage", new Stat<>("damage", 100));
+        defaultStats.put("range", new Stat<>("range", 100));
+        defaultStats.put("worth", new Stat<>("worth", 100));
+        defaultStats.put("sizeModifier", new Stat<>("sizeModifier", 0.1f));
+    }
+
     protected final Vector2[] path;
     protected final byte line;
     protected final TroyTD game;
@@ -47,16 +54,18 @@ public abstract class Enemy {
      * @param position the position of the enemy
      * @param path     the path the enemy will follow, in precalculated points
      */
-    public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture, final Vector2 distortion,
-                 Vector2[] path, final Map map, Stage stage) {
-        ProgressBar healthBar1;
+    public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture,
+                 Vector2[] path, final Map map) {
+        HashMap<String, Stat> currentDefaultStats;
         try {
-            this.hp = (int) ((int) ClassReflection.getField(this.getClass(), "maxHP")
-                    .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
-                    .get(null) * 0.1f * game.settingPreference.getInteger("difficulty"));
+            currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(this.getClass(),
+                                                                                           "defaultStats").get(null);
         } catch (ReflectionException e) {
-            hp = maxHp;
+            currentDefaultStats = defaultStats;
         }
+
+        hp = (int) ((int) currentDefaultStats.get("maxHP").getValue() + (int) currentDefaultStats.get("maxHP")
+                .getValue() * 0.1f * game.settingPreference.getInteger("difficulty"));
         this.line = line;
         this.game = game;
         this.map = map;
@@ -72,16 +81,7 @@ public abstract class Enemy {
         float sizeModifier = game.settingPreference.getInteger("width") * 0.025f / enemySprite.getWidth();
         enemySprite.setSize(enemySprite.getWidth() * sizeModifier, enemySprite.getHeight() * sizeModifier); // scales
         // the enemy
-        try {
-            healthBar1 = new ProgressBar(0, (int) ClassReflection.getField(this.getClass(), "maxHP")
-                    .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
-                    .get(null) * 0.1f * game.settingPreference.getInteger("difficulty"), 1, false, game.skin,
-                                         "enemy_health");
-        } catch (ReflectionException e) {
-            healthBar1 = new ProgressBar(0, maxHp + maxHp * 0.1f * game.settingPreference.getInteger("difficulty"), 1,
-                                         false, game.skin, "enemy_health");
-        }
-        healthBar = healthBar1;
+        healthBar = new ProgressBar(0, hp, 1, false, game.skin, "enemy_health");
 
         healthBar.setValue(hp);
         healthBar.setSize(enemySprite.getWidth(), healthBar.getHeight());
@@ -161,7 +161,15 @@ public abstract class Enemy {
     }
 
     public void update(final ArrayList<Enemy> enemies, GameScreen gameScreen) {
-        position_on_path += speed * Gdx.graphics.getDeltaTime() * 50;
+        HashMap<String, Stat> currentDefaultStats;
+        try {
+            currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(this.getClass(),
+                                                                                           "defaultStats").get(null);
+        } catch (ReflectionException e) {
+            currentDefaultStats = defaultStats;
+        }
+
+        position_on_path += (int) currentDefaultStats.get("speed").getValue() * Gdx.graphics.getDeltaTime() * 50;
 
         if (position_on_path < path.length) {
             enemySprite.setPosition(path[position_on_path].x,
@@ -179,7 +187,7 @@ public abstract class Enemy {
                     healthBar.setVisible(false);
                 }
             } catch (Exception e) {
-                if (hp < maxHp * 0.9f) {
+                if (hp < (int) currentDefaultStats.get("maxHP").getValue() * 0.9f) {
                     healthBar.setVisible(true);
                     healthBar.setPosition(enemySprite.getX(), enemySprite.getY() - 2.5f);
                     healthBar.setValue(hp);
@@ -192,7 +200,7 @@ public abstract class Enemy {
             try {
                 gameScreen.health -= (short) ClassReflection.getField(this.getClass(), "damage").get(null);
             } catch (ReflectionException e) {
-                gameScreen.health -= damage;
+                gameScreen.health -= (int) currentDefaultStats.get("damage").getValue();
             }
             if (gameScreen.health <= 0) {
                 map.lost = true;
@@ -212,6 +220,14 @@ public abstract class Enemy {
      * @param tower   the tower the shot was sent from
      */
     public void takeDamage(int damage, ArrayList<Enemy> enemies, Tower tower, GameScreen gameScreen) {
+        HashMap<String, Stat> currentDefaultStats;
+        try {
+            currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(this.getClass(),
+                                                                                           "defaultStats").get(null);
+        } catch (ReflectionException e) {
+            currentDefaultStats = defaultStats;
+        }
+
         hp -= damage;
         if (hp <= 0) {
             enemies.remove(this);
@@ -220,7 +236,7 @@ public abstract class Enemy {
             try {
                 gameScreen.money += (int) ClassReflection.getField(this.getClass(), "worth").get(null);
             } catch (ReflectionException e) {
-                gameScreen.money += worth;
+                gameScreen.money += (int) currentDefaultStats.get("worth").getValue();
             }
         }
     }

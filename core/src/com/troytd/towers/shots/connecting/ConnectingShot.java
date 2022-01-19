@@ -101,6 +101,7 @@ public abstract class ConnectingShot implements Shot {
         sprites[0].setRotation(vectorToTarget.angleDeg() - 90);
         sprites[0].setBounds(x, y, width, height);
         this.enemies[0].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
+        tower.totalDamage += damage;
 
         amountOfSpritesToDraw = 1;
         for (int i = 1; i < this.enemies.length; i++) {
@@ -126,6 +127,7 @@ public abstract class ConnectingShot implements Shot {
             sprites[i].setBounds(x, y, width, height);
             amountOfSpritesToDraw++;
             this.enemies[i].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
+            tower.totalDamage += damage;
         }
     }
 
