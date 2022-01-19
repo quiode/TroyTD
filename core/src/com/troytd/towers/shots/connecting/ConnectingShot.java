@@ -36,7 +36,7 @@ public abstract class ConnectingShot implements Shot {
     Vector2 vectorToTarget;
     private short amountOfSpritesToDraw;
 
-    public ConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
+    public ConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies) {
         this.game = game;
         this.tower = tower;
 

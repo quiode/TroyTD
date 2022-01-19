@@ -43,7 +43,7 @@ public abstract class SingleShot implements Shot {
     private final int speed;
     Vector2 vectorToTarget;
 
-    public SingleShot(TroyTD game, Tower tower, final Enemy target, Vector2 distortion) {
+    public SingleShot(TroyTD game, Tower tower, final Enemy target) {
         this.tower = tower;
         this.game = game;
         this.target = target;

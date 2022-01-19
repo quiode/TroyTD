@@ -25,7 +25,6 @@ public class InfoTowerHUD extends SideHUD {
     private final Label maxHPAmount;
     private final Label killsAmount;
     private final Label totalDamageAmount;
-    private final Label AOEAmount;
     private final Label atspeedAmount;
     private final Label typeAmount;
     private final Label refundAmount;
@@ -92,12 +91,6 @@ public class InfoTowerHUD extends SideHUD {
         totalDamageAmount = new Label("0", game.skin);
         table.add(totalDamage).colspan(2).left().padTop(10).padLeft(25);
         table.add(totalDamageAmount).colspan(3).right().padRight(25).padTop(10);
-        // AOE
-        table.row();
-        final Label AOE = new Label("AOE: ", game.skin);
-        AOEAmount = new Label("0", game.skin);
-        table.add(AOE).colspan(2).left().padTop(10).padLeft(25);
-        table.add(AOEAmount).colspan(3).right().padRight(25).padTop(10);
         // ats speed
         table.row();
         final Label atspeed = new Label("Attack Speed: ", game.skin);
@@ -185,8 +178,6 @@ public class InfoTowerHUD extends SideHUD {
                     (int) ClassReflection.getField(towerPlace.getTower().getClass(), "maxHP").get(null)));
             killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
             totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
-            AOEAmount.setText(
-                    String.valueOf((int) ClassReflection.getField(towerPlace.getTower().getClass(), "AOE").get(null)));
             atspeedAmount.setText(String.valueOf(
                     (int) ClassReflection.getField(towerPlace.getTower().getClass(), "atspeed").get(null)));
             typeAmount.setText(towerPlace.getTower().getType());

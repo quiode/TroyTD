@@ -28,7 +28,6 @@ public abstract class Tower {
     public final static int atspeed = 100;
     public final static short enemyAmount = 3;
     public final static short unitAmount = 3;
-    public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
     protected final TroyTD game;
@@ -46,7 +45,6 @@ public abstract class Tower {
     private int nspeed;
     private int natspeed;
     private int nmaxHP;
-    private int nAOE;
     private short nenemyAmount;
     private short nunitAmount;
     private long nlifeDuration;
@@ -171,23 +169,6 @@ public abstract class Tower {
         statsChanged = true;
     }
 
-    public int getAOE() {
-        if (!statsChanged) {
-            try {
-                return (Integer) ClassReflection.getField(this.getClass(), "AOE").get(null);
-            } catch (ReflectionException e) {
-                return AOE;
-            }
-        } else {
-            return nAOE;
-        }
-    }
-
-    public void setAOE(int AOE) {
-        this.nAOE = AOE;
-        statsChanged = true;
-    }
-
     public short getEnemyAmount() {
         if (!statsChanged) {
             try {
@@ -268,8 +249,8 @@ public abstract class Tower {
                     float distanceToTarget = target.getPosition().dst(getPosition());
                     if (distanceToTarget > range) return null;
                     return (SingleShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
-                                                                       Enemy.class, Vector2.class)
-                            .newInstance(game, this, target, distortion);
+                                                                       Enemy.class)
+                            .newInstance(game, this, target);
                 } catch (ReflectionException e) {
                     e.printStackTrace();
                     return null;
@@ -277,8 +258,8 @@ public abstract class Tower {
             case AOE:
                 try {
                     return (ConnectingShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
-                                                                           ArrayList.class, GameScreen.class)
-                            .newInstance(game, this, enemies, gameScreen);
+                                                                           ArrayList.class)
+                            .newInstance(game, this, enemies);
                 } catch (ReflectionException e) {
                     e.printStackTrace();
                     return null;
