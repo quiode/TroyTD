@@ -1,5 +1,6 @@
 package com.troytd.towers.shots.connecting;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -27,11 +28,13 @@ public abstract class ConnectingShot implements Shot {
      */
     private final Enemy[] enemies;
     private final TroyTD game;
+    private final int damage;
     /**
      * the different sprites for connecting the enemies
      */
     Sprite[] sprites;
     Vector2 vectorToTarget;
+    private short amountOfSpritesToDraw;
 
     public ConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
         int damage = 10;
@@ -44,6 +47,8 @@ public abstract class ConnectingShot implements Shot {
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
+
+        this.damage = damage;
 
         short enemyAmount = Tower.enemyAmount;
         try {
@@ -60,13 +65,6 @@ public abstract class ConnectingShot implements Shot {
             sprites[i] = new Sprite(game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png",
                                                           Texture.class));
             sprites[i].setSize(sprites[i].getWidth() * sizeModifier, sprites[i].getHeight() * sizeModifier);
-        }
-
-        for (Enemy enemy : this.enemies) {
-            if (enemy != null) {
-                enemy.takeDamage(damage, enemies, tower, gameScreen);
-                tower.totalDamage += damage;
-            }
         }
 
         vectorToTarget = new Vector2();
@@ -99,7 +97,7 @@ public abstract class ConnectingShot implements Shot {
                 (this.enemies[0].getRectangle().y + this.enemies[0].getRectangle().height / 2f) - y);
         float height = vectorToTarget.len();
         try {
-            if (vectorToTarget.len() > (int) ClassReflection.getField(tower.getClass(), "range").get(null)) {
+            if (vectorToTarget.len() > (Integer) ClassReflection.getField(tower.getClass(), "range").get(null)) {
                 shots.remove(this);
                 return;
             }
@@ -113,8 +111,9 @@ public abstract class ConnectingShot implements Shot {
         sprites[0].setOrigin(width / 2f, 0);
         sprites[0].setRotation(vectorToTarget.angleDeg() - 90);
         sprites[0].setBounds(x, y, width, height);
+        this.enemies[0].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
 
-        short amountOfSpritesToDraw = 1;
+        amountOfSpritesToDraw = 1;
         for (int i = 1; i < this.enemies.length; i++) {
             x = this.enemies[i - 1].getRectangle().x + this.enemies[i - 1].getRectangle().width / 2f;
             y = this.enemies[i - 1].getRectangle().y + this.enemies[i - 1].getRectangle().height / 2f;
@@ -124,13 +123,11 @@ public abstract class ConnectingShot implements Shot {
                     (this.enemies[i].getRectangle().y + this.enemies[i].getRectangle().height / 2f) - y);
             height = vectorToTarget.len();
             try {
-                if (vectorToTarget.len() > (int) ClassReflection.getField(tower.getClass(), "range2").get(null)) {
-                    shots.remove(this);
+                if (vectorToTarget.len() > (Integer) ClassReflection.getField(tower.getClass(), "range2").get(null)) {
                     break;
                 }
             } catch (ReflectionException e) {
                 if (vectorToTarget.len() > Tower.range2) {
-                    shots.remove(this);
                     break;
                 }
             }
@@ -139,12 +136,13 @@ public abstract class ConnectingShot implements Shot {
             sprites[i].setRotation(vectorToTarget.angleDeg() - 90);
             sprites[i].setBounds(x, y, width, height);
             amountOfSpritesToDraw++;
+            this.enemies[i].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
         }
     }
 
     @Override
     public void draw() {
-        for (int i = 0; i < this.enemies.length; i++) {
+        for (int i = 0; i < amountOfSpritesToDraw; i++) {
             sprites[i].draw(game.batch);
         }
     }
