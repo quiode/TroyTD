@@ -16,6 +16,9 @@ import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
 
 public class InfoTowerHUD extends SideHUD {
+    private final Label lifeDurationAmount;
+    private final Label enemyAmountAmount;
+    private final Label unitAmountAmount;
     private final Image towerImage;
     private final TextField towerName;
     private final Label damageAmount;
@@ -27,7 +30,20 @@ public class InfoTowerHUD extends SideHUD {
     private final Label totalDamageAmount;
     private final Label atspeedAmount;
     private final Label typeAmount;
+    private final Label range2Amount;
     private final Label refundAmount;
+
+    /*
+    private final ImageButton upgradeRangeButton;
+    private final ImageButton upgradeDamageButton;
+    private final ImageButton upgradeSpeedButton;
+    private final ImageButton upgradeHpButton;
+    private final ImageButton upgradeAtSpeedButton;
+    private final ImageButton updateRange2Button;
+    private final ImageButton updatelifeDurationButton;
+    private final ImageButton updateenemyAmountButton;
+    private final ImageButton updateunitAmountButton;
+     */
 
     public InfoTowerHUD(final TroyTD game, final Stage stage, Map map, float topHUDHeight,
                         final GameScreen gameScreen) {
@@ -49,6 +65,30 @@ public class InfoTowerHUD extends SideHUD {
         table.row();
 
         // stats
+        // type
+        table.row();
+        final Label type = new Label("Type: ", game.skin);
+        typeAmount = new Label("0", game.skin);
+        table.add(type).colspan(2).left().padTop(10).padLeft(25);
+        table.add(typeAmount).colspan(3).right().padRight(25).padTop(10);
+        // HP
+        table.row();
+        final Label HP = new Label("HP: ", game.skin);
+        HPAmount = new Label("0", game.skin);
+        table.add(HP).colspan(2).left().padTop(10).padLeft(25);
+        table.add(HPAmount).colspan(3).right().padRight(25).padTop(10);
+        // kills
+        table.row().colspan(2).left().padTop(10).padLeft(25);
+        final Label kills = new Label("Kills: ", game.skin);
+        killsAmount = new Label("0", game.skin);
+        table.add(kills).colspan(2).left().padTop(10).padLeft(25);
+        table.add(killsAmount).colspan(3).right().padRight(25).padTop(10);
+        // total damage
+        table.row();
+        final Label totalDamage = new Label("Total Damage: ", game.skin);
+        totalDamageAmount = new Label("0", game.skin);
+        table.add(totalDamage).colspan(2).left().padTop(10).padLeft(25);
+        table.add(totalDamageAmount).colspan(3).right().padRight(25).padTop(10);
         // damage
         table.row();
         final Label damage = new Label("Damage: ", game.skin);
@@ -67,42 +107,42 @@ public class InfoTowerHUD extends SideHUD {
         speedAmount = new Label("0", game.skin);
         table.add(speed).colspan(2).left().padTop(10).padLeft(25);
         table.add(speedAmount).colspan(3).right().padRight(25).padTop(10);
-        // HP
-        table.row();
-        final Label HP = new Label("HP: ", game.skin);
-        HPAmount = new Label("0", game.skin);
-        table.add(HP).colspan(2).left().padTop(10).padLeft(25);
-        table.add(HPAmount).colspan(3).right().padRight(25).padTop(10);
         // max HP
         table.row();
         final Label maxHP = new Label("Max HP: ", game.skin);
         maxHPAmount = new Label("0", game.skin);
         table.add(maxHP).colspan(2).left().padTop(10).padLeft(25);
         table.add(maxHPAmount).colspan(3).right().padRight(25).padTop(10);
-        // kills
-        table.row().colspan(2).left().padTop(10).padLeft(25);
-        final Label kills = new Label("Kills: ", game.skin);
-        killsAmount = new Label("0", game.skin);
-        table.add(kills).colspan(2).left().padTop(10).padLeft(25);
-        table.add(killsAmount).colspan(3).right().padRight(25).padTop(10);
-        // total damage
-        table.row();
-        final Label totalDamage = new Label("Total Damage: ", game.skin);
-        totalDamageAmount = new Label("0", game.skin);
-        table.add(totalDamage).colspan(2).left().padTop(10).padLeft(25);
-        table.add(totalDamageAmount).colspan(3).right().padRight(25).padTop(10);
         // ats speed
         table.row();
         final Label atspeed = new Label("Attack Speed: ", game.skin);
         atspeedAmount = new Label("0", game.skin);
         table.add(atspeed).colspan(2).left().padTop(10).padLeft(25);
         table.add(atspeedAmount).colspan(3).right().padRight(25).padTop(10);
-        // type
+        // range2
         table.row();
-        final Label type = new Label("Type: ", game.skin);
-        typeAmount = new Label("0", game.skin);
-        table.add(type).colspan(2).left().padTop(10).padLeft(25);
-        table.add(typeAmount).colspan(3).right().padRight(25).padTop(10);
+        final Label range2 = new Label("Range2: ", game.skin);
+        range2Amount = new Label("0", game.skin);
+        table.add(range2).colspan(2).left().padTop(10).padLeft(25);
+        table.add(range2Amount).colspan(3).right().padRight(25).padTop(10);
+        // unit amount
+        table.row();
+        final Label unitAmount = new Label("Unit Amount: ", game.skin);
+        unitAmountAmount = new Label("0", game.skin);
+        table.add(unitAmount).colspan(2).left().padTop(10).padLeft(25);
+        table.add(unitAmountAmount).colspan(3).right().padRight(25).padTop(10);
+        // enemy amount
+        table.row();
+        final Label enemyAmount = new Label("Enemy Amount: ", game.skin);
+        enemyAmountAmount = new Label("0", game.skin);
+        table.add(enemyAmount).colspan(2).left().padTop(10).padLeft(25);
+        table.add(enemyAmountAmount).colspan(3).right().padRight(25).padTop(10);
+        // life duration amount
+        table.row();
+        final Label lifeDuration = new Label("Life Duration: ", game.skin);
+        lifeDurationAmount = new Label("0", game.skin);
+        table.add(lifeDuration).colspan(2).left().padTop(10).padLeft(25);
+        table.add(lifeDurationAmount).colspan(3).right().padRight(25).padTop(10);
         // refund
         table.row();
         table.add(new Label("", game.skin));
@@ -145,6 +185,8 @@ public class InfoTowerHUD extends SideHUD {
         table.add(refund).colspan(3).center().expandX();
         table.add(refundAmount).right();
         table.add(moneyIcon).left().padLeft(5).size(game.settingPreference.getInteger("icon-size") / 2f);
+
+        table.debug();
     }
 
     /**
