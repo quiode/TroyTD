@@ -92,6 +92,7 @@ public abstract class SingleShot implements Shot {
 
         sprite.translate(vectorToTarget.x, vectorToTarget.y);
 
+        sprite.setOrigin(sprite.getWidth() / 2f, 0);
         sprite.setRotation(vectorToTarget.angleDeg() - 90);
 
         // if target was hit, deal damage to it and remove the shot
