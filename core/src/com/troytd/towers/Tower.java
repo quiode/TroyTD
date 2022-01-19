@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
-import com.troytd.screens.GameScreen;
 import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.connecting.ConnectingShot;
 import com.troytd.towers.shots.single.SingleShot;
@@ -241,7 +240,14 @@ public abstract class Tower {
      * @return a new shot instance or null if no shot can be made
      */
     public Shot shoot(ArrayList<Enemy> enemies) {
-        switch (type) {
+        TowerTypes towerType;
+        try {
+            towerType = (TowerTypes) ClassReflection.getField(this.getClass(), "type").get(null);
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+            towerType = type;
+        }
+        switch (towerType) {
             case SINGLE:
                 try {
                     Enemy target = Enemy.getClosest(getPosition(), enemies);

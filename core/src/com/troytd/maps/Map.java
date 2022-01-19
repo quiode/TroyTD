@@ -149,7 +149,7 @@ public abstract class Map implements Loadable {
 
         if (currentWave != null) updateTowers(currentWave.getEnemies());
         drawTowers();
-        updateEnemies(stage);
+        updateEnemies(stage, gameScreen);
         drawEnemies();
         updateShots(delta, gameScreen);
         drawShots();
@@ -270,7 +270,7 @@ public abstract class Map implements Loadable {
         }
     }
 
-    private void updateEnemies(Stage stage) {
+    private void updateEnemies(Stage stage, GameScreen gameScreen) {
         if (currentWave != null) {
             if (currentWave.isFinished()) {
                 if (++currentWaveIndex < waves.size()) {
@@ -286,7 +286,7 @@ public abstract class Map implements Loadable {
                     won = true;
                 }
             } else {
-                currentWave.update(stage);
+                currentWave.update(stage, gameScreen);
             }
         }
     }

@@ -24,7 +24,7 @@ public abstract class Enemy {
     public final static short spawnSpeed = 100;
     protected final static int maxHp = 100;
     protected final static int speed = 50;
-    protected final static short damage = 10;
+    protected final static short damage = 100;
     protected final static short range = 100;
     protected final static int worth = 100;
     protected final Vector2[] path;
@@ -160,7 +160,7 @@ public abstract class Enemy {
         }
     }
 
-    public void update(final ArrayList<Enemy> enemies) {
+    public void update(final ArrayList<Enemy> enemies, GameScreen gameScreen) {
         position_on_path += speed * Gdx.graphics.getDeltaTime() * 50;
 
         if (position_on_path < path.length) {
@@ -189,7 +189,14 @@ public abstract class Enemy {
             }
         } else {
             enemies.remove(this);
-            map.lost = true;
+            try {
+                gameScreen.health -= (short) ClassReflection.getField(this.getClass(), "damage").get(null);
+            } catch (ReflectionException e) {
+                gameScreen.health -= damage;
+            }
+            if (gameScreen.health <= 0) {
+                map.lost = true;
+            }
         }
     }
 
@@ -209,6 +216,7 @@ public abstract class Enemy {
         if (hp <= 0) {
             enemies.remove(this);
             tower.kills++;
+            gameScreen.kills++;
             try {
                 gameScreen.money += (int) ClassReflection.getField(this.getClass(), "worth").get(null);
             } catch (ReflectionException e) {

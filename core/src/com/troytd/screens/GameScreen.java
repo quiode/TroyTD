@@ -57,6 +57,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(final TroyTD game, final Class<? extends Map> map) {
         this.game = game;
+        health = (short) (200 + 50 * game.settingPreference.getInteger("difficulty", 1));
         Map temp1;
         try {
             temp1 = (Map) ClassReflection.getConstructor(map, TroyTD.class, ArrayList.class).newInstance(game, shots);
@@ -129,6 +130,8 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if (health <= 0) map.lost = true;
+
         ScreenUtils.clear(game.BACKGROUND_COLOR);
         stage.act(delta);
 
