@@ -20,6 +20,7 @@ public abstract class Tower {
     public final static int cost = 100;
     public final static int damage = 25;
     public final static int range = 100;
+    public final static int range2 = 5;
     public final static int speed = 100;
     public final static int maxHP = 100;
     public final static int atspeed = 100;
