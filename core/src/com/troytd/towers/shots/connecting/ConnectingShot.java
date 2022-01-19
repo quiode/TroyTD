@@ -91,17 +91,17 @@ public abstract class ConnectingShot implements Shot {
         }
 
         // resize sprites
-        sprites[0].setRotation(vectorToTarget.angleDeg() + 90);
 
         final float x = tower.getPosition().x + tower.getRect().width / 2f;
         final float y = tower.getPosition().y + tower.getRect().height / 2f;
-        final float height = vectorToTarget.set(
-                        (tower.getPosition().x + tower.getRect().width / 2f) - (this.enemies[0].getPosition().x + this.enemies[0].getRectangle().width / 2f),
-                        (tower.getPosition().y + tower.getRect().height / 2f) - (this.enemies[0].getPosition().y + this.enemies[0].getRectangle().height / 2f))
-                .dst(sprites[0].getBoundingRectangle().x, sprites[0].getBoundingRectangle().y);
         final float width = sprites[0].getWidth();
+        final float height = vectorToTarget.set(
+                (this.enemies[0].getRectangle().x + this.enemies[0].getRectangle().width / 2f) - x + width / 2f,
+                (this.enemies[0].getRectangle().y + this.enemies[0].getRectangle().height / 2f) - y).len();
 
         sprites[0].setBounds(x, y, width, height);
+        sprites[0].setOrigin(width / 2f, 0);
+        sprites[0].setRotation(vectorToTarget.angleDeg() - 90);
 
         for (int i = 1; i < this.enemies.length; i++) {
             vectorToTarget.set(
