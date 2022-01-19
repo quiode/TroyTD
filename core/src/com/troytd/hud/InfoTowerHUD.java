@@ -71,92 +71,87 @@ public class InfoTowerHUD extends SideHUD {
         table.row();
         final Label type = new Label("Type: ", game.skin);
         typeAmount = new Label("0", game.skin);
-        table.add(type).colspan(2).left().padTop(10).padLeft(25);
-        table.add(typeAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(type).colspan(3).left().padTop(10).padLeft(25);
+        table.add(typeAmount).colspan(1).right().padTop(10);
         // HP
         table.row();
         final Label HP = new Label("HP: ", game.skin);
         HPAmount = new Label("0", game.skin);
-        table.add(HP).colspan(2).left().padTop(10).padLeft(25);
-        table.add(HPAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(HP).colspan(3).left().padTop(10).padLeft(25);
+        table.add(HPAmount).colspan(1).right().padTop(10);
         // kills
-        table.row().colspan(2).left().padTop(10).padLeft(25);
+        table.row().colspan(3).left().padTop(10).padLeft(25);
         final Label kills = new Label("Kills: ", game.skin);
         killsAmount = new Label("0", game.skin);
-        table.add(kills).colspan(2).left().padTop(10).padLeft(25);
-        table.add(killsAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(kills).colspan(3).left().padTop(10).padLeft(25);
+        table.add(killsAmount).colspan(1).right().padTop(10);
         // total damage
         table.row();
         final Label totalDamage = new Label("Total Damage: ", game.skin);
         totalDamageAmount = new Label("0", game.skin);
-        table.add(totalDamage).colspan(2).left().padTop(10).padLeft(25);
-        table.add(totalDamageAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(totalDamage).colspan(3).left().padTop(10).padLeft(25);
+        table.add(totalDamageAmount).colspan(1).right().padTop(10);
 
         // variable stats
 
         // damage
         table.row();
         final Label damage = new Label("Damage: ", game.skin);
-        table.add(damage).colspan(2).left().padTop(10).padLeft(25);
+        table.add(damage).colspan(3).left().padTop(10).padLeft(25);
 
-        final VerticalGroup damageGroup = new VerticalGroup();
         upgradeDamageButton = new ImageButton(game.skin, "upgrade");
-        upgradeDamageButton.setTransform(true);
-        upgradeDamageButton.setSize(iconSize, iconSize);
         damageAmount = new Label("0", game.skin);
 
-        damageGroup.addActor(damageAmount);
-        damageGroup.addActor(upgradeDamageButton);
-
-        table.add(damageGroup).colspan(3).right().padRight(25).padTop(10);
+        table.add(damageAmount).colspan(1).right().padTop(10);
+        table.add(upgradeDamageButton).colspan(1).center().padTop(10).size(iconSize/2f);
         // range
-        table.row().colspan(2).left().padTop(10).padLeft(25);
+        table.row().colspan(3).left().padTop(10).padLeft(25);
         final Label range = new Label("Range: ", game.skin);
         rangeAmount = new Label("0", game.skin);
-        table.add(range).colspan(2).left().padTop(10).padLeft(25);
-        table.add(rangeAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(range).colspan(3).left().padTop(10).padLeft(25);
+        table.add(rangeAmount).colspan(1).right().padTop(10);
         // speed
         table.row();
         final Label speed = new Label("Speed: ", game.skin);
         speedAmount = new Label("0", game.skin);
-        table.add(speed).colspan(2).left().padTop(10).padLeft(25);
-        table.add(speedAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(speed).colspan(3).left().padTop(10).padLeft(25);
+        table.add(speedAmount).colspan(1).right().padTop(10);
         // max HP
         table.row();
         final Label maxHP = new Label("Max HP: ", game.skin);
         maxHPAmount = new Label("0", game.skin);
-        table.add(maxHP).colspan(2).left().padTop(10).padLeft(25);
-        table.add(maxHPAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(maxHP).colspan(3).left().padTop(10).padLeft(25);
+        table.add(maxHPAmount).colspan(1).right().padTop(10);
         // ats speed
         table.row();
         final Label atspeed = new Label("Attack Speed: ", game.skin);
         atspeedAmount = new Label("0", game.skin);
-        table.add(atspeed).colspan(2).left().padTop(10).padLeft(25);
-        table.add(atspeedAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(atspeed).colspan(3).left().padTop(10).padLeft(25);
+        table.add(atspeedAmount).colspan(1).right().padTop(10);
         // range2
         table.row();
         final Label range2 = new Label("Range2: ", game.skin);
         range2Amount = new Label("0", game.skin);
-        table.add(range2).colspan(2).left().padTop(10).padLeft(25);
-        table.add(range2Amount).colspan(3).right().padRight(25).padTop(10);
+        table.add(range2).colspan(3).left().padTop(10).padLeft(25);
+        table.add(range2Amount).colspan(1).right().padTop(10);
         // unit amount
         table.row();
         final Label unitAmount = new Label("Unit Amount: ", game.skin);
         unitAmountAmount = new Label("0", game.skin);
-        table.add(unitAmount).colspan(2).left().padTop(10).padLeft(25);
-        table.add(unitAmountAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(unitAmount).colspan(3).left().padTop(10).padLeft(25);
+        table.add(unitAmountAmount).colspan(1).right().padTop(10);
         // enemy amount
         table.row();
         final Label enemyAmount = new Label("Enemy Amount: ", game.skin);
         enemyAmountAmount = new Label("0", game.skin);
-        table.add(enemyAmount).colspan(2).left().padTop(10).padLeft(25);
-        table.add(enemyAmountAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(enemyAmount).colspan(3).left().padTop(10).padLeft(25);
+        table.add(enemyAmountAmount).colspan(1).right().padTop(10);
         // life duration amount
         table.row();
         final Label lifeDuration = new Label("Life Duration: ", game.skin);
         lifeDurationAmount = new Label("0", game.skin);
-        table.add(lifeDuration).colspan(2).left().padTop(10).padLeft(25);
-        table.add(lifeDurationAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(lifeDuration).colspan(3).left().padTop(10).padLeft(25);
+        table.add(lifeDurationAmount).colspan(1).right().padTop(10);
         // refund
         table.row();
         table.add(new Label("", game.skin));
