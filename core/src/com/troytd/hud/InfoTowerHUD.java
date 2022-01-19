@@ -33,9 +33,9 @@ public class InfoTowerHUD extends SideHUD {
     private final Label range2Amount;
     private final Label refundAmount;
 
+    private final ImageButton upgradeDamageButton;
     /*
     private final ImageButton upgradeRangeButton;
-    private final ImageButton upgradeDamageButton;
     private final ImageButton upgradeSpeedButton;
     private final ImageButton upgradeHpButton;
     private final ImageButton upgradeAtSpeedButton;
@@ -48,6 +48,8 @@ public class InfoTowerHUD extends SideHUD {
     public InfoTowerHUD(final TroyTD game, final Stage stage, Map map, float topHUDHeight,
                         final GameScreen gameScreen) {
         super(game, stage, map, topHUDHeight, "Tower Stats", gameScreen);
+
+        final int iconSize = game.settingPreference.getInteger("icon-size");
 
         // tower preview image
         towerImage = new Image(game.assetManager.get("towers/NoTower.png", Texture.class));
@@ -89,12 +91,24 @@ public class InfoTowerHUD extends SideHUD {
         totalDamageAmount = new Label("0", game.skin);
         table.add(totalDamage).colspan(2).left().padTop(10).padLeft(25);
         table.add(totalDamageAmount).colspan(3).right().padRight(25).padTop(10);
+
+        // variable stats
+
         // damage
         table.row();
         final Label damage = new Label("Damage: ", game.skin);
-        damageAmount = new Label("0", game.skin);
         table.add(damage).colspan(2).left().padTop(10).padLeft(25);
-        table.add(damageAmount).colspan(3).right().padRight(25).padTop(10);
+
+        final VerticalGroup damageGroup = new VerticalGroup();
+        upgradeDamageButton = new ImageButton(game.skin, "upgrade");
+        upgradeDamageButton.setTransform(true);
+        upgradeDamageButton.setSize(iconSize, iconSize);
+        damageAmount = new Label("0", game.skin);
+
+        damageGroup.addActor(damageAmount);
+        damageGroup.addActor(upgradeDamageButton);
+
+        table.add(damageGroup).colspan(3).right().padRight(25).padTop(10);
         // range
         table.row().colspan(2).left().padTop(10).padLeft(25);
         final Label range = new Label("Range: ", game.skin);
