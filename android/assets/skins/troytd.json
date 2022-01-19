@@ -103,6 +103,24 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 			a: 1
 		}
 	}
+	upgrade_icon_red: {
+		name: upgrade_icon_white
+		color: {
+			r: 1
+			g: 0
+			b: 0
+			a: 1
+		}
+	}
+	upgrade_icon_green: {
+		name: upgrade_icon_white
+		color: {
+			r: 0
+			g: 1
+			b: 0
+			a: 1
+		}
+	}
 	green: {
 		name: white-pixel
 		color: GREEN
@@ -213,6 +231,15 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	}
 	white: {
 		over: white
+	}
+	upgrade: {
+		up: upgrade_icon
+		down: upgrade_icon_green
+		over: upgrade_icon_green
+		disabled: upgrade_icon_red
+		checked: upgrade_icon
+		checkedOver: upgrade_icon_green
+		checkedDown: upgrade_icon_green
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
