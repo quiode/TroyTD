@@ -11,9 +11,10 @@ public class Spearthrower extends Tower {
     public final static int range = 160;
     public final static int speed = 100;
     public final static int maxHP = 100;
+    public final static TowerTypes type = TowerTypes.SINGLE;
 
     public Spearthrower(TroyTD game, Vector2 position, Vector2 distortion) {
         super(game, position, game.assetManager.get("towers/Spearthrower.png", Texture.class), "Spearthrower",
-              TowerTypes.SINGLE, distortion, DebugShot.class);
+              distortion, DebugShot.class);
     }
 }

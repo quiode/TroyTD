@@ -13,9 +13,10 @@ public class DebugTower4 extends Tower {
     public final static int cost = 45;
     public final static int speed = 5;
     public final static int atspeed = 50;
+    public final static TowerTypes type = TowerTypes.MELEE;
 
     public DebugTower4(TroyTD game, Vector2 position, Vector2 distortion) {
-        super(game, position, game.assetManager.get("towers/DebugTower4.png", Texture.class), "DebugTower4",
-              TowerTypes.MELEE, distortion, DebugShot.class);
+        super(game, position, game.assetManager.get("towers/DebugTower4.png", Texture.class), "DebugTower4", distortion,
+              DebugShot.class);
     }
 }

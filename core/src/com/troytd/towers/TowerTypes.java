@@ -1,7 +1,5 @@
 package com.troytd.towers;
 
-enum TowerTypes {
-    MELEE,
-    SINGLE,
-    AOE
+public enum TowerTypes {
+    MELEE, SINGLE, AOE, NONE
 }

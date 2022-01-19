@@ -28,8 +28,8 @@ public abstract class Tower {
     public final static int atspeed = 100;
     public final static short enemyAmount = 3;
     public final static short unitAmount = 3;
+    public final static TowerTypes type = TowerTypes.NONE;
     protected final Vector2 distortion;
-    protected final TowerTypes type;
     protected final TroyTD game;
     private final ArrayList<Unit> units = new ArrayList<Unit>(unitAmount);
     public String name = "Tower";
@@ -51,14 +51,13 @@ public abstract class Tower {
     private boolean statsChanged = false;
     private long lastShot = TimeUtils.millis();
 
-    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
-                 Vector2 distortion, Class<? extends Shot> shotClass) {
+    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
+                 Class<? extends Shot> shotClass) {
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
         towerSprite.setSize(getSize(game), getSize(game));
         this.name = name;
-        this.type = type;
         this.distortion = distortion;
         this.shotClass = shotClass;
     }
@@ -249,8 +248,7 @@ public abstract class Tower {
                     float distanceToTarget = target.getPosition().dst(getPosition());
                     if (distanceToTarget > range) return null;
                     return (SingleShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
-                                                                       Enemy.class)
-                            .newInstance(game, this, target);
+                                                                       Enemy.class).newInstance(game, this, target);
                 } catch (ReflectionException e) {
                     e.printStackTrace();
                     return null;

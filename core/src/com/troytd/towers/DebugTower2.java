@@ -8,9 +8,10 @@ import com.troytd.towers.shots.single.DebugShot;
 public class DebugTower2 extends Tower {
     public final static int cost = 200;
     public final static int damage = 26;
+    public final static TowerTypes type = TowerTypes.SINGLE;
 
     public DebugTower2(TroyTD game, Vector2 position, Vector2 distortion) {
-        super(game, position, game.assetManager.get("towers/DebugTower2.png", Texture.class), "DebugTower2",
-              TowerTypes.SINGLE, distortion, DebugShot.class);
+        super(game, position, game.assetManager.get("towers/DebugTower2.png", Texture.class), "DebugTower2", distortion,
+              DebugShot.class);
     }
 }

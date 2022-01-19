@@ -15,9 +15,10 @@ public class DebugTower5 extends Tower {
     public final static int range = 45;
     public final static int speed = 45;
     public final static int maxHP = 234;
+    public final static TowerTypes type = TowerTypes.AOE;
 
     public DebugTower5(TroyTD game, Vector2 position, Vector2 distortion) {
-        super(game, position, game.assetManager.get("towers/DebugTower5.png", Texture.class), "DebugTower5",
-              TowerTypes.AOE, distortion, DebugShot.class);
+        super(game, position, game.assetManager.get("towers/DebugTower5.png", Texture.class), "DebugTower5", distortion,
+              DebugShot.class);
     }
 }
