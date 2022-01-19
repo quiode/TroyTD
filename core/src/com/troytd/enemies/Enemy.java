@@ -33,6 +33,7 @@ public abstract class Enemy {
     final protected Sprite enemySprite;
     protected final Map map;
     private final ProgressBar healthBar;
+    private final Vector2 position = new Vector2();
     /**
      * t in [0,1] in path
      */
@@ -133,7 +134,7 @@ public abstract class Enemy {
     }
 
     public Vector2 getPosition() {
-        return enemySprite.getBoundingRectangle().getPosition(new Vector2());
+        return enemySprite.getBoundingRectangle().getPosition(position);
     }
 
     public void setPosition(Vector2 position) {
