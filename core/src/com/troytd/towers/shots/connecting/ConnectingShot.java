@@ -92,28 +92,28 @@ public abstract class ConnectingShot implements Shot {
 
         // resize sprites
 
-        final float x = tower.getPosition().x + tower.getRect().width / 2f;
-        final float y = tower.getPosition().y + tower.getRect().height / 2f;
-        final float width = sprites[0].getWidth();
-        final float height = vectorToTarget.set(
+        float x = tower.getPosition().x + tower.getRect().width / 2f;
+        float y = tower.getPosition().y + tower.getRect().height / 2f;
+        float width = sprites[0].getWidth();
+        float height = vectorToTarget.set(
                 (this.enemies[0].getRectangle().x + this.enemies[0].getRectangle().width / 2f) - x + width / 2f,
                 (this.enemies[0].getRectangle().y + this.enemies[0].getRectangle().height / 2f) - y).len();
 
-        sprites[0].setBounds(x, y, width, height);
         sprites[0].setOrigin(width / 2f, 0);
         sprites[0].setRotation(vectorToTarget.angleDeg() - 90);
+        sprites[0].setBounds(x, y, width, height);
 
         for (int i = 1; i < this.enemies.length; i++) {
-            vectorToTarget.set(
-                    (this.enemies[i - 1].getPosition().x + this.enemies[i - 1].getRectangle().width / 2f) - (this.enemies[i].getPosition().x + this.enemies[i].getRectangle().width / 2f),
-                    (this.enemies[i - 1].getPosition().y + this.enemies[i - 1].getRectangle().height / 2f) - (this.enemies[i].getPosition().y + this.enemies[i].getRectangle().height / 2f));
+            x = this.enemies[i - 1].getRectangle().x + this.enemies[i - 1].getRectangle().width / 2f;
+            y = this.enemies[i - 1].getRectangle().y + this.enemies[i - 1].getRectangle().height / 2f;
+            width = sprites[i].getWidth();
+            height = vectorToTarget.set(
+                    (this.enemies[i].getRectangle().x + this.enemies[i].getRectangle().width / 2f) - x + width / 2f,
+                    (this.enemies[i].getRectangle().y + this.enemies[i].getRectangle().height / 2f) - y).len();
 
-            sprites[i].setRotation(vectorToTarget.angleDeg() + 90);
-
-            sprites[i].setBounds(this.enemies[i - 1].getPosition().x + this.enemies[i - 1].getRectangle().width / 2f,
-                                 this.enemies[i - 1].getPosition().y + this.enemies[i - 1].getRectangle().height / 2f,
-                                 sprites[i].getWidth(), vectorToTarget.dst(sprites[i].getBoundingRectangle().x,
-                                                                           sprites[i].getBoundingRectangle().y));
+            sprites[i].setOrigin(width / 2f, 0);
+            sprites[i].setRotation(vectorToTarget.angleDeg() - 90);
+            sprites[i].setBounds(x, y, width, height);
         }
     }
 
