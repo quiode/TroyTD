@@ -23,7 +23,7 @@ public abstract class Tower {
     public final static int speed = 100;
     public final static int maxHP = 100;
     public final static int atspeed = 100;
-    public final static short enemyAmount = 1;
+    public final static short enemyAmount = 3;
     public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
