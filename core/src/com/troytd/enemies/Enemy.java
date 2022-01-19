@@ -118,7 +118,7 @@ public abstract class Enemy {
         }
         Vector2[] positions = new Vector2[n + 1];
         positions[0] = position;
-        for (int i = 1; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             positions[i + 1] = enemies.get(Helper.getClosest(positions[i], enemyPositions)).getPosition();
         }
         Enemy[] result = new Enemy[n];

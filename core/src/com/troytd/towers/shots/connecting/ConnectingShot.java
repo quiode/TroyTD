@@ -81,7 +81,7 @@ public abstract class ConnectingShot implements Shot {
             return;
         }
 
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : this.enemies) {
             if (enemy == null) {
                 shots.remove(this);
                 return;
@@ -92,12 +92,15 @@ public abstract class ConnectingShot implements Shot {
         if (vectorToTarget == null) vectorToTarget = new Vector2();
         sprites[0].setRotation(vectorToTarget.angleDeg() + 90);
 
-        sprites[0].setBounds(tower.getPosition().x + tower.getRect().width / 2f,
-                             tower.getPosition().y + tower.getRect().height / 2f, sprites[0].getWidth(),
-                             vectorToTarget.set(
-                                             (tower.getPosition().x + tower.getRect().width / 2f) - (this.enemies[0].getPosition().x + this.enemies[0].getRectangle().width / 2f),
-                                             (tower.getPosition().y + tower.getRect().height / 2f) - (this.enemies[0].getPosition().y + this.enemies[0].getRectangle().height / 2f))
-                                     .dst(sprites[0].getBoundingRectangle().x, sprites[0].getBoundingRectangle().y));
+        final float x = tower.getPosition().x + tower.getRect().width / 2f;
+        final float y = tower.getPosition().y + tower.getRect().height / 2f;
+        final float height = vectorToTarget.set(
+                        (tower.getPosition().x + tower.getRect().width / 2f) - (this.enemies[0].getPosition().x + this.enemies[0].getRectangle().width / 2f),
+                        (tower.getPosition().y + tower.getRect().height / 2f) - (this.enemies[0].getPosition().y + this.enemies[0].getRectangle().height / 2f))
+                .dst(sprites[0].getBoundingRectangle().x, sprites[0].getBoundingRectangle().y);
+        final float width = sprites[0].getWidth();
+
+        sprites[0].setBounds(x, y, width, height);
 
         for (int i = 1; i < this.enemies.length; i++) {
             vectorToTarget.set(
