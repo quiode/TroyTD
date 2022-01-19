@@ -12,8 +12,12 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
+import com.troytd.helpers.Stat;
 import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
+import com.troytd.towers.Tower;
+
+import java.util.HashMap;
 
 public class InfoTowerHUD extends SideHUD {
     private final Label lifeDurationAmount;
@@ -103,7 +107,7 @@ public class InfoTowerHUD extends SideHUD {
         damageAmount = new Label("0", game.skin);
 
         table.add(damageAmount).colspan(1).right().padTop(10);
-        table.add(upgradeDamageButton).colspan(1).center().padTop(10).size(iconSize/2f);
+        table.add(upgradeDamageButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // range
         table.row().colspan(3).left().padTop(10).padLeft(25);
         final Label range = new Label("Range: ", game.skin);
@@ -160,32 +164,35 @@ public class InfoTowerHUD extends SideHUD {
         refund.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                HashMap<String, Stat> towerStats;
                 try {
-                    gameScreen.money += ((int) ClassReflection.getField(towerPlace.getTower().getClass(), "cost")
-                            .get(null) / 3) * 2;
-                    towerPlace.removeTower();
-                    close();
-                    Dialog dialog = new Dialog("", game.skin, "info") {
-                        @Override
-                        public void result(Object object) {
-                            InfoTowerHUD.this.stage.getActors().removeValue(this, true);
-                        }
-                    };
-                    dialog.text("Refunded " + refundAmount.getText() + " gold");
-                    dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
-
-                    dialog.center();
-                    dialog.center();
-                    if (dialog.getButtonTable().getCells().size > 1)
-                        dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
-                    dialog.getContentTable().pad(0, 25, 25, 25);
-                    dialog.setWidth(Gdx.graphics.getWidth() / 2f);
-                    dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f,
-                                       Gdx.graphics.getHeight() / 2f, Align.center);
-                    dialog.show(stage);
+                    towerStats = (HashMap<String, Stat>) ClassReflection.getField(towerPlace.getTower().getClass(),
+                                                                                  "defaultStats").get(null);
                 } catch (ReflectionException e) {
-                    e.printStackTrace();
+                    towerStats = Tower.defaultStats;
                 }
+                gameScreen.money += ((int) towerStats.get("cost").getValue() / 3) * 2;
+                towerPlace.removeTower();
+                close();
+                Dialog dialog = new Dialog("", game.skin, "info") {
+                    @Override
+                    public void result(Object object) {
+                        InfoTowerHUD.this.stage.getActors().removeValue(this, true);
+                    }
+                };
+                dialog.text("Refunded " + refundAmount.getText() + " gold");
+                dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
+
+                dialog.center();
+                dialog.center();
+                if (dialog.getButtonTable().getCells().size > 1)
+                    dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
+                dialog.getContentTable().pad(0, 25, 25, 25);
+                dialog.setWidth(Gdx.graphics.getWidth() / 2f);
+                dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f, Gdx.graphics.getHeight() / 2f,
+                                   Align.center);
+                dialog.show(stage);
+
             }
         });
         refundAmount = new Label("0", game.skin);
@@ -217,25 +224,28 @@ public class InfoTowerHUD extends SideHUD {
     protected void updatedTowerPlace() {
         towerImage.setDrawable(new TextureRegionDrawable(towerPlace.getTower().getTexture()));
         towerName.setText(towerPlace.getTower().name);
+
+        HashMap<String, Stat> towerStats;
         try {
-            damageAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "damage").get(null)));
-            rangeAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "range").get(null)));
-            speedAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "speed").get(null)));
-            HPAmount.setText(String.valueOf(towerPlace.getTower().hp));
-            maxHPAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "maxHP").get(null)));
-            killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
-            totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
-            atspeedAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "atspeed").get(null)));
-            typeAmount.setText(towerPlace.getTower().getType());
-            refundAmount.setText(String.valueOf(
-                    ((int) ClassReflection.getField(towerPlace.getTower().getClass(), "cost").get(null) / 3) * 2));
+            towerStats = (HashMap<String, Stat>) ClassReflection.getField(towerPlace.getTower().getClass(),
+                                                                          "defaultStats").get(null);
         } catch (ReflectionException e) {
-            e.printStackTrace();
+            towerStats = Tower.defaultStats;
         }
+
+        HPAmount.setText(String.valueOf(towerPlace.getTower().hp));
+        killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
+        typeAmount.setText(towerPlace.getTower().getType());
+        damageAmount.setText(String.valueOf(towerStats.get("damage").getValue()));
+        rangeAmount.setText(String.valueOf(towerStats.get("range").getValue()));
+        speedAmount.setText(String.valueOf(towerStats.get("speed").getValue()));
+        maxHPAmount.setText(String.valueOf(towerStats.get("maxHP").getValue()));
+        totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
+        atspeedAmount.setText(String.valueOf(towerStats.get("atspeed").getValue()));
+        range2Amount.setText(String.valueOf(towerStats.get("range2").getValue()));
+        unitAmountAmount.setText(String.valueOf(towerStats.get("unitAmount").getValue()));
+        enemyAmountAmount.setText(String.valueOf(towerStats.get("enemyAmount").getValue()));
+        lifeDurationAmount.setText(String.valueOf(towerStats.get("lifeDuration").getValue()));
+        refundAmount.setText(String.valueOf(((int) towerStats.get("cost").getValue() / 3) * 2));
     }
 }

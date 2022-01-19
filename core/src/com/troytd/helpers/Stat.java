@@ -20,10 +20,6 @@ public class Stat<T> {
         this(name, value, 0);
     }
 
-    public Stat(T value, int level) {
-        this("", value, level);
-    }
-
     public Stat(T value) {
         this("", value);
     }

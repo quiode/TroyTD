@@ -40,10 +40,10 @@ public abstract class ConnectingShot implements Shot {
         this.game = game;
         this.tower = tower;
 
-        this.lifeDuration = (long) tower.getStat("lifeDuration").getValue();
+        this.lifeDuration = (int) tower.getStat("lifeDuration").getValue();
         this.damage = (int) tower.getStat("damage").getValue();
 
-        short enemyAmount = (short) tower.getStat("enemyAmount").getValue();
+        int enemyAmount = (int) tower.getStat("enemyAmount").getValue();
 
         this.enemies = Enemy.getClosestN(tower.getPosition(), enemies, enemyAmount);
         this.sprites = new Sprite[enemyAmount];

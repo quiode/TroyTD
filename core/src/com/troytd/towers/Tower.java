@@ -171,23 +171,18 @@ public abstract class Tower {
     public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots) {
         if (enemies.isEmpty()) return;
 
+        HashMap<String, Stat> towerStats;
         try {
-            if (TimeUtils.timeSinceMillis(lastShot) > 1 / ((int) ClassReflection.getField(this.getClass(), "atspeed")
-                    .get(null) / 100000f)) {
-                Shot shot = shoot(enemies);
-                if (shot != null) {
-                    shots.add(shot);
-                    lastShot = TimeUtils.millis();
-                }
-            }
+            towerStats = (HashMap<String, Stat>) ClassReflection.getField(this.getClass(), "defaultStats").get(null);
         } catch (ReflectionException e) {
-            e.printStackTrace();
-            if (TimeUtils.timeSinceMillis(lastShot) > (int) getStat("atspeed").getValue()) {
-                Shot shot = shoot(enemies);
-                if (shot != null) {
-                    shots.add(shot);
-                    lastShot = TimeUtils.millis();
-                }
+            towerStats = Tower.defaultStats;
+        }
+
+        if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) towerStats.get("atspeed").getValue() / 100000f)) {
+            Shot shot = shoot(enemies);
+            if (shot != null) {
+                shots.add(shot);
+                lastShot = TimeUtils.millis();
             }
         }
     }

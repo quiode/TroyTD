@@ -11,10 +11,13 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
+import com.troytd.helpers.Stat;
 import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 import com.troytd.towers.TowerTypes;
+
+import java.util.HashMap;
 
 public class PlaceTowerHUD extends SideHUD {
     // hud
@@ -57,6 +60,7 @@ public class PlaceTowerHUD extends SideHUD {
         super(game, stage, map, topHUDHeight, "Place Tower", gameScreen);
 
         final int icon_size = game.settingPreference.getInteger("icon-size");
+
 
         // hud - previous button
         previousButton = new ImageButton(game.skin, "navigationPrevious");
@@ -248,6 +252,14 @@ public class PlaceTowerHUD extends SideHUD {
             towerType = Tower.type;
         }
 
+        HashMap<String, Stat> towerStats;
+        try {
+            towerStats = (HashMap<String, Stat>) ClassReflection.getField(selectedTower.getClass(), "defaultStats")
+                    .get(null);
+        } catch (ReflectionException e) {
+            towerStats = Tower.defaultStats;
+        }
+
         // universal stats
 
         // tower type label
@@ -267,13 +279,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(costLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // cost amount
-        try {
-            tmp_text = (int) ClassReflection.getField(selectedTower, "cost").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        costAmount = new Label(tmp_text, game.skin);
+        costAmount = new Label(String.valueOf(towerStats.get("cost").getValue()), game.skin);
         table.add(costAmount).colspan(2).right().padRight(25).padTop(10);
 
         // damage label
@@ -283,14 +289,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(damageLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // damage amount
-        tmp_text = "";
-        try {
-            tmp_text = (int) ClassReflection.getField(selectedTower, "damage").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        damageAmount = new Label(tmp_text, game.skin);
+        damageAmount = new Label(String.valueOf(towerStats.get("damage").getValue()), game.skin);
         table.add(damageAmount).colspan(2).right().padRight(25).padTop(10);
 
         // range label
@@ -300,14 +299,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(rangeLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // range amount
-        tmp_text = "";
-        try {
-            tmp_text = (int) ClassReflection.getField(selectedTower, "range").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        rangeAmount = new Label(tmp_text, game.skin);
+        rangeAmount = new Label(String.valueOf(towerStats.get("range").getValue()), game.skin);
         table.add(rangeAmount).colspan(2).right().padRight(25).padTop(10);
 
         // hp label
@@ -317,14 +309,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(HPLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // hp amount
-        tmp_text = "";
-        try {
-            tmp_text = (int) ClassReflection.getField(selectedTower, "maxHP").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        HPAmount = new Label(tmp_text, game.skin);
+        HPAmount = new Label(String.valueOf(towerStats.get("maxHP").getValue()), game.skin);
         table.add(HPAmount).colspan(2).right().padRight(25).padTop(10);
 
         // attack speed label
@@ -334,14 +319,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(atSpeedLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // attack speed amount
-        tmp_text = "";
-        try {
-            tmp_text = (int) ClassReflection.getField(selectedTower, "atspeed").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        atSpeedAmount = new Label(tmp_text, game.skin);
+        atSpeedAmount = new Label(String.valueOf(towerStats.get("atspeed").getValue()), game.skin);
         table.add(atSpeedAmount).colspan(2).right().padRight(25).padTop(10);
 
         // special attributes
@@ -353,14 +331,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(unitAmountLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // unitAmount amount
-        tmp_text = "";
-        try {
-            tmp_text = (short) ClassReflection.getField(selectedTower, "unitAmount").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        unitAmountAmount = new Label(tmp_text, game.skin);
+        unitAmountAmount = new Label(String.valueOf(towerStats.get("unitAmount").getValue()), game.skin);
         table.add(unitAmountAmount).colspan(2).right().padRight(25).padTop(10);
         // speed label
         table.row();
@@ -369,14 +340,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(speedLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // speed amount
-        tmp_text = "";
-        try {
-            tmp_text = (int) ClassReflection.getField(selectedTower, "speed").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        speedAmount = new Label(tmp_text, game.skin);
+        speedAmount = new Label(String.valueOf(towerStats.get("speed").getValue()), game.skin);
         table.add(speedAmount).colspan(2).right().padRight(25).padTop(10);
         // range2 label
         table.row();
@@ -385,14 +349,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(range2Label).colspan(3).left().padTop(10).padLeft(25);
 
         // range2 amount
-        tmp_text = "";
-        try {
-            tmp_text = (int) ClassReflection.getField(selectedTower, "range2").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        range2Amount = new Label(tmp_text, game.skin);
+        range2Amount = new Label(String.valueOf(towerStats.get("range2").getValue()), game.skin);
         table.add(range2Amount).colspan(2).right().padRight(25).padTop(10);
 
         // lifeDuration label
@@ -402,14 +359,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(lifeDurationLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // lifeDuration amount
-        tmp_text = "";
-        try {
-            tmp_text = (long) ClassReflection.getField(selectedTower, "lifeDuration").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        lifeDurationAmount = new Label(tmp_text, game.skin);
+        lifeDurationAmount = new Label(String.valueOf(towerStats.get("lifeDuration").getValue()), game.skin);
         table.add(lifeDurationAmount).colspan(2).right().padRight(25).padTop(10);
 
         // enemyAmount label
@@ -419,14 +369,7 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(enemyAmountLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // enemyAmount amount
-        tmp_text = "";
-        try {
-            tmp_text = (short) ClassReflection.getField(selectedTower, "enemyAmount").get(null) + "";
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            tmp_text = "";
-        }
-        enemyAmountAmount = new Label(tmp_text, game.skin);
+        enemyAmountAmount = new Label(String.valueOf(towerStats.get("enemyAmount").getValue()), game.skin);
         table.add(enemyAmountAmount).colspan(2).right().padRight(25).padTop(10);
 
 
@@ -438,29 +381,27 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(navigationGroup).expandX().colspan(5).padTop(10).padBottom(10).center();
 
         placeButton = new TextButton("Place", game.skin, "place");
+        final HashMap<String, Stat> finalTowerStats = towerStats;
         placeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    if ((int) ClassReflection.getField(selectedTower, "cost").get(null) <= gameScreen.money) {
-                        gameScreen.money -= (int) ClassReflection.getField(selectedTower, "cost").get(null);
-                    } else {
-                        Dialog errorDialog = new Dialog("", game.skin, "error") {
-                            @Override
-                            public void result(Object object) {
-                                stage.getActors().removeValue(this, true);
-                            }
-                        };
-                        errorDialog.text("Not enough money", game.skin.get("error", Label.LabelStyle.class));
-                        errorDialog.button("OK", true, game.skin.get("error", TextButton.TextButtonStyle.class));
-                        stage.addActor(errorDialog);
-                        errorDialog.show(stage);
-                        close();
-                        return;
-                    }
-                } catch (ReflectionException e) {
-                    e.printStackTrace();
+                if ((int) finalTowerStats.get("cost").getValue() <= gameScreen.money) {
+                    gameScreen.money -= (int) finalTowerStats.get("cost").getValue();
+                } else {
+                    Dialog errorDialog = new Dialog("", game.skin, "error") {
+                        @Override
+                        public void result(Object object) {
+                            stage.getActors().removeValue(this, true);
+                        }
+                    };
+                    errorDialog.text("Not enough money", game.skin.get("error", Label.LabelStyle.class));
+                    errorDialog.button("OK", true, game.skin.get("error", TextButton.TextButtonStyle.class));
+                    stage.addActor(errorDialog);
+                    errorDialog.show(stage);
+                    close();
+                    return;
                 }
+
                 try {
                     towerPlace.setTower(
                             (Tower) ClassReflection.getConstructor(getSelectedTower(), TroyTD.class, Vector2.class,
@@ -515,24 +456,28 @@ public class PlaceTowerHUD extends SideHUD {
 
     private void setSelectedTower(Class<? extends Tower> selectedTower) {
         if (costAmount != null) {
+            HashMap<String, Stat> towerStats;
             try {
-                costAmount.setText((int) ClassReflection.getField(selectedTower, "cost").get(null) + "");
-                damageAmount.setText((int) ClassReflection.getField(selectedTower, "damage").get(null) + "");
-                rangeAmount.setText((int) ClassReflection.getField(selectedTower, "range").get(null) + "");
-                speedAmount.setText((int) ClassReflection.getField(selectedTower, "speed").get(null) + "");
-                HPAmount.setText((int) ClassReflection.getField(selectedTower, "maxHP").get(null) + "");
-                atSpeedAmount.setText((int) ClassReflection.getField(selectedTower, "atspeed").get(null) + "");
-                towerTypeAmount.setText(ClassReflection.getField(selectedTower, "type").get(null).toString());
-                range2Amount.setText((int) ClassReflection.getField(selectedTower, "range2").get(null) + "");
-                unitAmountAmount.setText((short) ClassReflection.getField(selectedTower, "unitAmount").get(null) + "");
-                enemyAmountAmount.setText(
-                        (short) ClassReflection.getField(selectedTower, "enemyAmount").get(null) + "");
-                lifeDurationAmount.setText(
-                        (long) ClassReflection.getField(selectedTower, "lifeDuration").get(null) + "");
-                towerName.setText(selectedTower.getSimpleName());
+                towerStats = (HashMap<String, Stat>) ClassReflection.getField(selectedTower, "defaultStats").get(null);
             } catch (ReflectionException e) {
-                e.printStackTrace();
+                towerStats = Tower.defaultStats;
             }
+            costAmount.setText(String.valueOf(towerStats.get("cost").getValue()));
+            damageAmount.setText(String.valueOf(towerStats.get("damage").getValue()));
+            rangeAmount.setText(String.valueOf(towerStats.get("range").getValue()));
+            speedAmount.setText(String.valueOf(towerStats.get("speed").getValue()));
+            HPAmount.setText(String.valueOf(towerStats.get("maxHP").getValue()));
+            atSpeedAmount.setText(String.valueOf(towerStats.get("atspeed").getValue()));
+            try {
+                towerTypeAmount.setText(ClassReflection.getField(selectedTower, "type").get(null).toString());
+            } catch (ReflectionException e) {
+                towerTypeAmount.setText(Tower.type.toString());
+            }
+            range2Amount.setText(String.valueOf(towerStats.get("range2").getValue()));
+            unitAmountAmount.setText(String.valueOf(towerStats.get("unitAmount").getValue()));
+            enemyAmountAmount.setText(String.valueOf(towerStats.get("enemyAmount").getValue()));
+            lifeDurationAmount.setText(String.valueOf(towerStats.get("lifeDuration").getValue()));
+            towerName.setText(selectedTower.getSimpleName());
         }
         this.selectedTower = selectedTower;
     }
