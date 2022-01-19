@@ -1,5 +1,6 @@
 package com.troytd.towers.shots.connecting;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -27,11 +28,13 @@ public abstract class ConnectingShot implements Shot {
      */
     private final Enemy[] enemies;
     private final TroyTD game;
+    private final int damage;
     /**
      * the different sprites for connecting the enemies
      */
     Sprite[] sprites;
     Vector2 vectorToTarget;
+    private short amountOfSpritesToDraw;
 
     public ConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
         int damage = 10;
@@ -44,6 +47,8 @@ public abstract class ConnectingShot implements Shot {
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
+
+        this.damage = damage;
 
         short enemyAmount = Tower.enemyAmount;
         try {
@@ -62,13 +67,6 @@ public abstract class ConnectingShot implements Shot {
             sprites[i].setSize(sprites[i].getWidth() * sizeModifier, sprites[i].getHeight() * sizeModifier);
         }
 
-        for (Enemy enemy : this.enemies) {
-            if (enemy != null) {
-                enemy.takeDamage(damage, enemies, tower, gameScreen);
-                tower.totalDamage += damage;
-            }
-        }
-
         vectorToTarget = new Vector2();
     }
 
@@ -84,43 +82,68 @@ public abstract class ConnectingShot implements Shot {
         }
 
         for (Enemy enemy : this.enemies) {
-            if (enemy == null) {
+            if (enemy == null || enemy.isDead()) {
                 shots.remove(this);
                 return;
             }
         }
 
         // resize sprites
-        sprites[0].setRotation(vectorToTarget.angleDeg() + 90);
+        float x = tower.getPosition().x + tower.getRect().width / 2f;
+        float y = tower.getPosition().y + tower.getRect().height / 2f;
+        float width = sprites[0].getWidth();
+        vectorToTarget.set(
+                (this.enemies[0].getRectangle().x + this.enemies[0].getRectangle().width / 2f) - x + width / 2f,
+                (this.enemies[0].getRectangle().y + this.enemies[0].getRectangle().height / 2f) - y);
+        float height = vectorToTarget.len();
+        try {
+            if (vectorToTarget.len() > (Integer) ClassReflection.getField(tower.getClass(), "range").get(null)) {
+                shots.remove(this);
+                return;
+            }
+        } catch (ReflectionException e) {
+            if (vectorToTarget.len() > Tower.range) {
+                shots.remove(this);
+                return;
+            }
+        }
 
-        final float x = tower.getPosition().x + tower.getRect().width / 2f;
-        final float y = tower.getPosition().y + tower.getRect().height / 2f;
-        final float height = vectorToTarget.set(
-                        (tower.getPosition().x + tower.getRect().width / 2f) - (this.enemies[0].getPosition().x + this.enemies[0].getRectangle().width / 2f),
-                        (tower.getPosition().y + tower.getRect().height / 2f) - (this.enemies[0].getPosition().y + this.enemies[0].getRectangle().height / 2f))
-                .dst(sprites[0].getBoundingRectangle().x, sprites[0].getBoundingRectangle().y);
-        final float width = sprites[0].getWidth();
-
+        sprites[0].setOrigin(width / 2f, 0);
+        sprites[0].setRotation(vectorToTarget.angleDeg() - 90);
         sprites[0].setBounds(x, y, width, height);
+        this.enemies[0].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
 
+        amountOfSpritesToDraw = 1;
         for (int i = 1; i < this.enemies.length; i++) {
+            x = this.enemies[i - 1].getRectangle().x + this.enemies[i - 1].getRectangle().width / 2f;
+            y = this.enemies[i - 1].getRectangle().y + this.enemies[i - 1].getRectangle().height / 2f;
+            width = sprites[i].getWidth();
             vectorToTarget.set(
-                    (this.enemies[i - 1].getPosition().x + this.enemies[i - 1].getRectangle().width / 2f) - (this.enemies[i].getPosition().x + this.enemies[i].getRectangle().width / 2f),
-                    (this.enemies[i - 1].getPosition().y + this.enemies[i - 1].getRectangle().height / 2f) - (this.enemies[i].getPosition().y + this.enemies[i].getRectangle().height / 2f));
+                    (this.enemies[i].getRectangle().x + this.enemies[i].getRectangle().width / 2f) - x + width / 2f,
+                    (this.enemies[i].getRectangle().y + this.enemies[i].getRectangle().height / 2f) - y);
+            height = vectorToTarget.len();
+            try {
+                if (vectorToTarget.len() > (Integer) ClassReflection.getField(tower.getClass(), "range2").get(null)) {
+                    break;
+                }
+            } catch (ReflectionException e) {
+                if (vectorToTarget.len() > Tower.range2) {
+                    break;
+                }
+            }
 
-            sprites[i].setRotation(vectorToTarget.angleDeg() + 90);
-
-            sprites[i].setBounds(this.enemies[i - 1].getPosition().x + this.enemies[i - 1].getRectangle().width / 2f,
-                                 this.enemies[i - 1].getPosition().y + this.enemies[i - 1].getRectangle().height / 2f,
-                                 sprites[i].getWidth(), vectorToTarget.dst(sprites[i].getBoundingRectangle().x,
-                                                                           sprites[i].getBoundingRectangle().y));
+            sprites[i].setOrigin(width / 2f, 0);
+            sprites[i].setRotation(vectorToTarget.angleDeg() - 90);
+            sprites[i].setBounds(x, y, width, height);
+            amountOfSpritesToDraw++;
+            this.enemies[i].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
         }
     }
 
     @Override
     public void draw() {
-        for (Sprite sprite : sprites) {
-            sprite.draw(game.batch);
+        for (int i = 0; i < amountOfSpritesToDraw; i++) {
+            sprites[i].draw(game.batch);
         }
     }
 }

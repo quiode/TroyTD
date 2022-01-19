@@ -18,12 +18,13 @@ import java.util.ArrayList;
 
 public abstract class Tower {
     public final static int cost = 100;
-    public final static int damage = 100;
-    public final static int range = 100;
+    public final static int damage = 200;
+    public final static int range = 300;
+    public final static int range2 = 100;
     public final static int speed = 100;
     public final static int maxHP = 100;
     public final static int atspeed = 100;
-    public final static short enemyAmount = 1;
+    public final static short enemyAmount = 3;
     public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
