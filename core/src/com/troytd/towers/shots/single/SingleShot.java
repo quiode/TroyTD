@@ -48,8 +48,8 @@ public abstract class SingleShot implements Shot {
         this.game = game;
         this.target = target;
 
-        damage = tower.getDamage();
-        speed = tower.getSpeed();
+        damage = (int) tower.getStat("damage").getValue();
+        speed = (int) tower.getStat("speed").getValue();
 
         sprite = new Sprite(
                 game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));

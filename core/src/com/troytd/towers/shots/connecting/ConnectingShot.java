@@ -40,10 +40,10 @@ public abstract class ConnectingShot implements Shot {
         this.game = game;
         this.tower = tower;
 
-        this.lifeDuration = tower.getLifeDuration();
-        this.damage = tower.getDamage();
+        this.lifeDuration = (long) tower.getStat("lifeDuration").getValue();
+        this.damage = (int) tower.getStat("damage").getValue();
 
-        short enemyAmount = tower.getEnemyAmount();
+        short enemyAmount = (short) tower.getStat("enemyAmount").getValue();
 
         this.enemies = Enemy.getClosestN(tower.getPosition(), enemies, enemyAmount);
         this.sprites = new Sprite[enemyAmount];
@@ -91,7 +91,7 @@ public abstract class ConnectingShot implements Shot {
                 return;
             }
         } catch (ReflectionException e) {
-            if (vectorToTarget.len() > Tower.range) {
+            if (vectorToTarget.len() > (int) Tower.defaultStats.get("range").getValue()) {
                 shots.remove(this);
                 return;
             }
@@ -116,7 +116,7 @@ public abstract class ConnectingShot implements Shot {
                     break;
                 }
             } catch (ReflectionException e) {
-                if (vectorToTarget.len() > Tower.range2) {
+                if (vectorToTarget.len() > (int) Tower.defaultStats.get("range2").getValue()) {
                     break;
                 }
             }

@@ -9,45 +9,43 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
+import com.troytd.helpers.Stat;
 import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.connecting.ConnectingShot;
 import com.troytd.towers.shots.single.SingleShot;
 import com.troytd.towers.units.Unit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Tower {
-    public final static int cost = 100;
-    public final static int damage = 200;
-    public final static int range = 300;
-    public final static long lifeDuration = 500;
-    public final static int range2 = 100;
-    public final static int speed = 100;
-    public final static int maxHP = 100;
-    public final static int atspeed = 100;
-    public final static short enemyAmount = 3;
-    public final static short unitAmount = 3;
+    public static final HashMap<String, Stat> defaultStats = new HashMap<>();
     public final static TowerTypes type = TowerTypes.NONE;
+
+    static {
+        defaultStats.put("cost", new Stat<>("cost", 100));
+        defaultStats.put("damage", new Stat<>("damage", 200));
+        defaultStats.put("range", new Stat<>("range", 300));
+        defaultStats.put("lifeDuration", new Stat<>("lifeDuration", 500));
+        defaultStats.put("range2", new Stat<>("range2", 100));
+        defaultStats.put("speed", new Stat<>("speed", 100));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 100));
+        defaultStats.put("atspeed", new Stat<>("atspeed", 100));
+        defaultStats.put("enemyAmount", new Stat<>("enemyAmount", 3));
+        defaultStats.put("unitAmount", new Stat<>("unitAmount", 3));
+    }
+
     protected final Vector2 distortion;
     protected final TroyTD game;
-    private final ArrayList<Unit> units = new ArrayList<Unit>(unitAmount);
-    public String name = "Tower";
+    private final HashMap<String, Stat> stats = new HashMap<>();
+    private final ArrayList<Unit> units = new ArrayList<Unit>((Integer) defaultStats.get("unitAmount").getValue());
+    public String name;
     public int kills = 0;
-    public int hp = maxHP;
+    public int hp = (Integer) defaultStats.get("maxHP").getValue();
     public int totalDamage = 0;
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
     Vector2 position;
-    private int ndamage;
-    private int nrange;
-    private int nrange2;
-    private int nspeed;
-    private int natspeed;
-    private int nmaxHP;
-    private short nenemyAmount;
-    private short nunitAmount;
-    private long nlifeDuration;
-    private boolean statsChanged = false;
     private long lastShot = TimeUtils.millis();
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
@@ -65,157 +63,40 @@ public abstract class Tower {
         return game.settingPreference.getInteger("width") * 0.075f;
     }
 
-    public int getDamage() {
-        if (!statsChanged) {
-            try {
-                return (Integer) ClassReflection.getField(this.getClass(), "damage").get(null);
-            } catch (ReflectionException e) {
-                return damage;
+    public void setStat(String key, Stat stat) {
+        HashMap<String, Stat> tempStats;
+        try {
+            tempStats = (HashMap<String, Stat>) ClassReflection.getField(this.getClass(), "defaultStats").get(null);
+        } catch (ReflectionException e) {
+            tempStats = defaultStats;
+        }
+        if (tempStats.containsKey(key)) {
+            if (stats.get(key).getValue().getClass() == stat.getValue().getClass()) {
+                stats.put(key, stat);
+            } else {
+                throw new IllegalArgumentException(
+                        "Cannot set stat " + key + " to " + stat.getValue() + " because it is not of type " + tempStats.get(
+                                key).getValue().getClass());
             }
         } else {
-            return ndamage;
+            throw new IllegalArgumentException("Cannot set stat " + key + " because it is not a correct stat");
         }
     }
 
-    public void setDamage(int damage) {
-        this.ndamage = damage;
-        statsChanged = true;
-    }
-
-    public int getRange() {
-        if (!statsChanged) {
-            try {
-                return (Integer) ClassReflection.getField(this.getClass(), "range").get(null);
-            } catch (ReflectionException e) {
-                return range;
-            }
-        } else {
-            return nrange;
+    public Stat getStat(String key) {
+        HashMap<String, Stat> tempStats;
+        try {
+            tempStats = (HashMap<String, Stat>) ClassReflection.getField(this.getClass(), "defaultStats").get(null);
+        } catch (ReflectionException e) {
+            tempStats = defaultStats;
         }
-    }
-
-    public void setRange(int range) {
-        this.nrange = range;
-        statsChanged = true;
-    }
-
-    public int getRange2() {
-        if (!statsChanged) {
-            try {
-                return (Integer) ClassReflection.getField(this.getClass(), "range2").get(null);
-            } catch (ReflectionException e) {
-                return range2;
-            }
+        if (stats.containsKey(key)) {
+            return stats.get(key);
+        } else if (tempStats.containsKey(key)) {
+            return tempStats.get(key);
         } else {
-            return nrange2;
+            throw new IllegalArgumentException("Cannot get stat " + key + " because it is not a correct stat");
         }
-    }
-
-    public void setRange2(int range2) {
-        this.nrange2 = range2;
-        statsChanged = true;
-    }
-
-    public int getSpeed() {
-        if (!statsChanged) {
-            try {
-                return (Integer) ClassReflection.getField(this.getClass(), "speed").get(null);
-            } catch (ReflectionException e) {
-                return speed;
-            }
-        } else {
-            return nspeed;
-        }
-    }
-
-    public void setSpeed(int speed) {
-        this.nspeed = speed;
-        statsChanged = true;
-    }
-
-    public int getAtSpeed() {
-        if (!statsChanged) {
-            try {
-                return (Integer) ClassReflection.getField(this.getClass(), "atspeed").get(null);
-            } catch (ReflectionException e) {
-                return atspeed;
-            }
-        } else {
-            return natspeed;
-        }
-    }
-
-    public void setAtSpeed(int atspeed) {
-        this.natspeed = atspeed;
-        statsChanged = true;
-    }
-
-    public int getMaxHP() {
-        if (!statsChanged) {
-            try {
-                return (Integer) ClassReflection.getField(this.getClass(), "maxHP").get(null);
-            } catch (ReflectionException e) {
-                return maxHP;
-            }
-        } else {
-            return nmaxHP;
-        }
-    }
-
-    public void setMaxHP(int maxHP) {
-        this.nmaxHP = maxHP;
-        statsChanged = true;
-    }
-
-    public short getEnemyAmount() {
-        if (!statsChanged) {
-            try {
-                return (Short) ClassReflection.getField(this.getClass(), "enemyAmount").get(null);
-            } catch (ReflectionException e) {
-                return enemyAmount;
-            }
-        } else {
-            return nenemyAmount;
-        }
-    }
-
-    public void setEnemyAmount(short enemyAmount) {
-        this.nenemyAmount = enemyAmount;
-        statsChanged = true;
-    }
-
-    public short getUnitAmount() {
-        if (!statsChanged) {
-            try {
-                return (Short) ClassReflection.getField(this.getClass(), "unitAmount").get(null);
-            } catch (ReflectionException e) {
-                return unitAmount;
-            }
-        } else {
-            return nunitAmount;
-        }
-    }
-
-    public void setUnitAmount(short unitAmount) {
-        this.nunitAmount = unitAmount;
-        statsChanged = true;
-    }
-
-    public long getLifeDuration() {
-        if (!statsChanged) {
-            try {
-                return (Long) ClassReflection.getField(this.getClass(), "lifeDuration").get(null);
-            } catch (ReflectionException e) {
-                return lifeDuration;
-            }
-        } else {
-            return nlifeDuration;
-        }
-    }
-
-    public void setLifeDuration(long lifeDuration) {
-        this.nlifeDuration = lifeDuration;
-        statsChanged = true;
     }
 
     public void dispose() {
@@ -252,7 +133,7 @@ public abstract class Tower {
                 try {
                     Enemy target = Enemy.getClosest(getPosition(), enemies);
                     float distanceToTarget = target.getPosition().dst(getPosition());
-                    if (distanceToTarget > range) return null;
+                    if (distanceToTarget > (int) getStat("range").getValue()) return null;
                     return (SingleShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
                                                                        Enemy.class).newInstance(game, this, target);
                 } catch (ReflectionException e) {
@@ -301,7 +182,7 @@ public abstract class Tower {
             }
         } catch (ReflectionException e) {
             e.printStackTrace();
-            if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
+            if (TimeUtils.timeSinceMillis(lastShot) > (int) getStat("atspeed").getValue()) {
                 Shot shot = shoot(enemies);
                 if (shot != null) {
                     shots.add(shot);
