@@ -13,6 +13,7 @@ import com.troytd.screens.GameScreen;
 import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.connecting.ConnectingShot;
 import com.troytd.towers.shots.single.SingleShot;
+import com.troytd.towers.units.Unit;
 
 import java.util.ArrayList;
 
@@ -20,15 +21,18 @@ public abstract class Tower {
     public final static int cost = 100;
     public final static int damage = 200;
     public final static int range = 300;
+    public final static long lifeDuration = 500;
     public final static int range2 = 100;
     public final static int speed = 100;
     public final static int maxHP = 100;
     public final static int atspeed = 100;
     public final static short enemyAmount = 3;
+    public final static short unitAmount = 3;
     public final static int AOE = 1;
     protected final Vector2 distortion;
     protected final TowerTypes type;
     protected final TroyTD game;
+    private final ArrayList<Unit> units = new ArrayList<Unit>(unitAmount);
     public String name = "Tower";
     public int kills = 0;
     public int hp = maxHP;
@@ -36,6 +40,17 @@ public abstract class Tower {
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
     Vector2 position;
+    private int ndamage;
+    private int nrange;
+    private int nrange2;
+    private int nspeed;
+    private int natspeed;
+    private int nmaxHP;
+    private int nAOE;
+    private short nenemyAmount;
+    private short nunitAmount;
+    private long nlifeDuration;
+    private boolean statsChanged = false;
     private long lastShot = TimeUtils.millis();
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
@@ -52,6 +67,176 @@ public abstract class Tower {
 
     static public float getSize(TroyTD game) {
         return game.settingPreference.getInteger("width") * 0.075f;
+    }
+
+    public int getDamage() {
+        if (!statsChanged) {
+            try {
+                return (Integer) ClassReflection.getField(this.getClass(), "damage").get(null);
+            } catch (ReflectionException e) {
+                return damage;
+            }
+        } else {
+            return ndamage;
+        }
+    }
+
+    public void setDamage(int damage) {
+        this.ndamage = damage;
+        statsChanged = true;
+    }
+
+    public int getRange() {
+        if (!statsChanged) {
+            try {
+                return (Integer) ClassReflection.getField(this.getClass(), "range").get(null);
+            } catch (ReflectionException e) {
+                return range;
+            }
+        } else {
+            return nrange;
+        }
+    }
+
+    public void setRange(int range) {
+        this.nrange = range;
+        statsChanged = true;
+    }
+
+    public int getRange2() {
+        if (!statsChanged) {
+            try {
+                return (Integer) ClassReflection.getField(this.getClass(), "range2").get(null);
+            } catch (ReflectionException e) {
+                return range2;
+            }
+        } else {
+            return nrange2;
+        }
+    }
+
+    public void setRange2(int range2) {
+        this.nrange2 = range2;
+        statsChanged = true;
+    }
+
+    public int getSpeed() {
+        if (!statsChanged) {
+            try {
+                return (Integer) ClassReflection.getField(this.getClass(), "speed").get(null);
+            } catch (ReflectionException e) {
+                return speed;
+            }
+        } else {
+            return nspeed;
+        }
+    }
+
+    public void setSpeed(int speed) {
+        this.nspeed = speed;
+        statsChanged = true;
+    }
+
+    public int getAtSpeed() {
+        if (!statsChanged) {
+            try {
+                return (Integer) ClassReflection.getField(this.getClass(), "atspeed").get(null);
+            } catch (ReflectionException e) {
+                return atspeed;
+            }
+        } else {
+            return natspeed;
+        }
+    }
+
+    public void setAtSpeed(int atspeed) {
+        this.natspeed = atspeed;
+        statsChanged = true;
+    }
+
+    public int getMaxHP() {
+        if (!statsChanged) {
+            try {
+                return (Integer) ClassReflection.getField(this.getClass(), "maxHP").get(null);
+            } catch (ReflectionException e) {
+                return maxHP;
+            }
+        } else {
+            return nmaxHP;
+        }
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.nmaxHP = maxHP;
+        statsChanged = true;
+    }
+
+    public int getAOE() {
+        if (!statsChanged) {
+            try {
+                return (Integer) ClassReflection.getField(this.getClass(), "AOE").get(null);
+            } catch (ReflectionException e) {
+                return AOE;
+            }
+        } else {
+            return nAOE;
+        }
+    }
+
+    public void setAOE(int AOE) {
+        this.nAOE = AOE;
+        statsChanged = true;
+    }
+
+    public short getEnemyAmount() {
+        if (!statsChanged) {
+            try {
+                return (Short) ClassReflection.getField(this.getClass(), "enemyAmount").get(null);
+            } catch (ReflectionException e) {
+                return enemyAmount;
+            }
+        } else {
+            return nenemyAmount;
+        }
+    }
+
+    public void setEnemyAmount(short enemyAmount) {
+        this.nenemyAmount = enemyAmount;
+        statsChanged = true;
+    }
+
+    public short getUnitAmount() {
+        if (!statsChanged) {
+            try {
+                return (Short) ClassReflection.getField(this.getClass(), "unitAmount").get(null);
+            } catch (ReflectionException e) {
+                return unitAmount;
+            }
+        } else {
+            return nunitAmount;
+        }
+    }
+
+    public void setUnitAmount(short unitAmount) {
+        this.nunitAmount = unitAmount;
+        statsChanged = true;
+    }
+
+    public long getLifeDuration() {
+        if (!statsChanged) {
+            try {
+                return (Long) ClassReflection.getField(this.getClass(), "lifeDuration").get(null);
+            } catch (ReflectionException e) {
+                return lifeDuration;
+            }
+        } else {
+            return nlifeDuration;
+        }
+    }
+
+    public void setLifeDuration(long lifeDuration) {
+        this.nlifeDuration = lifeDuration;
+        statsChanged = true;
     }
 
     public void dispose() {

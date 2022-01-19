@@ -20,7 +20,7 @@ public abstract class ConnectingShot implements Shot {
     /**
      * amount of enemies to connect
      */
-    private final long lifeDuration = 500;
+    private final long lifeDuration;
     private final long startTime;
     private final Tower tower;
     /**
@@ -37,25 +37,13 @@ public abstract class ConnectingShot implements Shot {
     private short amountOfSpritesToDraw;
 
     public ConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
-        int damage = 10;
         this.game = game;
-        startTime = System.currentTimeMillis();
         this.tower = tower;
 
-        try {
-            damage = (int) ClassReflection.getField(tower.getClass(), "damage").get(null);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-        }
+        this.lifeDuration = tower.getLifeDuration();
+        this.damage = tower.getDamage();
 
-        this.damage = damage;
-
-        short enemyAmount = Tower.enemyAmount;
-        try {
-            enemyAmount = (short) ClassReflection.getField(tower.getClass(), "enemyAmount").get(null);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-        }
+        short enemyAmount = tower.getEnemyAmount();
 
         this.enemies = Enemy.getClosestN(tower.getPosition(), enemies, enemyAmount);
         this.sprites = new Sprite[enemyAmount];
@@ -68,6 +56,7 @@ public abstract class ConnectingShot implements Shot {
         }
 
         vectorToTarget = new Vector2();
+        startTime = System.currentTimeMillis();
     }
 
     public ShotType getShotType() {
