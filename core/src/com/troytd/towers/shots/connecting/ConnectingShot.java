@@ -68,6 +68,8 @@ public abstract class ConnectingShot implements Shot {
                 tower.totalDamage += damage;
             }
         }
+
+        vectorToTarget = new Vector2();
     }
 
     public ShotType getShotType() {
@@ -89,7 +91,6 @@ public abstract class ConnectingShot implements Shot {
         }
 
         // resize sprites
-        if (vectorToTarget == null) vectorToTarget = new Vector2();
         sprites[0].setRotation(vectorToTarget.angleDeg() + 90);
 
         final float x = tower.getPosition().x + tower.getRect().width / 2f;
