@@ -240,7 +240,7 @@ public abstract class Tower {
      *
      * @return a new shot instance or null if no shot can be made
      */
-    public Shot shoot(ArrayList<Enemy> enemies, GameScreen gameScreen) {
+    public Shot shoot(ArrayList<Enemy> enemies) {
         switch (type) {
             case SINGLE:
                 try {
@@ -281,13 +281,13 @@ public abstract class Tower {
         return type.toString();
     }
 
-    public void update(float delta, ArrayList<Enemy> enemies, final ArrayList<Shot> shots, GameScreen gameScreen) {
+    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots) {
         if (enemies.isEmpty()) return;
 
         try {
             if (TimeUtils.timeSinceMillis(lastShot) > 1 / ((int) ClassReflection.getField(this.getClass(), "atspeed")
                     .get(null) / 100000f)) {
-                Shot shot = shoot(enemies, gameScreen);
+                Shot shot = shoot(enemies);
                 if (shot != null) {
                     shots.add(shot);
                     lastShot = TimeUtils.millis();
@@ -296,7 +296,7 @@ public abstract class Tower {
         } catch (ReflectionException e) {
             e.printStackTrace();
             if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
-                Shot shot = shoot(enemies, gameScreen);
+                Shot shot = shoot(enemies);
                 if (shot != null) {
                     shots.add(shot);
                     lastShot = TimeUtils.millis();

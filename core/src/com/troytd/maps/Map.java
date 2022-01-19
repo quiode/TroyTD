@@ -147,7 +147,7 @@ public abstract class Map implements Loadable {
             mapSprite.draw(batch);
         }
 
-        if (currentWave != null) updateTowers(delta, currentWave.getEnemies(), gameScreen);
+        if (currentWave != null) updateTowers(currentWave.getEnemies());
         drawTowers();
         updateEnemies(stage);
         drawEnemies();
@@ -262,10 +262,10 @@ public abstract class Map implements Loadable {
         }
     }
 
-    private void updateTowers(float delta, ArrayList<Enemy> enemies, GameScreen gameScreen) {
+    private void updateTowers(ArrayList<Enemy> enemies) {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.getTower() != null) {
-                towerPlace.getTower().update(delta, enemies, shots, gameScreen);
+                towerPlace.getTower().update(enemies, shots);
             }
         }
     }
