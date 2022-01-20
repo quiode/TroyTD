@@ -2,6 +2,7 @@ package com.troytd.waves;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
@@ -37,6 +38,8 @@ public abstract class Wave {
      */
     protected final Vector2[] path;
     protected final Map map;
+    private final long initTime;
+    private final int pauseTime;
 
     /**
      * @param game          game instance
@@ -45,12 +48,20 @@ public abstract class Wave {
      * @param path          the path the enemies traverse
      * @param map           the map
      */
-    public Wave(TroyTD game, Vector2 mapDistortion, ArrayList<enemyAmount> enemyList, Vector2[] path, Map map) {
+    public Wave(TroyTD game, Vector2 mapDistortion, ArrayList<enemyAmount> enemyList, Vector2[] path, Map map,
+                int pauseTime) {
         this.game = game;
         this.map = map;
         this.mapDistortion = mapDistortion;
         this.enemyList = enemyList;
         this.path = path;
+
+        initTime = TimeUtils.millis();
+        this.pauseTime = pauseTime;
+    }
+
+    public Wave(TroyTD game, Vector2 mapDistortion, ArrayList<enemyAmount> enemyList, Vector2[] path, Map map) {
+        this(game, mapDistortion, enemyList, path, map, 5000);
     }
 
     public static Class<? extends Enemy>[] getEnemyList() {
@@ -116,8 +127,10 @@ public abstract class Wave {
     }
 
     public void update(Stage stage, GameScreen gameScreen) {
-        updateWave(stage);
-        updateEnemies(gameScreen);
+        if (TimeUtils.timeSinceMillis(initTime) > pauseTime) {
+            updateWave(stage);
+            updateEnemies(gameScreen);
+        }
     }
 
     public boolean isFinished() {
