@@ -35,7 +35,7 @@ public class MessageScreen implements Screen {
         creditsLabel1.setAlignment(1, 2);
         Label creditsLabel2 = new Label("Dominik Schwaiger - Code", game.skin, "big");
         creditsLabel2.setAlignment(1, 2);
-        Label creditsLabel3 = new Label("Jakob Meyer - Design", game.skin, "big");
+        Label creditsLabel3 = new Label("Jakob Mayr - Grafiken", game.skin, "big");
         creditsLabel3.setAlignment(1, 2);
         Label creditsLabel4 = new Label("Oriane Schweizer - Emotional Support", game.skin, "big");
         creditsLabel4.setAlignment(1, 2);
