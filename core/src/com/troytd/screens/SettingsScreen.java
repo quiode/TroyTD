@@ -26,10 +26,11 @@ public class SettingsScreen implements Screen {
     private final TextField screenResolutionTextField2;
     private final Screen lastScreen;
     private final Slider volumeSlider;
-    private final Button fullScreenCheckBox;
+    private final ImageButton fullScreenCheckBox;
     private final ImageButton muteButton;
     private final Slider difficultySlider;
     private final TextField iconSize;
+    private final Button monitorResolutionButton;
     private Dialog dialog;
 
     public SettingsScreen(final TroyTD game, final Screen lastScreen) {
@@ -175,6 +176,11 @@ public class SettingsScreen implements Screen {
         difficultySlider.setValue(game.settingPreference.getInteger("difficulty"));
         Label iconSizeLabel = new Label("Icon Size:", game.skin, "settings");
         iconSize = new TextField(game.settingPreference.getInteger("icon-size") + "", game.skin, "settings");
+        Label monitorResolution = new Label("Use Monitor Resolution:", game.skin, "settings");
+        monitorResolutionButton = new ImageButton(game.skin, "screen");
+        monitorResolutionButton.setChecked(muteButton.isChecked() && game.settingPreference.getInteger(
+                "width") == Gdx.graphics.getDisplayMode().width && game.settingPreference.getInteger(
+                "height") == Gdx.graphics.getDisplayMode().height);
         table.row();
         table.add(screenResolutionLabel);
         table.add(screenResolutionTextField1).right();
@@ -193,6 +199,9 @@ public class SettingsScreen implements Screen {
         table.row();
         table.add(iconSizeLabel);
         table.add(iconSize).colspan(10).padLeft(25).padRight(25).center().expandX();
+        table.row();
+        table.add(monitorResolution);
+        table.add(monitorResolutionButton).size(52, 52).colspan(10).padLeft(25).padRight(25);
         table.row();
         table.add(submitButton).colspan(4).pad(10).center();
         table.row();
@@ -298,8 +307,8 @@ public class SettingsScreen implements Screen {
 
         if (fullScreenCheckBox.isChecked() != game.settingPreference.getBoolean("fullscreen")) {
             game.settingPreference.putBoolean("fullscreen", fullScreenCheckBox.isChecked());
+            if (fullScreenCheckBox.isChecked()) Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             changes = true;
-            restart = true;
         }
 
         if (difficultySlider.getValue() >= 0 && difficultySlider.getValue() <= 2) {
@@ -316,6 +325,15 @@ public class SettingsScreen implements Screen {
                 game.settingPreference.putInteger("iconSize", Integer.parseInt(iconSize.getText()));
                 changes = true;
             }
+        }
+
+        if (monitorResolutionButton.isChecked()) {
+            Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+            game.settingPreference.putBoolean("fullscreen", true);
+            game.settingPreference.putInteger("width", Gdx.graphics.getDisplayMode().width);
+            game.settingPreference.putInteger("height", Gdx.graphics.getDisplayMode().height);
+            changes = true;
+            restart = true;
         }
 
         if (changes) {
@@ -365,7 +383,8 @@ public class SettingsScreen implements Screen {
                            Align.center);
         dialog.show(stage);
 
-        Gdx.graphics.setWindowedMode(game.settingPreference.getInteger("width"),
-                                     game.settingPreference.getInteger("height"));
+        if (!game.settingPreference.getBoolean("fullscreen"))
+            Gdx.graphics.setWindowedMode(game.settingPreference.getInteger("width"),
+                                         game.settingPreference.getInteger("height"));
     }
 }
