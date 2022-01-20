@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.troytd.game.TroyTD;
@@ -27,9 +28,36 @@ public class MessageScreen implements Screen {
 
         // label
         Label textLabel = new Label(message, game.skin, skin);
-        textLabel.setFillParent(true);
         textLabel.setAlignment(1, 2);
-        stage.addActor(textLabel);
+
+        // credits
+        Label creditsLabel1 = new Label("Created by", game.skin, "big");
+        creditsLabel1.setAlignment(1, 2);
+        Label creditsLabel2 = new Label("Dominik Schwaiger - Code", game.skin, "big");
+        creditsLabel2.setAlignment(1, 2);
+        Label creditsLabel3 = new Label("Jakob Meyer - Design", game.skin, "big");
+        creditsLabel3.setAlignment(1, 2);
+        Label creditsLabel4 = new Label("Oriane Schweizer - Emotional Support", game.skin, "big");
+        creditsLabel4.setAlignment(1, 2);
+        Label creditsLabel5 = new Label("Clément Lucas-Hirtz - war auch dabei", game.skin, "big");
+        creditsLabel5.setAlignment(1, 2);
+
+        // vertical row
+        VerticalGroup verticalGroup = new VerticalGroup();
+        verticalGroup.setFillParent(true);
+        verticalGroup.center();
+
+        verticalGroup.addActor(textLabel);
+
+        verticalGroup.addActor(new Label("", game.skin, "big"));
+
+        verticalGroup.addActor(creditsLabel1);
+        verticalGroup.addActor(creditsLabel2);
+        verticalGroup.addActor(creditsLabel3);
+        verticalGroup.addActor(creditsLabel4);
+        verticalGroup.addActor(creditsLabel5);
+
+        stage.addActor(verticalGroup);
 
     }
 
