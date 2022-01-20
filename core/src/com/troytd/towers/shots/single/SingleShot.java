@@ -3,8 +3,6 @@ package com.troytd.towers.shots.single;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
@@ -35,26 +33,24 @@ public abstract class SingleShot implements Shot {
      * the target of the shot
      */
     private final Enemy target;
-    Vector2 vectorToTarget;
     /**
      * the damage the shot does
      */
-    private int damage;
+    private final int damage;
     /**
      * the speed of the shot
      */
-    private int speed;
+    private final int speed;
+    Vector2 vectorToTarget;
 
-    public SingleShot(TroyTD game, Tower tower, final Enemy target, Vector2 distortion) {
+    public SingleShot(TroyTD game, Tower tower, final Enemy target) {
         this.tower = tower;
         this.game = game;
         this.target = target;
-        try {
-            this.damage = (int) ClassReflection.getField(tower.getClass(), "damage").get(null);
-            this.speed = (int) ClassReflection.getField(tower.getClass(), "speed").get(null);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-        }
+
+        damage = (int) tower.getStat("damage").getValue();
+        speed = (int) tower.getStat("speed").getValue();
+
         sprite = new Sprite(
                 game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class));
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f,

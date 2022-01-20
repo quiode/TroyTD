@@ -3,7 +3,9 @@ package com.troytd.enemies;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import com.troytd.enemies.Enemy;
+import com.troytd.helpers.Stat;
+
+import java.util.HashMap;
 
 /**
  * Class which stores an enemy class and the number of enemies to spawn
@@ -56,13 +58,14 @@ public class enemyAmount {
      * @return true if new enemy can be spawned
      */
     public boolean readyToSpawn() {
+        HashMap<String, Stat> currentDefaultStats;
         try {
-            return TimeUtils.timeSinceMillis(lastSpawn) > 200000 / (short) ClassReflection.getField(enemy, "spawnSpeed")
+            currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(enemy, "defaultStats")
                     .get(null);
         } catch (ReflectionException e) {
-            e.printStackTrace();
+            currentDefaultStats = Enemy.defaultStats;
         }
-        return false;
+        return TimeUtils.timeSinceMillis(lastSpawn) > 200000 / (int) currentDefaultStats.get("spawnSpeed").getValue();
     }
 
     public byte getLine() {

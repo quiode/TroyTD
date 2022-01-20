@@ -6,7 +6,7 @@ import com.troytd.game.TroyTD;
 import com.troytd.towers.Tower;
 
 public class DebugShot extends SingleShot {
-    public DebugShot(TroyTD game, Tower tower, Enemy enemy, Vector2 distortion) {
-        super(game, tower, enemy, distortion);
+    public DebugShot(TroyTD game, Tower tower, Enemy enemy) {
+        super(game, tower, enemy);
     }
 }
