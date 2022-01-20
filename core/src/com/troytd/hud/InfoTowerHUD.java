@@ -27,7 +27,6 @@ public class InfoTowerHUD extends SideHUD {
     private final Label damageAmount;
     private final Label rangeAmount;
     private final Label speedAmount;
-    private final Label HPAmount;
     private final Label maxHPAmount;
     private final Label killsAmount;
     private final Label totalDamageAmount;
@@ -74,12 +73,6 @@ public class InfoTowerHUD extends SideHUD {
         typeAmount = new Label("0", game.skin);
         table.add(type).colspan(3).left().padTop(10).padLeft(25);
         table.add(typeAmount).colspan(1).right().padTop(10);
-        // HP
-        table.row();
-        final Label HP = new Label("HP: ", game.skin);
-        HPAmount = new Label("0", game.skin);
-        table.add(HP).colspan(3).left().padTop(10).padLeft(25);
-        table.add(HPAmount).colspan(1).right().padTop(10);
         // kills
         table.row().colspan(3).left().padTop(10).padLeft(25);
         final Label kills = new Label("Kills: ", game.skin);
@@ -422,7 +415,6 @@ public class InfoTowerHUD extends SideHUD {
         towerName.setText(towerPlace.getTower().name);
 
         typeAmount.setText(towerPlace.getTower().getType());
-        HPAmount.setText(String.valueOf(towerPlace.getTower().hp));
         killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
         damageAmount.setText(String.valueOf(towerPlace.getTower().getStat("damage").getValue()));
         rangeAmount.setText(String.valueOf(towerPlace.getTower().getStat("range").getValue()));

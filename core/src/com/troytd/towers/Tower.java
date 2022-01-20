@@ -42,7 +42,6 @@ public abstract class Tower {
     private final ArrayList<Unit> units = new ArrayList<Unit>((Integer) defaultStats.get("unitAmount").getValue());
     public String name;
     public int kills = 0;
-    public int hp = (Integer) defaultStats.get("maxHP").getValue();
     public int totalDamage = 0;
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
