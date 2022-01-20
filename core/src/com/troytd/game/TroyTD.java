@@ -22,7 +22,8 @@ public class TroyTD extends Game {
     public AssetManager assetManager;
     public Music music;
 
-    public void create() {        // preferences
+    public void create() {
+        // preferences
         settingPreference = Gdx.app.getPreferences("TroyTD-settings");
 
         assetManager = new AssetManager();
@@ -33,7 +34,7 @@ public class TroyTD extends Game {
             settingPreference.putInteger("width", 1000);
         }
         if (!settingPreference.contains("height")) {
-            settingPreference.putInteger("height", 600);
+            settingPreference.putInteger("height", 650);
         }
         if (!settingPreference.contains("fullscreen")) {
             settingPreference.putBoolean("fullscreen", false);
