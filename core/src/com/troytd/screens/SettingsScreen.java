@@ -29,6 +29,7 @@ public class SettingsScreen implements Screen {
     private final Button fullScreenCheckBox;
     private final ImageButton muteButton;
     private final Slider difficultySlider;
+    private final TextField iconSize;
     private Dialog dialog;
 
     public SettingsScreen(final TroyTD game, final Screen lastScreen) {
@@ -172,6 +173,8 @@ public class SettingsScreen implements Screen {
         Label difficultyLabel = new Label("Difficulty:", game.skin, "settings");
         difficultySlider = new Slider(0, 2, 1, false, game.skin, "difficulty");
         difficultySlider.setValue(game.settingPreference.getInteger("difficulty"));
+        Label iconSizeLabel = new Label("Icon Size:", game.skin, "settings");
+        iconSize = new TextField(game.settingPreference.getInteger("icon-size") + "", game.skin, "settings");
         table.row();
         table.add(screenResolutionLabel);
         table.add(screenResolutionTextField1).right();
@@ -187,6 +190,9 @@ public class SettingsScreen implements Screen {
         table.row();
         table.add(difficultyLabel);
         table.add(difficultySlider).colspan(10).fillX().padLeft(25).padRight(25);
+        table.row();
+        table.add(iconSizeLabel);
+        table.add(iconSize).colspan(10).padLeft(25).padRight(25).center().expandX();
         table.row();
         table.add(submitButton).colspan(4).pad(10).center();
         table.row();
@@ -268,10 +274,14 @@ public class SettingsScreen implements Screen {
 
         if (Integer.parseInt(screenResolutionTextField1.getText()) > 400 && Integer.parseInt(
                 screenResolutionTextField2.getText()) > 400) {
-            game.settingPreference.putInteger("width", Integer.parseInt(screenResolutionTextField1.getText()));
-            game.settingPreference.putInteger("height", Integer.parseInt(screenResolutionTextField2.getText()));
-            changes = true;
-            restart = true;
+            if (game.settingPreference.getInteger("width") != Integer.parseInt(
+                    screenResolutionTextField1.getText()) || game.settingPreference.getInteger(
+                    "height") != Integer.parseInt(screenResolutionTextField2.getText())) {
+                game.settingPreference.putInteger("width", Integer.parseInt(screenResolutionTextField1.getText()));
+                game.settingPreference.putInteger("height", Integer.parseInt(screenResolutionTextField2.getText()));
+                changes = true;
+                restart = true;
+            }
         }
 
         if (volumeSlider.getValue() >= 0 && volumeSlider.getValue() <= 1) {
@@ -297,6 +307,14 @@ public class SettingsScreen implements Screen {
                 game.settingPreference.putInteger("difficulty", (int) difficultySlider.getValue());
                 changes = true;
                 restart = true;
+            }
+        }
+
+        if (Integer.parseInt(iconSize.getText()) >= 10 && Integer.parseInt(
+                iconSize.getText()) < game.settingPreference.getInteger("height") / 5f) {
+            if (game.settingPreference.getInteger("iconSize") != Integer.parseInt(iconSize.getText())) {
+                game.settingPreference.putInteger("iconSize", Integer.parseInt(iconSize.getText()));
+                changes = true;
             }
         }
 
