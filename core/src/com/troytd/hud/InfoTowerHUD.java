@@ -164,29 +164,6 @@ public class InfoTowerHUD extends SideHUD {
 
         table.add(speedAmount).colspan(1).right().padTop(10);
         table.add(upgradeSpeedButton).colspan(1).center().padTop(10).size(iconSize / 2f);
-        // max HP
-        table.row();
-        final Label maxHP = new Label("Max HP: ", game.skin);
-        table.add(maxHP).colspan(3).left().padTop(10).padLeft(25);
-
-        upgradeHpButton = new ImageButton(game.skin, "upgrade");
-        upgradeHpButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (gameScreen.money < (towerPlace.getTower().getStat("maxHP").getLevel() + 1) * Tower.upgradeCost)
-                    return;
-                gameScreen.money -= (towerPlace.getTower().getStat("maxHP").getLevel() + 1) * Tower.upgradeCost;
-                towerPlace.getTower()
-                        .setStat("maxHP", new Stat<>("maxHP", (int) ((Integer) towerPlace.getTower()
-                                .getStat("maxHP")
-                                .getValue() + (Integer) towerPlace.getTower().getStat("maxHP").getValue() * 0.1f),
-                                                     towerPlace.getTower().getStat("maxHP").getLevel() + 1));
-            }
-        });
-        maxHPAmount = new Label("0", game.skin);
-
-        table.add(maxHPAmount).colspan(1).right().padTop(10);
-        table.add(upgradeHpButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // ats speed
         table.row();
         final Label atspeed = new Label("Attack Speed: ", game.skin);
@@ -233,28 +210,6 @@ public class InfoTowerHUD extends SideHUD {
 
         table.add(range2Amount).colspan(1).right().padTop(10);
         table.add(upgradeRange2Button).colspan(1).center().padTop(10).size(iconSize / 2f);
-        // unit amount
-        table.row();
-        final Label unitAmount = new Label("Unit Amount: ", game.skin);
-        table.add(unitAmount).colspan(3).left().padTop(10).padLeft(25);
-
-        upgradeUnitAmountButton = new ImageButton(game.skin, "upgrade");
-        upgradeUnitAmountButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost)
-                    return;
-                gameScreen.money -= (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost;
-                towerPlace.getTower()
-                        .setStat("unitAmount", new Stat<>("unitAmount", (Integer) towerPlace.getTower()
-                                .getStat("unitAmount")
-                                .getValue() + 1, towerPlace.getTower().getStat("unitAmount").getLevel() + 1));
-            }
-        });
-        unitAmountAmount = new Label("0", game.skin);
-
-        table.add(unitAmountAmount).colspan(1).right().padTop(10);
-        table.add(upgradeUnitAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // enemy amount
         table.row();
         final Label enemyAmount = new Label("Enemy Amount: ", game.skin);
@@ -301,6 +256,51 @@ public class InfoTowerHUD extends SideHUD {
 
         table.add(lifeDurationAmount).colspan(1).right().padTop(10);
         table.add(upgradelifeDurationButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // max HP
+        table.row();
+        final Label maxHP = new Label("Max HP: ", game.skin);
+        table.add(maxHP).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeHpButton = new ImageButton(game.skin, "upgrade");
+        upgradeHpButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("maxHP").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("maxHP").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("maxHP", new Stat<>("maxHP", (int) ((Integer) towerPlace.getTower()
+                                .getStat("maxHP")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("maxHP").getValue() * 0.1f),
+                                                     towerPlace.getTower().getStat("maxHP").getLevel() + 1));
+            }
+        });
+        maxHPAmount = new Label("0", game.skin);
+
+        table.add(maxHPAmount).colspan(1).right().padTop(10);
+        table.add(upgradeHpButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // unit amount
+        table.row();
+        final Label unitAmount = new Label("Unit Amount: ", game.skin);
+        table.add(unitAmount).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeUnitAmountButton = new ImageButton(game.skin, "upgrade");
+        upgradeUnitAmountButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("unitAmount", new Stat<>("unitAmount", (Integer) towerPlace.getTower()
+                                .getStat("unitAmount")
+                                .getValue() + 1, towerPlace.getTower().getStat("unitAmount").getLevel() + 1));
+            }
+        });
+        unitAmountAmount = new Label("0", game.skin);
+
+        table.add(unitAmountAmount).colspan(1).right().padTop(10);
+        table.add(upgradeUnitAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // refund
         table.row();
         table.add(new Label("", game.skin));
@@ -340,7 +340,7 @@ public class InfoTowerHUD extends SideHUD {
         table.add(refundAmount).right();
         table.add(moneyIcon).left().padLeft(5).size(game.settingPreference.getInteger("icon-size") / 2f);
 
-        table.debug();
+        //table.debug();
     }
 
     /**
