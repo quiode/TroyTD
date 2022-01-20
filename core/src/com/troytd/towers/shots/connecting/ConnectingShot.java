@@ -20,7 +20,7 @@ public abstract class ConnectingShot implements Shot {
     /**
      * amount of enemies to connect
      */
-    private final long lifeDuration = 500;
+    private final long lifeDuration;
     private final long startTime;
     private final Tower tower;
     /**
@@ -36,26 +36,14 @@ public abstract class ConnectingShot implements Shot {
     Vector2 vectorToTarget;
     private short amountOfSpritesToDraw;
 
-    public ConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
-        int damage = 10;
+    public ConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies) {
         this.game = game;
-        startTime = System.currentTimeMillis();
         this.tower = tower;
 
-        try {
-            damage = (int) ClassReflection.getField(tower.getClass(), "damage").get(null);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-        }
+        this.lifeDuration = (int) tower.getStat("lifeDuration").getValue();
+        this.damage = (int) tower.getStat("damage").getValue();
 
-        this.damage = damage;
-
-        short enemyAmount = Tower.enemyAmount;
-        try {
-            enemyAmount = (short) ClassReflection.getField(tower.getClass(), "enemyAmount").get(null);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-        }
+        int enemyAmount = (int) tower.getStat("enemyAmount").getValue();
 
         this.enemies = Enemy.getClosestN(tower.getPosition(), enemies, enemyAmount);
         this.sprites = new Sprite[enemyAmount];
@@ -68,6 +56,7 @@ public abstract class ConnectingShot implements Shot {
         }
 
         vectorToTarget = new Vector2();
+        startTime = System.currentTimeMillis();
     }
 
     public ShotType getShotType() {
@@ -102,7 +91,7 @@ public abstract class ConnectingShot implements Shot {
                 return;
             }
         } catch (ReflectionException e) {
-            if (vectorToTarget.len() > Tower.range) {
+            if (vectorToTarget.len() > (int) Tower.defaultStats.get("range").getValue()) {
                 shots.remove(this);
                 return;
             }
@@ -112,6 +101,7 @@ public abstract class ConnectingShot implements Shot {
         sprites[0].setRotation(vectorToTarget.angleDeg() - 90);
         sprites[0].setBounds(x, y, width, height);
         this.enemies[0].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
+        tower.totalDamage += damage;
 
         amountOfSpritesToDraw = 1;
         for (int i = 1; i < this.enemies.length; i++) {
@@ -127,7 +117,7 @@ public abstract class ConnectingShot implements Shot {
                     break;
                 }
             } catch (ReflectionException e) {
-                if (vectorToTarget.len() > Tower.range2) {
+                if (vectorToTarget.len() > (int) Tower.defaultStats.get("range2").getValue()) {
                     break;
                 }
             }
@@ -137,6 +127,7 @@ public abstract class ConnectingShot implements Shot {
             sprites[i].setBounds(x, y, width, height);
             amountOfSpritesToDraw++;
             this.enemies[i].takeDamage((int) (damage * Gdx.graphics.getDeltaTime()), enemies, tower, gameScreen);
+            tower.totalDamage += damage;
         }
     }
 

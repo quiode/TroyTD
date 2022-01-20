@@ -12,10 +12,16 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.game.TroyTD;
+import com.troytd.helpers.Stat;
 import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
+import com.troytd.towers.Tower;
+import com.troytd.towers.TowerTypes;
 
 public class InfoTowerHUD extends SideHUD {
+    private final Label lifeDurationAmount;
+    private final Label enemyAmountAmount;
+    private final Label unitAmountAmount;
     private final Image towerImage;
     private final TextField towerName;
     private final Label damageAmount;
@@ -25,14 +31,26 @@ public class InfoTowerHUD extends SideHUD {
     private final Label maxHPAmount;
     private final Label killsAmount;
     private final Label totalDamageAmount;
-    private final Label AOEAmount;
     private final Label atspeedAmount;
     private final Label typeAmount;
+    private final Label range2Amount;
     private final Label refundAmount;
+
+    private final ImageButton upgradeDamageButton;
+    private final ImageButton upgradeRangeButton;
+    private final ImageButton upgradeSpeedButton;
+    private final ImageButton upgradeHpButton;
+    private final ImageButton upgradeAtSpeedButton;
+    private final ImageButton upgradeRange2Button;
+    private final ImageButton upgradelifeDurationButton;
+    private final ImageButton upgradeEnemyAmountButton;
+    private final ImageButton upgradeUnitAmountButton;
 
     public InfoTowerHUD(final TroyTD game, final Stage stage, Map map, float topHUDHeight,
                         final GameScreen gameScreen) {
         super(game, stage, map, topHUDHeight, "Tower Stats", gameScreen);
+
+        final int iconSize = game.settingPreference.getInteger("icon-size");
 
         // tower preview image
         towerImage = new Image(game.assetManager.get("towers/NoTower.png", Texture.class));
@@ -50,66 +68,239 @@ public class InfoTowerHUD extends SideHUD {
         table.row();
 
         // stats
-        // damage
-        table.row();
-        final Label damage = new Label("Damage: ", game.skin);
-        damageAmount = new Label("0", game.skin);
-        table.add(damage).colspan(2).left().padTop(10).padLeft(25);
-        table.add(damageAmount).colspan(3).right().padRight(25).padTop(10);
-        // range
-        table.row().colspan(2).left().padTop(10).padLeft(25);
-        final Label range = new Label("Range: ", game.skin);
-        rangeAmount = new Label("0", game.skin);
-        table.add(range).colspan(2).left().padTop(10).padLeft(25);
-        table.add(rangeAmount).colspan(3).right().padRight(25).padTop(10);
-        // speed
-        table.row();
-        final Label speed = new Label("Speed: ", game.skin);
-        speedAmount = new Label("0", game.skin);
-        table.add(speed).colspan(2).left().padTop(10).padLeft(25);
-        table.add(speedAmount).colspan(3).right().padRight(25).padTop(10);
-        // HP
-        table.row();
-        final Label HP = new Label("HP: ", game.skin);
-        HPAmount = new Label("0", game.skin);
-        table.add(HP).colspan(2).left().padTop(10).padLeft(25);
-        table.add(HPAmount).colspan(3).right().padRight(25).padTop(10);
-        // max HP
-        table.row();
-        final Label maxHP = new Label("Max HP: ", game.skin);
-        maxHPAmount = new Label("0", game.skin);
-        table.add(maxHP).colspan(2).left().padTop(10).padLeft(25);
-        table.add(maxHPAmount).colspan(3).right().padRight(25).padTop(10);
-        // kills
-        table.row().colspan(2).left().padTop(10).padLeft(25);
-        final Label kills = new Label("Kills: ", game.skin);
-        killsAmount = new Label("0", game.skin);
-        table.add(kills).colspan(2).left().padTop(10).padLeft(25);
-        table.add(killsAmount).colspan(3).right().padRight(25).padTop(10);
-        // total damage
-        table.row();
-        final Label totalDamage = new Label("Total Damage: ", game.skin);
-        totalDamageAmount = new Label("0", game.skin);
-        table.add(totalDamage).colspan(2).left().padTop(10).padLeft(25);
-        table.add(totalDamageAmount).colspan(3).right().padRight(25).padTop(10);
-        // AOE
-        table.row();
-        final Label AOE = new Label("AOE: ", game.skin);
-        AOEAmount = new Label("0", game.skin);
-        table.add(AOE).colspan(2).left().padTop(10).padLeft(25);
-        table.add(AOEAmount).colspan(3).right().padRight(25).padTop(10);
-        // ats speed
-        table.row();
-        final Label atspeed = new Label("Attack Speed: ", game.skin);
-        atspeedAmount = new Label("0", game.skin);
-        table.add(atspeed).colspan(2).left().padTop(10).padLeft(25);
-        table.add(atspeedAmount).colspan(3).right().padRight(25).padTop(10);
         // type
         table.row();
         final Label type = new Label("Type: ", game.skin);
         typeAmount = new Label("0", game.skin);
-        table.add(type).colspan(2).left().padTop(10).padLeft(25);
-        table.add(typeAmount).colspan(3).right().padRight(25).padTop(10);
+        table.add(type).colspan(3).left().padTop(10).padLeft(25);
+        table.add(typeAmount).colspan(1).right().padTop(10);
+        // HP
+        table.row();
+        final Label HP = new Label("HP: ", game.skin);
+        HPAmount = new Label("0", game.skin);
+        table.add(HP).colspan(3).left().padTop(10).padLeft(25);
+        table.add(HPAmount).colspan(1).right().padTop(10);
+        // kills
+        table.row().colspan(3).left().padTop(10).padLeft(25);
+        final Label kills = new Label("Kills: ", game.skin);
+        killsAmount = new Label("0", game.skin);
+        table.add(kills).colspan(3).left().padTop(10).padLeft(25);
+        table.add(killsAmount).colspan(1).right().padTop(10);
+        // total damage
+        table.row();
+        final Label totalDamage = new Label("Total Damage: ", game.skin);
+        totalDamageAmount = new Label("0", game.skin);
+        table.add(totalDamage).colspan(3).left().padTop(10).padLeft(25);
+        table.add(totalDamageAmount).colspan(1).right().padTop(10);
+
+        // variable stats
+
+        // damage
+        table.row();
+        final Label damage = new Label("Damage: ", game.skin);
+        table.add(damage).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeDamageButton = new ImageButton(game.skin, "upgrade");
+        upgradeDamageButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("damage").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("damage").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("damage", new Stat<>("damage", (int) ((Integer) towerPlace.getTower()
+                                .getStat("damage")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("damage").getValue() * 0.1f),
+                                                      towerPlace.getTower().getStat("damage").getLevel() + 1));
+            }
+        });
+        damageAmount = new Label("0", game.skin);
+
+        table.add(damageAmount).colspan(1).right().padTop(10);
+        table.add(upgradeDamageButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // range
+        table.row();
+        final Label range = new Label("Range: ", game.skin);
+        table.add(range).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeRangeButton = new ImageButton(game.skin, "upgrade");
+        upgradeRangeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("range").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("range").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("range", new Stat<>("range", (int) ((Integer) towerPlace.getTower()
+                                .getStat("range")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("range").getValue() * 0.1f),
+                                                     towerPlace.getTower().getStat("range").getLevel() + 1));
+            }
+        });
+        rangeAmount = new Label("0", game.skin);
+
+        table.add(rangeAmount).colspan(1).right().padTop(10);
+        table.add(upgradeRangeButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // speed
+        table.row();
+        final Label speed = new Label("Speed: ", game.skin);
+        table.add(speed).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeSpeedButton = new ImageButton(game.skin, "upgrade");
+        upgradeSpeedButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("speed").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("speed").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("speed", new Stat<>("speed", (int) ((Integer) towerPlace.getTower()
+                                .getStat("speed")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("speed").getValue() * 0.1f),
+                                                     towerPlace.getTower().getStat("speed").getLevel() + 1));
+            }
+        });
+        speedAmount = new Label("0", game.skin);
+
+        table.add(speedAmount).colspan(1).right().padTop(10);
+        table.add(upgradeSpeedButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // max HP
+        table.row();
+        final Label maxHP = new Label("Max HP: ", game.skin);
+        table.add(maxHP).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeHpButton = new ImageButton(game.skin, "upgrade");
+        upgradeHpButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("maxHP").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("maxHP").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("maxHP", new Stat<>("maxHP", (int) ((Integer) towerPlace.getTower()
+                                .getStat("maxHP")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("maxHP").getValue() * 0.1f),
+                                                     towerPlace.getTower().getStat("maxHP").getLevel() + 1));
+            }
+        });
+        maxHPAmount = new Label("0", game.skin);
+
+        table.add(maxHPAmount).colspan(1).right().padTop(10);
+        table.add(upgradeHpButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // ats speed
+        table.row();
+        final Label atspeed = new Label("Attack Speed: ", game.skin);
+        table.add(atspeed).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeAtSpeedButton = new ImageButton(game.skin, "upgrade");
+        upgradeAtSpeedButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("atspeed").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("atspeed").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("atspeed", new Stat<>("atspeed", (int) ((Integer) towerPlace.getTower()
+                                .getStat("atspeed")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("atspeed").getValue() * 0.1f),
+                                                       towerPlace.getTower().getStat("atspeed").getLevel() + 1));
+            }
+        });
+        atspeedAmount = new Label("0", game.skin);
+
+        table.add(atspeedAmount).colspan(1).right().padTop(10);
+        table.add(upgradeAtSpeedButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // range2
+        table.row();
+        final Label range2 = new Label("Range2: ", game.skin);
+        table.add(range2).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeRange2Button = new ImageButton(game.skin, "upgrade");
+        upgradeRange2Button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("range2", new Stat<>("range2", (int) ((Integer) towerPlace.getTower()
+                                .getStat("range2")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("range2").getValue() * 0.1f),
+                                                      towerPlace.getTower().getStat("range2").getLevel() + 1));
+            }
+        });
+        range2Amount = new Label("0", game.skin);
+
+        table.add(range2Amount).colspan(1).right().padTop(10);
+        table.add(upgradeRange2Button).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // unit amount
+        table.row();
+        final Label unitAmount = new Label("Unit Amount: ", game.skin);
+        table.add(unitAmount).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeUnitAmountButton = new ImageButton(game.skin, "upgrade");
+        upgradeUnitAmountButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("unitAmount", new Stat<>("unitAmount", (Integer) towerPlace.getTower()
+                                .getStat("unitAmount")
+                                .getValue() + 1, towerPlace.getTower().getStat("unitAmount").getLevel() + 1));
+            }
+        });
+        unitAmountAmount = new Label("0", game.skin);
+
+        table.add(unitAmountAmount).colspan(1).right().padTop(10);
+        table.add(upgradeUnitAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // enemy amount
+        table.row();
+        final Label enemyAmount = new Label("Enemy Amount: ", game.skin);
+        table.add(enemyAmount).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeEnemyAmountButton = new ImageButton(game.skin, "upgrade");
+        upgradeEnemyAmountButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower()
+                        .getStat("enemyAmount")
+                        .getLevel() + 1) * Tower.upgradeCost) return;
+                gameScreen.money -= (towerPlace.getTower().getStat("enemyAmount").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("enemyAmount", new Stat<>("enemyAmount", (Integer) towerPlace.getTower()
+                                .getStat("enemyAmount")
+                                .getValue() + 1, towerPlace.getTower().getStat("enemyAmount").getLevel() + 1));
+            }
+        });
+        enemyAmountAmount = new Label("0", game.skin);
+
+        table.add(enemyAmountAmount).colspan(1).right().padTop(10);
+        table.add(upgradeEnemyAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // life duration amount
+        table.row();
+        final Label lifeDuration = new Label("Life Duration: ", game.skin);
+        table.add(lifeDuration).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradelifeDurationButton = new ImageButton(game.skin, "upgrade");
+        upgradelifeDurationButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower()
+                        .getStat("lifeDuration")
+                        .getLevel() + 1) * Tower.upgradeCost) return;
+                gameScreen.money -= (towerPlace.getTower().getStat("lifeDuration").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("range2", new Stat<>("lifeDuration",
+                                                      (Integer) towerPlace.getTower().getStat("range2").getValue() + 1,
+                                                      towerPlace.getTower().getStat("lifeDuration").getLevel() + 1));
+            }
+        });
+        lifeDurationAmount = new Label("0", game.skin);
+
+        table.add(lifeDurationAmount).colspan(1).right().padTop(10);
+        table.add(upgradelifeDurationButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // refund
         table.row();
         table.add(new Label("", game.skin));
@@ -118,32 +309,28 @@ public class InfoTowerHUD extends SideHUD {
         refund.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    gameScreen.money += ((int) ClassReflection.getField(towerPlace.getTower().getClass(), "cost")
-                            .get(null) / 3) * 2;
-                    towerPlace.removeTower();
-                    close();
-                    Dialog dialog = new Dialog("", game.skin, "info") {
-                        @Override
-                        public void result(Object object) {
-                            InfoTowerHUD.this.stage.getActors().removeValue(this, true);
-                        }
-                    };
-                    dialog.text("Refunded " + refundAmount.getText() + " gold");
-                    dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
+                gameScreen.money += ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
+                towerPlace.removeTower();
+                close();
+                Dialog dialog = new Dialog("", game.skin, "info") {
+                    @Override
+                    public void result(Object object) {
+                        InfoTowerHUD.this.stage.getActors().removeValue(this, true);
+                    }
+                };
+                dialog.text("Refunded " + refundAmount.getText() + " gold");
+                dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
 
-                    dialog.center();
-                    dialog.center();
-                    if (dialog.getButtonTable().getCells().size > 1)
-                        dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
-                    dialog.getContentTable().pad(0, 25, 25, 25);
-                    dialog.setWidth(Gdx.graphics.getWidth() / 2f);
-                    dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f,
-                                       Gdx.graphics.getHeight() / 2f, Align.center);
-                    dialog.show(stage);
-                } catch (ReflectionException e) {
-                    e.printStackTrace();
-                }
+                dialog.center();
+                dialog.center();
+                if (dialog.getButtonTable().getCells().size > 1)
+                    dialog.getButtonTable().getCells().first().pad(0, 0, 0, 75);
+                dialog.getContentTable().pad(0, 25, 25, 25);
+                dialog.setWidth(Gdx.graphics.getWidth() / 2f);
+                dialog.setPosition(Gdx.graphics.getWidth() / 2f - dialog.getWidth() / 2f, Gdx.graphics.getHeight() / 2f,
+                                   Align.center);
+                dialog.show(stage);
+
             }
         });
         refundAmount = new Label("0", game.skin);
@@ -152,6 +339,8 @@ public class InfoTowerHUD extends SideHUD {
         table.add(refund).colspan(3).center().expandX();
         table.add(refundAmount).right();
         table.add(moneyIcon).left().padLeft(5).size(game.settingPreference.getInteger("icon-size") / 2f);
+
+        table.debug();
     }
 
     /**
@@ -171,29 +360,80 @@ public class InfoTowerHUD extends SideHUD {
      */
     @Override
     protected void updatedTowerPlace() {
+        updateStats();
+    }
+
+    public void update() {
+        if (towerPlace == null) return;
+        if (towerPlace.getTower() == null) return;
+
+        updateStats();
+
+        upgradeDamageButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("damage").getLevel() + 1) * Tower.upgradeCost);
+        upgradeRangeButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("range").getLevel() + 1) * Tower.upgradeCost);
+        upgradeSpeedButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("speed").getLevel() + 1) * Tower.upgradeCost);
+        upgradeHpButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("maxHP").getLevel() + 1) * Tower.upgradeCost);
+        upgradeAtSpeedButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("atspeed").getLevel() + 1) * Tower.upgradeCost);
+        upgradelifeDurationButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("lifeDuration").getLevel() + 1) * Tower.upgradeCost);
+        upgradeEnemyAmountButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("enemyAmount").getLevel() + 1) * Tower.upgradeCost);
+        upgradeUnitAmountButton.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost);
+        upgradeRange2Button.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost);
+
+        TowerTypes towerType;
+        try {
+            towerType = (TowerTypes) ClassReflection.getField(towerPlace.getTower().getClass(), "type").get(null);
+        } catch (ReflectionException e) {
+            towerType = TowerTypes.NONE;
+        }
+
+        switch (towerType) {
+            case MELEE:
+                upgradeEnemyAmountButton.setDisabled(true);
+                upgradeRange2Button.setDisabled(true);
+                upgradelifeDurationButton.setDisabled(true);
+                break;
+            case SINGLE:
+                upgradeEnemyAmountButton.setDisabled(true);
+                upgradeRange2Button.setDisabled(true);
+                upgradelifeDurationButton.setDisabled(true);
+                upgradeHpButton.setDisabled(true);
+                upgradeUnitAmountButton.setDisabled(true);
+                break;
+            case AOE:
+                upgradeHpButton.setDisabled(true);
+                upgradeUnitAmountButton.setDisabled(true);
+                break;
+            case NONE:
+                break;
+        }
+    }
+
+    private void updateStats() {
         towerImage.setDrawable(new TextureRegionDrawable(towerPlace.getTower().getTexture()));
         towerName.setText(towerPlace.getTower().name);
-        try {
-            damageAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "damage").get(null)));
-            rangeAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "range").get(null)));
-            speedAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "speed").get(null)));
-            HPAmount.setText(String.valueOf(towerPlace.getTower().hp));
-            maxHPAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "maxHP").get(null)));
-            killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
-            totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
-            AOEAmount.setText(
-                    String.valueOf((int) ClassReflection.getField(towerPlace.getTower().getClass(), "AOE").get(null)));
-            atspeedAmount.setText(String.valueOf(
-                    (int) ClassReflection.getField(towerPlace.getTower().getClass(), "atspeed").get(null)));
-            typeAmount.setText(towerPlace.getTower().getType());
-            refundAmount.setText(String.valueOf(
-                    ((int) ClassReflection.getField(towerPlace.getTower().getClass(), "cost").get(null) / 3) * 2));
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-        }
+
+        typeAmount.setText(towerPlace.getTower().getType());
+        HPAmount.setText(String.valueOf(towerPlace.getTower().hp));
+        killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
+        damageAmount.setText(String.valueOf(towerPlace.getTower().getStat("damage").getValue()));
+        rangeAmount.setText(String.valueOf(towerPlace.getTower().getStat("range").getValue()));
+        speedAmount.setText(String.valueOf(towerPlace.getTower().getStat("speed").getValue()));
+        maxHPAmount.setText(String.valueOf(towerPlace.getTower().getStat("maxHP").getValue()));
+        totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
+        atspeedAmount.setText(String.valueOf(towerPlace.getTower().getStat("atspeed").getValue()));
+        range2Amount.setText(String.valueOf(towerPlace.getTower().getStat("range2").getValue()));
+        unitAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("unitAmount").getValue()));
+        enemyAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("enemyAmount").getValue()));
+        lifeDurationAmount.setText(String.valueOf(towerPlace.getTower().getStat("lifeDuration").getValue()));
+        refundAmount.setText(String.valueOf(((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2));
     }
 }

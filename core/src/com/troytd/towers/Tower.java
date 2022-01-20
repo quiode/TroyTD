@@ -9,49 +9,95 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
-import com.troytd.screens.GameScreen;
+import com.troytd.helpers.Stat;
 import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.connecting.ConnectingShot;
 import com.troytd.towers.shots.single.SingleShot;
+import com.troytd.towers.units.Unit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Tower {
-    public final static int cost = 100;
-    public final static int damage = 200;
-    public final static int range = 300;
-    public final static int range2 = 100;
-    public final static int speed = 100;
-    public final static int maxHP = 100;
-    public final static int atspeed = 100;
-    public final static short enemyAmount = 3;
-    public final static int AOE = 1;
+    public static final int upgradeCost = 25;
+    public static final HashMap<String, Stat> defaultStats = new HashMap<>();
+    public final static TowerTypes type = TowerTypes.NONE;
+
+    static {
+        defaultStats.put("cost", new Stat<>("cost", 100));
+        defaultStats.put("damage", new Stat<>("damage", 200));
+        defaultStats.put("range", new Stat<>("range", 300));
+        defaultStats.put("lifeDuration", new Stat<>("lifeDuration", 500));
+        defaultStats.put("range2", new Stat<>("range2", 100));
+        defaultStats.put("speed", new Stat<>("speed", 100));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 100));
+        defaultStats.put("atspeed", new Stat<>("atspeed", 100));
+        defaultStats.put("enemyAmount", new Stat<>("enemyAmount", 3));
+        defaultStats.put("unitAmount", new Stat<>("unitAmount", 3));
+    }
+
     protected final Vector2 distortion;
-    protected final TowerTypes type;
     protected final TroyTD game;
-    public String name = "Tower";
+    private final HashMap<String, Stat> stats = new HashMap<>();
+    private final ArrayList<Unit> units = new ArrayList<Unit>((Integer) defaultStats.get("unitAmount").getValue());
+    public String name;
     public int kills = 0;
-    public int hp = maxHP;
+    public int hp = (Integer) defaultStats.get("maxHP").getValue();
     public int totalDamage = 0;
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
     Vector2 position;
     private long lastShot = TimeUtils.millis();
 
-    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, final TowerTypes type,
-                 Vector2 distortion, Class<? extends Shot> shotClass) {
+    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
+                 Class<? extends Shot> shotClass) {
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
         towerSprite.setSize(getSize(game), getSize(game));
         this.name = name;
-        this.type = type;
         this.distortion = distortion;
         this.shotClass = shotClass;
     }
 
     static public float getSize(TroyTD game) {
         return game.settingPreference.getInteger("width") * 0.075f;
+    }
+
+    public void setStat(String key, Stat stat) {
+        HashMap<String, Stat> tempStats;
+        try {
+            tempStats = (HashMap<String, Stat>) ClassReflection.getField(this.getClass(), "defaultStats").get(null);
+        } catch (ReflectionException e) {
+            tempStats = defaultStats;
+        }
+        if (tempStats.containsKey(key)) {
+            if (tempStats.get(key).getValue().getClass() == stat.getValue().getClass()) {
+                stats.put(key, stat);
+            } else {
+                throw new IllegalArgumentException(
+                        "Cannot set stat " + key + " to " + stat.getValue() + " because it is not of type " + tempStats.get(
+                                key).getValue().getClass());
+            }
+        } else {
+            throw new IllegalArgumentException("Cannot set stat " + key + " because it is not a correct stat");
+        }
+    }
+
+    public Stat getStat(String key) {
+        HashMap<String, Stat> tempStats;
+        try {
+            tempStats = (HashMap<String, Stat>) ClassReflection.getField(this.getClass(), "defaultStats").get(null);
+        } catch (ReflectionException e) {
+            tempStats = defaultStats;
+        }
+        if (stats.containsKey(key)) {
+            return stats.get(key);
+        } else if (tempStats.containsKey(key)) {
+            return tempStats.get(key);
+        } else {
+            throw new IllegalArgumentException("Cannot get stat " + key + " because it is not a correct stat");
+        }
     }
 
     public void dispose() {
@@ -75,16 +121,22 @@ public abstract class Tower {
      *
      * @return a new shot instance or null if no shot can be made
      */
-    public Shot shoot(ArrayList<Enemy> enemies, GameScreen gameScreen) {
-        switch (type) {
+    public Shot shoot(ArrayList<Enemy> enemies) {
+        TowerTypes towerType;
+        try {
+            towerType = (TowerTypes) ClassReflection.getField(this.getClass(), "type").get(null);
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+            towerType = type;
+        }
+        switch (towerType) {
             case SINGLE:
                 try {
                     Enemy target = Enemy.getClosest(getPosition(), enemies);
                     float distanceToTarget = target.getPosition().dst(getPosition());
-                    if (distanceToTarget > range) return null;
+                    if (distanceToTarget > (int) getStat("range").getValue()) return null;
                     return (SingleShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
-                                                                       Enemy.class, Vector2.class)
-                            .newInstance(game, this, target, distortion);
+                                                                       Enemy.class).newInstance(game, this, target);
                 } catch (ReflectionException e) {
                     e.printStackTrace();
                     return null;
@@ -92,8 +144,8 @@ public abstract class Tower {
             case AOE:
                 try {
                     return (ConnectingShot) ClassReflection.getConstructor(shotClass, TroyTD.class, Tower.class,
-                                                                           ArrayList.class, GameScreen.class)
-                            .newInstance(game, this, enemies, gameScreen);
+                                                                           ArrayList.class)
+                            .newInstance(game, this, enemies);
                 } catch (ReflectionException e) {
                     e.printStackTrace();
                     return null;
@@ -117,26 +169,21 @@ public abstract class Tower {
         return type.toString();
     }
 
-    public void update(float delta, ArrayList<Enemy> enemies, final ArrayList<Shot> shots, GameScreen gameScreen) {
+    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots) {
         if (enemies.isEmpty()) return;
 
+        HashMap<String, Stat> towerStats;
         try {
-            if (TimeUtils.timeSinceMillis(lastShot) > 1 / ((int) ClassReflection.getField(this.getClass(), "atspeed")
-                    .get(null) / 100000f)) {
-                Shot shot = shoot(enemies, gameScreen);
-                if (shot != null) {
-                    shots.add(shot);
-                    lastShot = TimeUtils.millis();
-                }
-            }
+            towerStats = (HashMap<String, Stat>) ClassReflection.getField(this.getClass(), "defaultStats").get(null);
         } catch (ReflectionException e) {
-            e.printStackTrace();
-            if (TimeUtils.timeSinceMillis(lastShot) > atspeed) {
-                Shot shot = shoot(enemies, gameScreen);
-                if (shot != null) {
-                    shots.add(shot);
-                    lastShot = TimeUtils.millis();
-                }
+            towerStats = Tower.defaultStats;
+        }
+
+        if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) towerStats.get("atspeed").getValue() / 100000f)) {
+            Shot shot = shoot(enemies);
+            if (shot != null) {
+                shots.add(shot);
+                lastShot = TimeUtils.millis();
             }
         }
     }

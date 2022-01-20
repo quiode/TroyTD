@@ -8,7 +8,7 @@ import com.troytd.towers.Tower;
 import java.util.ArrayList;
 
 public class DebugConnectingShot extends ConnectingShot {
-    public DebugConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies, GameScreen gameScreen) {
-        super(game, tower, enemies, gameScreen);
+    public DebugConnectingShot(TroyTD game, Tower tower, ArrayList<Enemy> enemies) {
+        super(game, tower, enemies);
     }
 }
