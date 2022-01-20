@@ -986,6 +986,49 @@ atlasData: {
 			type: TEXTURE
 			hidden: false
 		}
+		{
+			file: "/media/quio/HDD/GitHub/TroyTD/android/assets/skins/troytd_data/circle_smaller.png"
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: circle_smaller
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: TEXTURE
+			hidden: false
+		}
+		{
+			file: "/media/quio/HDD/GitHub/TroyTD/android/assets/skins/troytd_data/circle_smaller.png"
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: {
+				r: 1
+				g: 0
+				b: 0
+				a: 1
+			}
+			tintName: null
+			name: circle_smaller_red
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: TINTED
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -3753,7 +3796,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: knob
 						optional: true
-						value: circle
+						value: circle_smaller_red
 					}
 					disabledKnob: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable

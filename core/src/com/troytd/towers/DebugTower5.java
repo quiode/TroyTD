@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Stat;
-import com.troytd.towers.shots.single.DebugShot;
+import com.troytd.towers.units.DebugUnit;
 
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
  * Class for debugging towers.
  */
 public class DebugTower5 extends Tower {
-    public final static TowerTypes type = TowerTypes.SINGLE;
+    public final static TowerTypes type = TowerTypes.MELEE;
     public static final HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) Tower.defaultStats.clone();
 
     static {
@@ -27,6 +27,6 @@ public class DebugTower5 extends Tower {
 
     public DebugTower5(TroyTD game, Vector2 position, Vector2 distortion) {
         super(game, position, game.assetManager.get("towers/DebugTower5.png", Texture.class), "DebugTower5", distortion,
-              DebugShot.class);
+              null, DebugUnit.class);
     }
 }

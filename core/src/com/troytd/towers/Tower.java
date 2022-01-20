@@ -39,7 +39,7 @@ public abstract class Tower {
     protected final Vector2 distortion;
     protected final TroyTD game;
     private final HashMap<String, Stat> stats = new HashMap<>();
-    private final ArrayList<Unit> units = new ArrayList<Unit>((Integer) defaultStats.get("unitAmount").getValue());
+    private final Class<? extends Unit> unitClass;
     public String name;
     public int kills = 0;
     public int totalDamage = 0;
@@ -50,6 +50,32 @@ public abstract class Tower {
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
                  Class<? extends Shot> shotClass) {
+        this(game, position, texture, name, distortion, shotClass, null);
+    }
+
+    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name,
+                 Class<? extends Unit> unitClass, Vector2 distortion) {
+        this(game, position, texture, name, distortion, null, unitClass);
+    }
+
+    public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
+                 Class<? extends Shot> shotClass, Class<? extends Unit> unitClass) {
+        TowerTypes towerType;
+        try {
+            towerType = (TowerTypes) ClassReflection.getField(this.getClass(), "type").get(null);
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+            towerType = type;
+        }
+
+        if (unitClass == null && towerType == TowerTypes.MELEE) {
+            throw new IllegalArgumentException("No unit class specified for melee tower");
+        }
+
+        if (shotClass == null && towerType == TowerTypes.SINGLE || towerType == TowerTypes.AOE) {
+            throw new IllegalArgumentException("No shot class specified for tower");
+        }
+
         this.game = game;
         this.towerSprite = new Sprite(texture);
         towerSprite.setPosition(position.x, position.y);
@@ -57,6 +83,7 @@ public abstract class Tower {
         this.name = name;
         this.distortion = distortion;
         this.shotClass = shotClass;
+        this.unitClass = unitClass;
     }
 
     static public float getSize(TroyTD game) {
@@ -168,22 +195,45 @@ public abstract class Tower {
         return type.toString();
     }
 
-    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots) {
+    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots, ArrayList<Unit> units) {
         if (enemies.isEmpty()) return;
 
-        HashMap<String, Stat> towerStats;
+        TowerTypes towerType;
         try {
-            towerStats = (HashMap<String, Stat>) ClassReflection.getField(this.getClass(), "defaultStats").get(null);
+            towerType = (TowerTypes) ClassReflection.getField(this.getClass(), "type").get(null);
         } catch (ReflectionException e) {
-            towerStats = Tower.defaultStats;
+            e.printStackTrace();
+            towerType = type;
         }
 
-        if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) towerStats.get("atspeed").getValue() / 100000f)) {
-            Shot shot = shoot(enemies);
-            if (shot != null) {
-                shots.add(shot);
-                lastShot = TimeUtils.millis();
-            }
+        switch (towerType) {
+            case SINGLE:
+            case AOE:
+                if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) getStat("atspeed").getValue() / 100000f)) {
+                    Shot shot = shoot(enemies);
+                    if (shot != null) {
+                        shots.add(shot);
+                        lastShot = TimeUtils.millis();
+                    }
+                }
+                break;
+            case MELEE:
+                int unitsOfThisTower = 0;
+                for (Unit unit : units) {
+                    if (unit.getTower() == this) unitsOfThisTower++;
+                }
+                if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) getStat("atspeed").getValue() / 100000f)) {
+                    if (unitsOfThisTower < (int) getStat("unitAmount").getValue()) {
+                        try {
+                            units.add((Unit) ClassReflection.getConstructor(unitClass, TroyTD.class, Tower.class)
+                                    .newInstance(game, this));
+                            lastShot = TimeUtils.millis();
+                        } catch (ReflectionException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
         }
     }
 }

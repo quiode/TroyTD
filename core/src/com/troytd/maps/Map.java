@@ -15,7 +15,9 @@ import com.troytd.helpers.Loadable;
 import com.troytd.screens.GameScreen;
 import com.troytd.screens.LoadingScreen;
 import com.troytd.towers.Tower;
+import com.troytd.towers.TowerTypes;
 import com.troytd.towers.shots.Shot;
+import com.troytd.towers.units.Unit;
 import com.troytd.waves.Wave;
 
 import java.util.ArrayList;
@@ -49,6 +51,10 @@ public abstract class Map implements Loadable {
      * list of all singleShots
      */
     private final ArrayList<Shot> shots;
+    /**
+     * list of all tower units
+     */
+    private final ArrayList<Unit> units = new ArrayList<>();
     /**
      * true if game is won
      */
@@ -112,7 +118,27 @@ public abstract class Map implements Loadable {
         // load tower textures and shot textures
         for (Class<? extends Tower> tower : towers) {
             game.assetManager.load("towers/" + tower.getSimpleName() + ".png", Texture.class);
-            game.assetManager.load("shots/" + tower.getSimpleName() + "Shot" + ".png", Texture.class);
+
+            TowerTypes towerType;
+            try {
+                towerType = (TowerTypes) ClassReflection.getField(tower, "type").get(null);
+            } catch (ReflectionException e) {
+                e.printStackTrace();
+                towerType = Tower.type;
+            }
+
+            switch (towerType) {
+                case MELEE:
+                    game.assetManager.load("units/" + tower.getSimpleName() + "Unit" + ".png", Texture.class);
+                    break;
+                case SINGLE:
+                case AOE:
+                    game.assetManager.load("shots/" + tower.getSimpleName() + "Shot" + ".png", Texture.class);
+                    break;
+                case NONE:
+                    break;
+            }
+
         }
 
         // set values
@@ -265,7 +291,7 @@ public abstract class Map implements Loadable {
     private void updateTowers(ArrayList<Enemy> enemies) {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.getTower() != null) {
-                towerPlace.getTower().update(enemies, shots);
+                towerPlace.getTower().update(enemies, shots, units);
             }
         }
     }
@@ -313,6 +339,18 @@ public abstract class Map implements Loadable {
 
     public short currentWave() {
         return currentWaveIndex;
+    }
+
+    public void drawUnits(){
+        for (Unit unit : units) {
+            unit.draw();
+        }
+    }
+
+    public void updateUnits(){
+        for (Unit unit : units) {
+            unit.update(units);
+        }
     }
 }
 
