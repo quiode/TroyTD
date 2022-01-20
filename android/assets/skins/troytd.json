@@ -121,6 +121,15 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 			a: 1
 		}
 	}
+	circle_smaller_red: {
+		name: circle_smaller
+		color: {
+			r: 1
+			g: 0
+			b: 0
+			a: 1
+		}
+	}
 	green: {
 		name: white-pixel
 		color: GREEN
@@ -281,6 +290,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	volume: {
 		background: rect1153
 		knob: red
+		knobBefore: rectangle-red
+	}
+	difficulty: {
+		background: thin_rect
+		knob: circle_smaller_red
 		knobBefore: rectangle-red
 	}
 }

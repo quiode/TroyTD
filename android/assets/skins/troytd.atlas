@@ -6,7 +6,7 @@ filter: Linear, Linear
 repeat: none
 close_icon
   rotate: false
-  xy: 1, 745
+  xy: 1, 734
   size: 1240, 1242
   orig: 1240, 1242
   offset: 0, 0
@@ -16,6 +16,13 @@ rectangle_long
   xy: 1, 1989
   size: 2000, 10
   orig: 2000, 10
+  offset: 0, 0
+  index: -1
+thin_rect
+  rotate: false
+  xy: 1, 1978
+  size: 1837, 9
+  orig: 1837, 9
   offset: 0, 0
   index: -1
 
@@ -382,6 +389,20 @@ checkbox-white-checked
   orig: 512, 512
   offset: 0, 0
   index: -1
+circle
+  rotate: false
+  xy: 1, 72
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+circle_smaller
+  rotate: false
+  xy: 103, 122
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
 gamepad-vector-clipart
   rotate: false
   xy: 515, 1359
@@ -391,28 +412,28 @@ gamepad-vector-clipart
   index: -1
 noun_back button_251451
   rotate: false
-  xy: 515, 1017
+  xy: 757, 1259
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 noun_back button_251451-light-gray
   rotate: false
-  xy: 757, 1259
+  xy: 1265, 1665
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 noun_back button_251451-white
   rotate: false
-  xy: 1, 74
+  xy: 515, 1017
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 x22
   rotate: false
-  xy: 1265, 1705
+  xy: 877, 1525
   size: 50, 58
   orig: 50, 58
   offset: 0, 0
@@ -433,14 +454,14 @@ x22-bigger
   index: -1
 x22-mute1
   rotate: false
-  xy: 1633, 1911
+  xy: 1, 12
   size: 50, 58
   orig: 50, 58
   offset: 0, 0
   index: -1
 x22-mute2
   rotate: false
-  xy: 877, 1525
+  xy: 1633, 1911
   size: 50, 58
   orig: 50, 58
   offset: 0, 0
