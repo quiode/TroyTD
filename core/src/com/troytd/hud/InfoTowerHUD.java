@@ -436,7 +436,7 @@ public class InfoTowerHUD extends SideHUD {
         towerImage.setDrawable(new TextureRegionDrawable(towerPlace.getTower().getTexture()));
         towerName.setText(towerPlace.getTower().name);
 
-        typeAmount.setText(towerPlace.getTower().getType());
+        typeAmount.setText(towerPlace.getTower().getType().toString());
         killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
         damageAmount.setText(String.valueOf(towerPlace.getTower().getStat("damage").getValue()));
         rangeAmount.setText(String.valueOf(towerPlace.getTower().getStat("range").getValue()));

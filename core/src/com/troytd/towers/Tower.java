@@ -60,13 +60,7 @@ public abstract class Tower {
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
                  Class<? extends Shot> shotClass, Class<? extends Unit> unitClass) {
-        TowerTypes towerType;
-        try {
-            towerType = (TowerTypes) ClassReflection.getField(this.getClass(), "type").get(null);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            towerType = type;
-        }
+        TowerTypes towerType = getType();
 
         if (unitClass == null && towerType == TowerTypes.MELEE) {
             throw new IllegalArgumentException("No unit class specified for melee tower");
@@ -148,14 +142,7 @@ public abstract class Tower {
      * @return a new shot instance or null if no shot can be made
      */
     public Shot shoot(ArrayList<Enemy> enemies) {
-        TowerTypes towerType;
-        try {
-            towerType = (TowerTypes) ClassReflection.getField(this.getClass(), "type").get(null);
-        } catch (ReflectionException e) {
-            e.printStackTrace();
-            towerType = type;
-        }
-        switch (towerType) {
+        switch (getType()) {
             case SINGLE:
                 try {
                     Enemy target = Enemy.getClosest(getPosition(), enemies);
@@ -191,13 +178,7 @@ public abstract class Tower {
         towerSprite.setPosition(position.x, position.y);
     }
 
-    public String getType() {
-        return type.toString();
-    }
-
-    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots, ArrayList<Unit> units) {
-        if (enemies.isEmpty()) return;
-
+    public TowerTypes getType() {
         TowerTypes towerType;
         try {
             towerType = (TowerTypes) ClassReflection.getField(this.getClass(), "type").get(null);
@@ -205,8 +186,13 @@ public abstract class Tower {
             e.printStackTrace();
             towerType = type;
         }
+        return towerType;
+    }
 
-        switch (towerType) {
+    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots, ArrayList<Unit> units) {
+        if (enemies.isEmpty()) return;
+
+        switch (getType()) {
             case SINGLE:
             case AOE:
                 if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) getStat("atspeed").getValue() / 100000f)) {
