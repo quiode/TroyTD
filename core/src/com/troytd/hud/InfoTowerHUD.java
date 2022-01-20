@@ -18,6 +18,8 @@ import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 import com.troytd.towers.TowerTypes;
 
+import java.util.HashMap;
+
 public class InfoTowerHUD extends SideHUD {
     private final Label lifeDurationAmount;
     private final Label enemyAmountAmount;
@@ -302,7 +304,27 @@ public class InfoTowerHUD extends SideHUD {
         refund.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameScreen.money += ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
+                int refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
+                try {
+                    HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) ClassReflection.getField(
+                            towerPlace.getTower().getClass(), "defaultStats").get(null);
+
+                    int upgradeCost;
+                    try {
+                        upgradeCost = (int) ClassReflection.getField(towerPlace.getTower().getClass(), "upgradeCost")
+                                .get(null);
+                    } catch (ReflectionException e) {
+                        upgradeCost = Tower.upgradeCost;
+                    }
+                    for (String statName : defaultStats.keySet()) {
+                        refundAmountAmount += ((towerPlace.getTower()
+                                .getStat(statName)
+                                .getLevel() + 1) * upgradeCost / 3);
+                    }
+                } catch (ReflectionException e) {
+                    refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
+                }
+                gameScreen.money += refundAmountAmount;
                 towerPlace.removeTower();
                 close();
                 Dialog dialog = new Dialog("", game.skin, "info") {
@@ -311,7 +333,7 @@ public class InfoTowerHUD extends SideHUD {
                         InfoTowerHUD.this.stage.getActors().removeValue(this, true);
                     }
                 };
-                dialog.text("Refunded " + refundAmount.getText() + " gold");
+                dialog.text("Refunded " + refundAmountAmount + " gold");
                 dialog.button("OK", true, game.skin.get("info", TextButton.TextButtonStyle.class));
 
                 dialog.center();
@@ -426,6 +448,23 @@ public class InfoTowerHUD extends SideHUD {
         unitAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("unitAmount").getValue()));
         enemyAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("enemyAmount").getValue()));
         lifeDurationAmount.setText(String.valueOf(towerPlace.getTower().getStat("lifeDuration").getValue()));
-        refundAmount.setText(String.valueOf(((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2));
+        int refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
+        try {
+            HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) ClassReflection.getField(
+                    towerPlace.getTower().getClass(), "defaultStats").get(null);
+
+            int upgradeCost;
+            try {
+                upgradeCost = (int) ClassReflection.getField(towerPlace.getTower().getClass(), "upgradeCost").get(null);
+            } catch (ReflectionException e) {
+                upgradeCost = Tower.upgradeCost;
+            }
+            for (String statName : defaultStats.keySet()) {
+                refundAmountAmount += ((towerPlace.getTower().getStat(statName).getLevel() + 1) * upgradeCost / 3);
+            }
+        } catch (ReflectionException e) {
+            refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
+        }
+        refundAmount.setText(String.valueOf(refundAmountAmount));
     }
 }
