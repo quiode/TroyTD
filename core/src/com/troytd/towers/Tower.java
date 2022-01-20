@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Tower {
+    public static final int upgradeCost = 25;
     public static final HashMap<String, Stat> defaultStats = new HashMap<>();
     public final static TowerTypes type = TowerTypes.NONE;
 
@@ -71,7 +72,7 @@ public abstract class Tower {
             tempStats = defaultStats;
         }
         if (tempStats.containsKey(key)) {
-            if (stats.get(key).getValue().getClass() == stat.getValue().getClass()) {
+            if (tempStats.get(key).getValue().getClass() == stat.getValue().getClass()) {
                 stats.put(key, stat);
             } else {
                 throw new IllegalArgumentException(

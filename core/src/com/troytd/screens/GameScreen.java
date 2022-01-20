@@ -143,7 +143,6 @@ public class GameScreen implements Screen {
              ()));
             */
             if (selectedTowerPlace != null) {
-                //Gdx.app.log("Touched", "Tower place found");
                 if (selectedTowerPlace.getTower() == null) {
                     placeTowerHUD.show(selectedTowerPlace);
                 } else {
@@ -151,6 +150,8 @@ public class GameScreen implements Screen {
                 }
             }
         }
+
+        infoTowerHUD.update();
 
         game.batch.begin();
         // Draw map
