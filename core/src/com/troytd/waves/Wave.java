@@ -5,9 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
-import com.troytd.game.TroyTD;
 import com.troytd.enemies.enemyAmount;
+import com.troytd.game.TroyTD;
 import com.troytd.maps.Map;
+import com.troytd.screens.GameScreen;
 
 import java.util.ArrayList;
 
@@ -65,9 +66,8 @@ public abstract class Wave {
     private Enemy spawnEnemy(Class<? extends Enemy> enemy, byte line, Vector2 position, Stage stage) {
         try {
             Enemy enemyInstance = (Enemy) ClassReflection.getConstructor(enemy, byte.class, TroyTD.class, Vector2.class,
-                                                                         Vector2.class, Vector2[].class, Map.class,
-                                                                         Stage.class)
-                    .newInstance(line, game, position, mapDistortion, path, map, stage);
+                                                                         Vector2[].class, Map.class)
+                    .newInstance(line, game, position, path, map);
             activeEnemies.add(enemyInstance);
             return enemyInstance;
         } catch (ReflectionException e) {
@@ -90,10 +90,10 @@ public abstract class Wave {
         }
     }
 
-    private void updateEnemies() {
+    private void updateEnemies(GameScreen gameScreen) {
         for (int i = activeEnemies.size() - 1; i >= 0; i--) {
             try {
-                activeEnemies.get(i).update(activeEnemies);
+                activeEnemies.get(i).update(activeEnemies, gameScreen);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
@@ -115,9 +115,9 @@ public abstract class Wave {
         }
     }
 
-    public void update(Stage stage) {
+    public void update(Stage stage, GameScreen gameScreen) {
         updateWave(stage);
-        updateEnemies();
+        updateEnemies(gameScreen);
     }
 
     public boolean isFinished() {
