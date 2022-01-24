@@ -14,6 +14,7 @@ import com.troytd.helpers.Stat;
 import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
+import com.troytd.towers.units.Unit;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -165,7 +166,7 @@ public abstract class Enemy {
         }
     }
 
-    public void update(final ArrayList<Enemy> enemies, GameScreen gameScreen) {
+    public void update(final ArrayList<Enemy> enemies, GameScreen gameScreen, ArrayList<Unit> units) {
         HashMap<String, Stat> currentDefaultStats;
         try {
             currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(this.getClass(),
@@ -200,6 +201,8 @@ public abstract class Enemy {
                     healthBar.setVisible(false);
                 }
             }
+
+            attackUnits(units);
         } else {
             enemies.remove(this);
             try {
@@ -252,5 +255,28 @@ public abstract class Enemy {
 
     public Vector2 getCenterPosition() {
         return enemySprite.getBoundingRectangle().getCenter(centerPosition);
+    }
+
+    /**
+     * if the enemy overlaps a unit, attack it
+     *
+     * @param units the units to check for collision
+     */
+    public void attackUnits(ArrayList<Unit> units) {
+        HashMap<String, Stat> currentDefaultStats;
+        try {
+            currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(this.getClass(),
+                                                                                           "defaultStats").get(null);
+        } catch (ReflectionException e) {
+            currentDefaultStats = defaultStats;
+        }
+
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i) != null) {
+                if (units.get(i).getRect().overlaps(getRectangle())) {
+                    units.get(i).takeDamage((Integer) currentDefaultStats.get("damage").getValue(), units);
+                }
+            }
+        }
     }
 }

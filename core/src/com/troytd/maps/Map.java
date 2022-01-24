@@ -314,7 +314,7 @@ public abstract class Map implements Loadable {
                     won = true;
                 }
             } else {
-                currentWave.update(stage, gameScreen);
+                currentWave.update(stage, gameScreen, units);
             }
         }
     }

@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
@@ -18,13 +20,14 @@ public abstract class Unit {
     private final TroyTD game;
     private final Sprite sprite;
     private final Tower tower;
-    private final int hp;
     /**
      * center position of sprite
      */
     private final Vector2 position;
     private final Vector2 vectorToEnemy = new Vector2();
     private final Vector2 vectorToTower = new Vector2();
+    private final ProgressBar healthBar;
+    private int hp;
 
 
     public Unit(UnitType type, final TroyTD game, Tower tower) {
@@ -40,10 +43,18 @@ public abstract class Unit {
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f - sprite.getWidth() / 2f,
                            tower.getPosition().y + tower.getRect().height * 1.1f);
         this.position = sprite.getBoundingRectangle().getCenter(new Vector2());
+
+        // the enemy
+        healthBar = new ProgressBar(0, hp, 1, false, game.skin, "enemy_health");
+
+        healthBar.setValue(hp);
+        healthBar.setSize(sprite.getWidth(), healthBar.getHeight());
+        healthBar.setVisible(false);
     }
 
     public void draw() {
         sprite.draw(game.batch);
+        if (healthBar.isVisible()) healthBar.draw(game.batch, 1);
     }
 
     public void update(ArrayList<Unit> units, ArrayList<Enemy> enemies, GameScreen gameScreen) {
@@ -65,6 +76,24 @@ public abstract class Unit {
             }
         } else {
             goBackToTower(units);
+        }
+
+        try {
+            if (hp < (int) tower.getStat("maxHP").getValue()) {
+                healthBar.setVisible(true);
+                healthBar.setPosition(sprite.getX(), sprite.getY() - 2.5f);
+                healthBar.setValue(hp);
+            } else {
+                healthBar.setVisible(false);
+            }
+        } catch (Exception e) {
+            if (hp < (int) tower.getStat("maxHP").getValue() * 0.9f) {
+                healthBar.setVisible(true);
+                healthBar.setPosition(sprite.getX(), sprite.getY() - 2.5f);
+                healthBar.setValue(hp);
+            } else {
+                healthBar.setVisible(false);
+            }
         }
     }
 
@@ -172,5 +201,14 @@ public abstract class Unit {
             }
         }
         return vector;
+    }
+
+    public Rectangle getRect() {
+        return sprite.getBoundingRectangle();
+    }
+
+    public void takeDamage(int damage, ArrayList<Unit> units) {
+        hp -= damage;
+        if (hp <= 0) units.remove(this);
     }
 }

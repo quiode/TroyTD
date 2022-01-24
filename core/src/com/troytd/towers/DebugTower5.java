@@ -19,6 +19,7 @@ public class DebugTower5 extends Tower {
     static {
         defaultStats.put("range2", new Stat("range2", 10));
         defaultStats.put("damage", new Stat("damage", 5));
+        defaultStats.put("maxHP", new Stat("maxHP", 25));
     }
 
     public DebugTower5(TroyTD game, Vector2 position, Vector2 distortion) {
