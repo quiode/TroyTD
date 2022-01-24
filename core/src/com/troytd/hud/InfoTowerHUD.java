@@ -182,29 +182,6 @@ public class InfoTowerHUD extends SideHUD {
 
         table.add(atspeedAmount).colspan(1).right().padTop(10);
         table.add(upgradeAtSpeedButton).colspan(1).center().padTop(10).size(iconSize / 2f);
-        // range2
-        table.row();
-        final Label range2 = new Label("Range2: ", game.skin);
-        table.add(range2).colspan(3).left().padTop(10).padLeft(25);
-
-        upgradeRange2Button = new ImageButton(game.skin, "upgrade");
-        upgradeRange2Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (gameScreen.money < (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost)
-                    return;
-                gameScreen.money -= (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost;
-                towerPlace.getTower()
-                        .setStat("range2", new Stat<>("range2", (int) ((Integer) towerPlace.getTower()
-                                .getStat("range2")
-                                .getValue() + (Integer) towerPlace.getTower().getStat("range2").getValue() * 0.1f),
-                                                      towerPlace.getTower().getStat("range2").getLevel() + 1));
-            }
-        });
-        range2Amount = new Label("0", game.skin);
-
-        table.add(range2Amount).colspan(1).right().padTop(10);
-        table.add(upgradeRange2Button).colspan(1).center().padTop(10).size(iconSize / 2f);
         // enemy amount
         table.row();
         final Label enemyAmount = new Label("Enemy Amount: ", game.skin);
@@ -251,6 +228,29 @@ public class InfoTowerHUD extends SideHUD {
 
         table.add(lifeDurationAmount).colspan(1).right().padTop(10);
         table.add(upgradelifeDurationButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // range2
+        table.row();
+        final Label range2 = new Label("Range2: ", game.skin);
+        table.add(range2).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeRange2Button = new ImageButton(game.skin, "upgrade");
+        upgradeRange2Button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("range2", new Stat<>("range2", (int) ((Integer) towerPlace.getTower()
+                                .getStat("range2")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("range2").getValue() * 0.1f),
+                                                      towerPlace.getTower().getStat("range2").getLevel() + 1));
+            }
+        });
+        range2Amount = new Label("0", game.skin);
+
+        table.add(range2Amount).colspan(1).right().padTop(10);
+        table.add(upgradeRange2Button).colspan(1).center().padTop(10).size(iconSize / 2f);
         // max HP
         table.row();
         final Label maxHP = new Label("Max HP: ", game.skin);
@@ -413,7 +413,6 @@ public class InfoTowerHUD extends SideHUD {
         switch (towerType) {
             case MELEE:
                 upgradeEnemyAmountButton.setDisabled(true);
-                upgradeRange2Button.setDisabled(true);
                 upgradelifeDurationButton.setDisabled(true);
                 break;
             case SINGLE:

@@ -38,6 +38,7 @@ public abstract class Tower {
 
     protected final Vector2 distortion;
     protected final TroyTD game;
+    private final Vector2 centerPosition;
     private final HashMap<String, Stat> stats = new HashMap<>();
     private final Class<? extends Unit> unitClass;
     public String name;
@@ -78,6 +79,7 @@ public abstract class Tower {
         this.distortion = distortion;
         this.shotClass = shotClass;
         this.unitClass = unitClass;
+        this.centerPosition = towerSprite.getBoundingRectangle().getCenter(new Vector2());
     }
 
     static public float getSize(TroyTD game) {
@@ -221,5 +223,14 @@ public abstract class Tower {
                 }
                 break;
         }
+    }
+
+    private void updateCenterPosition() {
+        towerSprite.getBoundingRectangle().getCenter(centerPosition);
+    }
+
+    public Vector2 getCenterPosition() {
+        updateCenterPosition();
+        return centerPosition;
     }
 }

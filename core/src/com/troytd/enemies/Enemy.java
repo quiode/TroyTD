@@ -44,6 +44,7 @@ public abstract class Enemy {
     protected final Map map;
     private final ProgressBar healthBar;
     private final Vector2 position = new Vector2();
+    private final Vector2 centerPosition;
     /**
      * t in [0,1] in path
      */
@@ -89,6 +90,7 @@ public abstract class Enemy {
         healthBar.setValue(hp);
         healthBar.setSize(enemySprite.getWidth(), healthBar.getHeight());
         healthBar.setVisible(false);
+        centerPosition = enemySprite.getBoundingRectangle().getCenter(new Vector2());
     }
 
     public static void loadAssets() {
@@ -246,5 +248,9 @@ public abstract class Enemy {
 
     public boolean isDead() {
         return hp <= 0;
+    }
+
+    public Vector2 getCenterPosition() {
+        return enemySprite.getBoundingRectangle().getCenter(centerPosition);
     }
 }

@@ -175,7 +175,7 @@ public abstract class Map implements Loadable {
 
         if (currentWave != null) updateTowers(currentWave.getEnemies());
         drawTowers();
-        updateUnits();
+        updateUnits(gameScreen);
         drawUnits();
         updateEnemies(stage, gameScreen);
         drawEnemies();
@@ -349,9 +349,9 @@ public abstract class Map implements Loadable {
         }
     }
 
-    public void updateUnits() {
+    public void updateUnits(GameScreen gameScreen) {
         for (Unit unit : units) {
-            unit.update(units);
+            unit.update(units, currentWave.getEnemies(), gameScreen);
         }
     }
 }

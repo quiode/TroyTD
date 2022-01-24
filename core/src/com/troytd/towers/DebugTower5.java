@@ -16,6 +16,11 @@ public class DebugTower5 extends Tower {
     public final static TowerTypes type = TowerTypes.MELEE;
     public static final HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) Tower.defaultStats.clone();
 
+    static {
+        defaultStats.put("range2", new Stat("range2", 10));
+        defaultStats.put("damage", new Stat("damage", 5));
+    }
+
     public DebugTower5(TroyTD game, Vector2 position, Vector2 distortion) {
         super(game, position, game.assetManager.get("towers/DebugTower5.png", Texture.class), "DebugTower5", distortion,
               null, DebugUnit.class);
