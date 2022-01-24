@@ -3,7 +3,6 @@ package com.troytd.towers.units;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
@@ -27,7 +26,7 @@ public abstract class Unit {
     private final Vector2 vectorToTower = new Vector2();
 
 
-    public Unit(UnitType type, final TroyTD game, Tower tower) {
+    public Unit(UnitType type, final TroyTD game, Tower tower, final ArrayList<Unit> units) {
         this.type = type;
         this.game = game;
         this.tower = tower;
@@ -38,9 +37,9 @@ public abstract class Unit {
                 game.assetManager.get("units/" + tower.getClass().getSimpleName() + "Unit" + ".png", Texture.class)) {
             @Override
             public void translate(float x, float y) {
-                float rangeX = game.settingPreference.getInteger("height") / 350f;
-                float rangeY = game.settingPreference.getInteger("width") / 350f;
-                super.translate(x + MathUtils.random(-rangeX, +rangeX), y + MathUtils.random(-rangeY, +rangeY));
+                super.translate(x + (units.indexOf(Unit.this) + 1) * game.settingPreference.getInteger("width") / 200f,
+                                y + (units.indexOf(Unit.this) + 1) * game.settingPreference.getInteger(
+                                        "height") / 200f);
             }
         };
         sprite.setSize(Tower.getSize(game) / 5f, Tower.getSize(game) / 5f);
