@@ -24,8 +24,7 @@ public abstract class Unit {
 
         sprite = new Sprite(
                 game.assetManager.get("units/" + tower.getClass().getSimpleName() + "Unit" + ".png", Texture.class));
-        float sizeModifier = Tower.getSize(game) / 5f;
-        sprite.setSize(sprite.getWidth() * sizeModifier, sprite.getHeight() * sizeModifier);
+        sprite.setSize(Tower.getSize(game) / 5f, Tower.getSize(game) / 5f);
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f - sprite.getWidth() / 2f,
                            tower.getPosition().y + tower.getRect().height * 1.1f);
     }

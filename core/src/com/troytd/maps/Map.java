@@ -175,6 +175,8 @@ public abstract class Map implements Loadable {
 
         if (currentWave != null) updateTowers(currentWave.getEnemies());
         drawTowers();
+        updateUnits();
+        drawUnits();
         updateEnemies(stage, gameScreen);
         drawEnemies();
         updateShots(delta, gameScreen);
@@ -341,13 +343,13 @@ public abstract class Map implements Loadable {
         return currentWaveIndex;
     }
 
-    public void drawUnits(){
+    public void drawUnits() {
         for (Unit unit : units) {
             unit.draw();
         }
     }
 
-    public void updateUnits(){
+    public void updateUnits() {
         for (Unit unit : units) {
             unit.update(units);
         }
