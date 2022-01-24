@@ -35,6 +35,9 @@ public abstract class Enemy {
     }
 
     protected final Vector2[] path;
+    /**
+     * the line where the enemy is located, 0 is the top line, 1 is the middle line, 2 is the bottom line
+     */
     protected final byte line;
     protected final TroyTD game;
     final protected Sprite enemySprite;
@@ -54,8 +57,8 @@ public abstract class Enemy {
      * @param position the position of the enemy
      * @param path     the path the enemy will follow, in precalculated points
      */
-    public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture,
-                 Vector2[] path, final Map map) {
+    public Enemy(byte line, final TroyTD game, final Vector2 position, final Texture texture, Vector2[] path,
+                 final Map map) {
         HashMap<String, Stat> currentDefaultStats;
         try {
             currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(this.getClass(),
