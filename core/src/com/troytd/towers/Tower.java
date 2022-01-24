@@ -206,16 +206,15 @@ public abstract class Tower {
                 }
                 break;
             case MELEE:
-                ArrayList<Unit> unitsOfThisTower = new ArrayList<Unit>();
+                int unitsOfThisTower = 0;
                 for (Unit unit : units) {
-                    if (unit.getTower() == this) unitsOfThisTower.add(unit);
+                    if (unit.getTower() == this) unitsOfThisTower++;
                 }
                 if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) getStat("atspeed").getValue() / 100000f)) {
-                    if (unitsOfThisTower.size() < (int) getStat("unitAmount").getValue()) {
+                    if (unitsOfThisTower < (int) getStat("unitAmount").getValue()) {
                         try {
-                            units.add((Unit) ClassReflection.getConstructor(unitClass, TroyTD.class, Tower.class,
-                                                                            ArrayList.class)
-                                    .newInstance(game, this, unitsOfThisTower));
+                            units.add((Unit) ClassReflection.getConstructor(unitClass, TroyTD.class, Tower.class)
+                                    .newInstance(game, this));
                             lastShot = TimeUtils.millis();
                         } catch (ReflectionException e) {
                             e.printStackTrace();
