@@ -35,14 +35,7 @@ public abstract class Unit {
         this.hp = (Integer) tower.getStat("maxHP").getValue();
 
         sprite = new Sprite(
-                game.assetManager.get("units/" + tower.getClass().getSimpleName() + "Unit" + ".png", Texture.class)) {
-            @Override
-            public void translate(float x, float y) {
-                float rangeX = game.settingPreference.getInteger("height") / 350f;
-                float rangeY = game.settingPreference.getInteger("width") / 350f;
-                super.translate(x + MathUtils.random(-rangeX, +rangeX), y + MathUtils.random(-rangeY, +rangeY));
-            }
-        };
+                game.assetManager.get("units/" + tower.getClass().getSimpleName() + "Unit" + ".png", Texture.class));
         sprite.setSize(Tower.getSize(game) / 5f, Tower.getSize(game) / 5f);
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f - sprite.getWidth() / 2f,
                            tower.getPosition().y + tower.getRect().height * 1.1f);
@@ -65,13 +58,13 @@ public abstract class Unit {
                 if (enemyInAttackRange(enemy)) {
                     attack(enemy, enemies, gameScreen);
                 } else {
-                    moveTo(enemy);
+                    moveTo(enemy, units);
                 }
             } else {
-                goBackToTower();
+                goBackToTower(units);
             }
         } else {
-            goBackToTower();
+            goBackToTower(units);
         }
     }
 
@@ -132,8 +125,9 @@ public abstract class Unit {
      *
      * @param enemy the enemy to move to
      */
-    private void moveTo(Enemy enemy) {
+    private void moveTo(Enemy enemy, ArrayList<Unit> units) {
         vectorToEnemy.set(enemy.getCenterPosition().sub(getCenterPosition()));
+        correctIfOverlap(vectorToEnemy, units);
 
         /*
           copied from SingleShot
@@ -145,8 +139,9 @@ public abstract class Unit {
         sprite.translate(vectorToEnemy.x, vectorToEnemy.y);
     }
 
-    public void goBackToTower() {
+    public void goBackToTower(ArrayList<Unit> units) {
         vectorToTower.set(tower.getCenterPosition().add(0, tower.getRect().height / 2f).sub(getCenterPosition()));
+        correctIfOverlap(vectorToTower, units);
 
         /*
           copied from SingleShot
@@ -156,5 +151,26 @@ public abstract class Unit {
                 1 / ((vectorToTower.x * vectorToTower.x + vectorToTower.y * vectorToTower.y) / tmp_speed * tmp_speed)));
 
         sprite.translate(vectorToTower.x, vectorToTower.y);
+    }
+
+    /**
+     * adds randomness to the unit's movement
+     */
+    private Vector2 correctVector(final Vector2 vector) {
+        float rangeX = game.settingPreference.getInteger("height") / 10f;
+        float rangeY = game.settingPreference.getInteger("width") / 10f;
+        rangeX = MathUtils.random(-rangeX, rangeX);
+        rangeY = MathUtils.random(-rangeY, rangeY);
+        vector.add(rangeX, rangeY);
+        return vector;
+    }
+
+    private Vector2 correctIfOverlap(final Vector2 vector, final ArrayList<Unit> units) {
+        for (Unit unit : units) {
+            if (unit.sprite.getBoundingRectangle().overlaps(sprite.getBoundingRectangle())) {
+                return correctVector(vector);
+            }
+        }
+        return vector;
     }
 }
