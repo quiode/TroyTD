@@ -66,7 +66,7 @@ public abstract class Tower {
             throw new IllegalArgumentException("No unit class specified for melee tower");
         }
 
-        if (shotClass == null && towerType == TowerTypes.SINGLE || towerType == TowerTypes.AOE) {
+        if (shotClass == null && (towerType == TowerTypes.SINGLE || towerType == TowerTypes.AOE)) {
             throw new IllegalArgumentException("No shot class specified for tower");
         }
 
