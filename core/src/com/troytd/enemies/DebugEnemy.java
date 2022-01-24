@@ -18,7 +18,7 @@ public class DebugEnemy extends Enemy {
     static {
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 50));
         defaultStats.put("maxHP", new Stat<>("maxHP", 500));
-        defaultStats.put("damage", new Stat<>("worth", 10));
+        defaultStats.put("worth", new Stat<>("worth", 10));
     }
 
     public DebugEnemy(byte line, final TroyTD game, Vector2 position, final Vector2[] path,

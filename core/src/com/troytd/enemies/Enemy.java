@@ -3,6 +3,7 @@ package com.troytd.enemies;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -17,6 +18,8 @@ import com.troytd.towers.Tower;
 import com.troytd.towers.units.Unit;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -50,6 +53,10 @@ public abstract class Enemy {
      * t in [0,1] in path
      */
     protected int position_on_path;
+    /**
+     * true if unit is targeting this enemy
+     */
+    private boolean isTargeted = false;
     private boolean draw = true;
     private int hp;
 
@@ -103,6 +110,34 @@ public abstract class Enemy {
             positions[i] = enemies.get(i).getPosition();
         }
         return enemies.get(Helper.getClosest(position, positions));
+    }
+
+    /**
+     * @param position the position to start the search from
+     * @param enemies  the enemies to check
+     * @return the closest not-targeted enemy or null if none is found
+     */
+    public static Enemy getClosestNotTargeted(final Vector2 position, ArrayList<Enemy> enemies) {
+        ArrayList<Enemy> toSort = (ArrayList<Enemy>) enemies.clone();
+        Collections.sort(toSort, new Comparator<Enemy>() {
+            @Override
+            public int compare(Enemy enemy, Enemy t1) {
+                if (position.dst(enemy.getPosition()) == position.dst(t1.getPosition())) {
+                    return 0;
+                } else if (position.dst(enemy.getPosition()) > position.dst(t1.getPosition())) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
+
+        for (Enemy enemy : toSort) {
+            if (!enemy.isTargeted()) {
+                return enemy;
+            }
+        }
+        return null;
     }
 
     /**
@@ -175,13 +210,48 @@ public abstract class Enemy {
             currentDefaultStats = defaultStats;
         }
 
-        position_on_path += (int) currentDefaultStats.get("speed").getValue() * Gdx.graphics.getDeltaTime() * 50;
+        if (!isTargeted) { // only move when not targeted
+            position_on_path += (int) currentDefaultStats.get("speed").getValue() * Gdx.graphics.getDeltaTime() * 50;
 
-        if (position_on_path < path.length) {
-            enemySprite.setPosition(path[position_on_path].x,
-                                    path[position_on_path].y - line * game.settingPreference.getInteger(
-                                            "height") / 24f);
+            if (position_on_path < path.length) {
+                enemySprite.setPosition(path[position_on_path].x,
+                                        path[position_on_path].y - line * game.settingPreference.getInteger(
+                                                "height") / 24f);
 
+                try {
+                    if (hp < ((int) ClassReflection.getField(this.getClass(), "maxHP")
+                            .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
+                            .get(null) * 0.1f * game.settingPreference.getInteger("difficulty")) * 0.9f) {
+                        healthBar.setVisible(true);
+                        healthBar.setPosition(enemySprite.getX(), enemySprite.getY() - 2.5f);
+                        healthBar.setValue(hp);
+                    } else {
+                        healthBar.setVisible(false);
+                    }
+                } catch (Exception e) {
+                    if (hp < (int) currentDefaultStats.get("maxHP").getValue() * 0.9f) {
+                        healthBar.setVisible(true);
+                        healthBar.setPosition(enemySprite.getX(), enemySprite.getY() - 2.5f);
+                        healthBar.setValue(hp);
+                    } else {
+                        healthBar.setVisible(false);
+                    }
+                }
+
+                attackUnits(units);
+            } else {
+                enemies.remove(this);
+                try {
+                    gameScreen.health -= (short) ClassReflection.getField(this.getClass(), "damage").get(null);
+                } catch (ReflectionException e) {
+                    gameScreen.health -= (int) currentDefaultStats.get("damage").getValue();
+                }
+                if (gameScreen.health <= 0) {
+                    map.lost = true;
+                }
+            }
+        } else {
+            attackUnits(units);
             try {
                 if (hp < ((int) ClassReflection.getField(this.getClass(), "maxHP")
                         .get(null) + (int) ClassReflection.getField(this.getClass(), "maxHP")
@@ -201,18 +271,6 @@ public abstract class Enemy {
                     healthBar.setVisible(false);
                 }
             }
-
-            attackUnits(units);
-        } else {
-            enemies.remove(this);
-            try {
-                gameScreen.health -= (short) ClassReflection.getField(this.getClass(), "damage").get(null);
-            } catch (ReflectionException e) {
-                gameScreen.health -= (int) currentDefaultStats.get("damage").getValue();
-            }
-            if (gameScreen.health <= 0) {
-                map.lost = true;
-            }
         }
     }
 
@@ -226,8 +284,9 @@ public abstract class Enemy {
      * @param damage  the damage to take
      * @param enemies the enemies to remove the enemy from
      * @param tower   the tower the shot was sent from
+     * @return true if the enemy was killed
      */
-    public void takeDamage(int damage, ArrayList<Enemy> enemies, Tower tower, GameScreen gameScreen) {
+    public boolean takeDamage(int damage, ArrayList<Enemy> enemies, Tower tower, GameScreen gameScreen) {
         HashMap<String, Stat> currentDefaultStats;
         try {
             currentDefaultStats = (HashMap<String, Stat>) ClassReflection.getDeclaredField(this.getClass(),
@@ -246,7 +305,9 @@ public abstract class Enemy {
             } catch (ReflectionException e) {
                 gameScreen.money += (int) currentDefaultStats.get("worth").getValue();
             }
+            return true;
         }
+        return false;
     }
 
     public boolean isDead() {
@@ -274,9 +335,27 @@ public abstract class Enemy {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i) != null) {
                 if (units.get(i).getRect().overlaps(getRectangle())) {
-                    units.get(i).takeDamage((Integer) currentDefaultStats.get("damage").getValue(), units);
+                    units.get(i)
+                            .takeDamage(MathUtils.round(
+                                    (Integer) currentDefaultStats.get("damage").getValue() / 10f + 0.5f), units);
                 }
             }
+        }
+    }
+
+    /**
+     * @return true if unit is targeting this enemy
+     */
+    public boolean isTargeted() {
+        return isTargeted;
+    }
+
+    /**
+     * @param isTargeted true if unit is targeting this enemy
+     */
+    public void setTargeted(boolean isTargeted) {
+        if (this.isTargeted != isTargeted) {
+            this.isTargeted = isTargeted;
         }
     }
 }

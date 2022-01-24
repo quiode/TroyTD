@@ -28,6 +28,7 @@ public abstract class Unit {
     private final Vector2 vectorToTower = new Vector2();
     private final ProgressBar healthBar;
     private int hp;
+    private Enemy target;
 
 
     public Unit(UnitType type, final TroyTD game, Tower tower) {
@@ -60,24 +61,54 @@ public abstract class Unit {
     public void update(ArrayList<Unit> units, ArrayList<Enemy> enemies, GameScreen gameScreen) {
         if (hp <= 0) {
             units.remove(this);
+            if (target != null) target.setTargeted(false);
             return;
         }
 
-        if (!enemies.isEmpty()) {
-            Enemy enemy = enemyInRange(enemies);
-            if (enemy != null) {
-                if (enemyInAttackRange(enemy)) {
-                    attack(enemy, enemies, gameScreen);
+        // target logic/moving logic
+        if (target == null) { // searches for a target if there is none
+            target = enemyInRange(enemies);
+            if (target != null) {
+                if (enemyInRange(target)) {
+                    target.setTargeted(true);
+                    if (enemyInAttackRange(target)) {
+                        attack(target, enemies, gameScreen);
+                    } else {
+                        moveTo(target, units);
+                    }
                 } else {
-                    moveTo(enemy, units);
+                    target.setTargeted(false);
+                    target = null;
+                    goBackToTower(units);
                 }
             } else {
                 goBackToTower(units);
             }
-        } else {
-            goBackToTower(units);
+        } else { // if there is a target, try to attack it
+            if (enemyInRange(target)) {
+                target.setTargeted(true);
+                if (enemyInAttackRange(target)) {
+                    attack(target, enemies, gameScreen);
+                } else {
+                    moveTo(target, units);
+                }
+            } else {
+                target.setTargeted(false);
+                target = null;
+                goBackToTower(units);
+            }
         }
 
+        // heal if near tower
+        if (tower.getRect()
+                .getPosition(vectorToTower)
+                .dst(sprite.getBoundingRectangle().getPosition(position)) < Tower.getSize(game) / 5f) {
+            if (hp < (Integer) tower.getStat("maxHP").getValue()) {
+                hp += MathUtils.round((Integer) tower.getStat("maxHP").getValue() * 0.025f + 0.5f);
+            }
+        }
+
+        // health bar
         try {
             if (hp < (int) tower.getStat("maxHP").getValue()) {
                 healthBar.setVisible(true);
@@ -110,14 +141,22 @@ public abstract class Unit {
      * @return an enemy if he is in range (of the tower), null otherwise
      */
     private Enemy enemyInRange(ArrayList<Enemy> enemies) {
-        Enemy closestEnemy = Enemy.getClosest(tower.getCenterPosition(), enemies);
-        closestEnemy.getRectangle().getCenter(enemyCenter);
+        Enemy closestEnemy = Enemy.getClosestNotTargeted(tower.getCenterPosition(), enemies);
 
-        if (enemyCenter.dst(tower.getCenterPosition()) <= (int) tower.getStat("range").getValue()) {
+        if (closestEnemy != null && enemyInRange(closestEnemy)) {
             return closestEnemy;
         } else {
             return null;
         }
+    }
+
+    /**
+     * @param enemy the enemy to check
+     * @return true if the enemy is in range
+     */
+    private boolean enemyInRange(Enemy enemy) {
+        enemy.getRectangle().getCenter(enemyCenter);
+        return enemyCenter.dst(tower.getCenterPosition()) <= (int) tower.getStat("range").getValue();
     }
 
 
@@ -133,12 +172,15 @@ public abstract class Unit {
     /**
      * attacks the enemy
      *
-     * @param enemy
-     * @param enemies
-     * @param gameScreen
+     * @param enemy      the enemy to attack
+     * @param enemies    the enemies array
+     * @param gameScreen the game screen
      */
     private void attack(Enemy enemy, ArrayList<Enemy> enemies, GameScreen gameScreen) {
-        enemy.takeDamage((int) tower.getStat("damage").getValue(), enemies, tower, gameScreen);
+        if (enemy.takeDamage((int) tower.getStat("damage").getValue(), enemies, tower, gameScreen)) {
+            target.setTargeted(false);
+            target = null;
+        }
     }
 
     /**
@@ -156,7 +198,7 @@ public abstract class Unit {
      */
     private void moveTo(Enemy enemy, ArrayList<Unit> units) {
         vectorToEnemy.set(enemy.getCenterPosition().sub(getCenterPosition()));
-        correctIfOverlap(vectorToEnemy, units);
+        //correctIfOverlap(vectorToEnemy, units);
 
         /*
           copied from SingleShot
@@ -170,7 +212,7 @@ public abstract class Unit {
 
     public void goBackToTower(ArrayList<Unit> units) {
         vectorToTower.set(tower.getCenterPosition().add(0, tower.getRect().height / 2f).sub(getCenterPosition()));
-        correctIfOverlap(vectorToTower, units);
+        //correctIfOverlap(vectorToTower, units);
 
         /*
           copied from SingleShot
@@ -209,6 +251,10 @@ public abstract class Unit {
 
     public void takeDamage(int damage, ArrayList<Unit> units) {
         hp -= damage;
-        if (hp <= 0) units.remove(this);
+        if (hp <= 0) {
+            if (target != null) target.setTargeted(false);
+            units.remove(this);
+            return;
+        }
     }
 }
