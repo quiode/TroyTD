@@ -321,7 +321,7 @@ public class InfoTowerHUD extends SideHUD {
         range3Amount = new Label("0", game.skin);
 
         table.add(range3Amount).colspan(1).right().padTop(10);
-        table.add(upgradeUnitAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        table.add(upgradeRange3Button).colspan(1).center().padTop(10).size(iconSize / 2f);
         // refund
         table.row();
         table.add(new Label("", game.skin));
@@ -441,6 +441,8 @@ public class InfoTowerHUD extends SideHUD {
                 gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost);
         upgradeRange2Button.setDisabled(
                 gameScreen.money < (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost);
+        upgradeRange3Button.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("range3").getLevel() + 1) * Tower.upgradeCost);
 
         TowerTypes towerType;
         try {
@@ -487,6 +489,7 @@ public class InfoTowerHUD extends SideHUD {
         totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
         atspeedAmount.setText(String.valueOf(towerPlace.getTower().getStat("atspeed").getValue()));
         range2Amount.setText(String.valueOf(towerPlace.getTower().getStat("range2").getValue()));
+        range3Amount.setText(String.valueOf(towerPlace.getTower().getStat("range3").getValue()));
         unitAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("unitAmount").getValue()));
         enemyAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("enemyAmount").getValue()));
         lifeDurationAmount.setText(String.valueOf(towerPlace.getTower().getStat("lifeDuration").getValue()));
