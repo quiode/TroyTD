@@ -224,27 +224,6 @@ public abstract class Unit {
         sprite.translate(vectorToHomeLocation.x, vectorToHomeLocation.y);
     }
 
-    /**
-     * adds randomness to the unit's movement
-     */
-    private Vector2 correctVector(final Vector2 vector) {
-        float rangeX = game.settingPreference.getInteger("height") / 10f;
-        float rangeY = game.settingPreference.getInteger("width") / 10f;
-        rangeX = MathUtils.random(-rangeX, rangeX);
-        rangeY = MathUtils.random(-rangeY, rangeY);
-        vector.add(rangeX, rangeY);
-        return vector;
-    }
-
-    private Vector2 correctIfOverlap(final Vector2 vector, final ArrayList<Unit> units) {
-        for (Unit unit : units) {
-            if (unit.sprite.getBoundingRectangle().overlaps(sprite.getBoundingRectangle())) {
-                return correctVector(vector);
-            }
-        }
-        return vector;
-    }
-
     public Rectangle getRect() {
         return sprite.getBoundingRectangle();
     }
