@@ -38,7 +38,7 @@ public class TroyTD extends Game {
             settingPreference.putInteger("width", 1000);
         }
         if (!settingPreference.contains("height")) {
-            settingPreference.putInteger("height", 650);
+            settingPreference.putInteger("height", 750);
         }
         if (!settingPreference.contains("fullscreen")) {
             settingPreference.putBoolean("fullscreen", false);

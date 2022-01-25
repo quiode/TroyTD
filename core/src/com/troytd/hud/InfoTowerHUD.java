@@ -47,6 +47,8 @@ public class InfoTowerHUD extends SideHUD {
     private final ImageButton upgradeEnemyAmountButton;
     private final ImageButton upgradeUnitAmountButton;
 
+    private final TextButton setHomeLocation;
+
     public InfoTowerHUD(final TroyTD game, final Stage stage, Map map, float topHUDHeight,
                         final GameScreen gameScreen) {
         super(game, stage, map, topHUDHeight, "Tower Stats", gameScreen);
@@ -355,6 +357,12 @@ public class InfoTowerHUD extends SideHUD {
         table.add(refundAmount).right();
         table.add(moneyIcon).left().padLeft(5).size(game.settingPreference.getInteger("icon-size") / 2f);
 
+        setHomeLocation = new TextButton("Set Home Location", game.skin, "info");
+        table.row();
+        table.add(new Label("", game.skin));
+        table.row();
+        table.add(setHomeLocation).colspan(10).center().expandX();
+
         //table.debug();
     }
 
@@ -434,6 +442,8 @@ public class InfoTowerHUD extends SideHUD {
     private void updateStats() {
         towerImage.setDrawable(new TextureRegionDrawable(towerPlace.getTower().getTexture()));
         towerName.setText(towerPlace.getTower().name);
+
+        setHomeLocation.setDisabled(towerPlace.getTower().getType() != TowerTypes.MELEE);
 
         typeAmount.setText(towerPlace.getTower().getType().toString());
         killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
