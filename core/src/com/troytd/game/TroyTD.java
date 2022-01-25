@@ -6,15 +6,19 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.troytd.screens.MainMenuScreen;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class TroyTD extends Game {
     // 22.05.2021 <3
 
     public final Color BACKGROUND_COLOR = new Color(0.2f, 0.2f, 0.2f, 1);
+    public ShapeDrawer shapeDrawer;
     public SpriteBatch batch;
     public BitmapFont font;
     public Skin skin;
@@ -69,6 +73,9 @@ public class TroyTD extends Game {
 
         // set skin
         assetManager.load("skins/troytd.json", Skin.class);
+        // get asset
+        assetManager.load("others/white_pixel.png", Texture.class);
+        // load everything
         assetManager.finishLoading();
         skin = assetManager.get("skins/troytd.json", Skin.class);
         this.setScreen(new MainMenuScreen(this));
@@ -82,6 +89,10 @@ public class TroyTD extends Game {
         music.play();
         music.setVolume(volume);
         music.setLooping(true);
+
+        // shape drawer
+        shapeDrawer = new ShapeDrawer(batch,
+                                      new TextureRegion(assetManager.get("others/white_pixel.png", Texture.class)));
     }
 
     public void render() {

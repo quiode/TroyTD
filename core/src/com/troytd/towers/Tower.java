@@ -44,6 +44,7 @@ public abstract class Tower {
     public String name;
     public int kills = 0;
     public int totalDamage = 0;
+    public boolean isSelected = false;
     protected Class<? extends Shot> shotClass;
     protected Sprite towerSprite;
     Vector2 position;
@@ -131,6 +132,10 @@ public abstract class Tower {
     }
 
     public void draw() {
+        if (isSelected) {
+            game.shapeDrawer.setColor(0.5f, 0.5f, 0.5f, 0.25f);
+            game.shapeDrawer.filledCircle(getCenterPosition(), (int) getStat("range").getValue());
+        }
         towerSprite.draw(game.batch);
     }
 

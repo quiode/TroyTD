@@ -173,12 +173,12 @@ public abstract class Map implements Loadable {
             mapSprite.draw(batch);
         }
 
+        updateEnemies(stage, gameScreen);
+        drawEnemies();
         if (currentWave != null) updateTowers(currentWave.getEnemies());
         drawTowers();
         updateUnits(gameScreen);
         drawUnits();
-        updateEnemies(stage, gameScreen);
-        drawEnemies();
         updateShots(delta, gameScreen);
         drawShots();
     }

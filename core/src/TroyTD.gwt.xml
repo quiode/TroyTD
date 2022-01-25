@@ -21,4 +21,6 @@
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.helpers"/>
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.waves"/>
     <extend-configuration-property name="gdx.reflect.include" value="com.troytd.shots"/>
+
+    <inherits name="space.earlygrey.shapedrawer"/>
 </module>

@@ -71,7 +71,9 @@ public abstract class SideHUD {
      * @param selectedTowerPlace the tower place which was selected
      */
     public void show(final TowerPlace selectedTowerPlace) {
+        if (towerPlace != null && towerPlace.getTower() != null) towerPlace.getTower().isSelected = false;
         towerPlace = selectedTowerPlace;
+        if (towerPlace != null && towerPlace.getTower() != null) towerPlace.getTower().isSelected = true;
         updatedTowerPlace();
         table.addAction(sequence(visible(true), moveTo(stage.getWidth() - table.getWidth(), 0, 1 / 3f)));
     }
@@ -88,6 +90,7 @@ public abstract class SideHUD {
      * closes the table
      */
     public void close() {
+        if (towerPlace != null && towerPlace.getTower() != null) towerPlace.getTower().isSelected = false;
         table.addAction(sequence(moveTo(stage.getWidth(), 0, 1 / 3f), visible(false)));
     }
 
