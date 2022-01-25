@@ -36,6 +36,7 @@ public class InfoTowerHUD extends SideHUD {
     private final Label typeAmount;
     private final Label range2Amount;
     private final Label refundAmount;
+    private final Label range3Amount;
 
     private final ImageButton upgradeDamageButton;
     private final ImageButton upgradeRangeButton;
@@ -46,6 +47,7 @@ public class InfoTowerHUD extends SideHUD {
     private final ImageButton upgradelifeDurationButton;
     private final ImageButton upgradeEnemyAmountButton;
     private final ImageButton upgradeUnitAmountButton;
+    private final ImageButton upgradeRange3Button;
 
     private final TextButton setHomeLocation;
 
@@ -297,6 +299,28 @@ public class InfoTowerHUD extends SideHUD {
         unitAmountAmount = new Label("0", game.skin);
 
         table.add(unitAmountAmount).colspan(1).right().padTop(10);
+        table.add(upgradeUnitAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // range3 amount
+        table.row();
+        final Label range3 = new Label("Site Range: ", game.skin);
+        table.add(range3).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeRange3Button = new ImageButton(game.skin, "upgrade");
+        upgradeRange3Button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("range3").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("range3").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("range3",
+                                 new Stat<>("range3", (Integer) towerPlace.getTower().getStat("range3").getValue() + 1,
+                                            towerPlace.getTower().getStat("range3").getLevel() + 1));
+            }
+        });
+        range3Amount = new Label("0", game.skin);
+
+        table.add(range3Amount).colspan(1).right().padTop(10);
         table.add(upgradeUnitAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // refund
         table.row();

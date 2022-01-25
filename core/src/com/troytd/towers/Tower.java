@@ -34,6 +34,7 @@ public abstract class Tower {
         defaultStats.put("atspeed", new Stat<>("atspeed", 100));
         defaultStats.put("enemyAmount", new Stat<>("enemyAmount", 3));
         defaultStats.put("unitAmount", new Stat<>("unitAmount", 3));
+        defaultStats.put("range3", new Stat<>("range3", 100));
     }
 
     protected final Vector2 distortion;
