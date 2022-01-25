@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.towers.*;
 import com.troytd.towers.shots.Shot;
-import com.troytd.waves.DebugWave;
+import com.troytd.waves.Debug.DebugWave;
 import com.troytd.waves.Wave;
 
 import java.util.ArrayList;

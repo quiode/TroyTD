@@ -18,6 +18,7 @@ public class DebugTower3 extends Tower {
 
     static {
         defaultStats.put("range", new Stat<>("range", 234));
+        defaultStats.put("range2", new Stat<>("range2", 2000));
     }
 
 
