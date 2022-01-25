@@ -177,7 +177,7 @@ public abstract class Map implements Loadable {
         drawEnemies();
         if (currentWave != null) updateTowers(currentWave.getEnemies());
         drawTowers();
-        updateUnits(gameScreen);
+        if (currentWave != null) updateUnits(gameScreen);
         drawUnits();
         updateShots(delta, gameScreen);
         drawShots();

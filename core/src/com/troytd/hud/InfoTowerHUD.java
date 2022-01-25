@@ -36,6 +36,7 @@ public class InfoTowerHUD extends SideHUD {
     private final Label typeAmount;
     private final Label range2Amount;
     private final Label refundAmount;
+    private final Label range3Amount;
 
     private final ImageButton upgradeDamageButton;
     private final ImageButton upgradeRangeButton;
@@ -46,6 +47,9 @@ public class InfoTowerHUD extends SideHUD {
     private final ImageButton upgradelifeDurationButton;
     private final ImageButton upgradeEnemyAmountButton;
     private final ImageButton upgradeUnitAmountButton;
+    private final ImageButton upgradeRange3Button;
+
+    private final TextButton setHomeLocation;
 
     public InfoTowerHUD(final TroyTD game, final Stage stage, Map map, float topHUDHeight,
                         final GameScreen gameScreen) {
@@ -115,7 +119,7 @@ public class InfoTowerHUD extends SideHUD {
         table.add(upgradeDamageButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // range
         table.row();
-        final Label range = new Label("Range: ", game.skin);
+        final Label range = new Label("Tower Range: ", game.skin);
         table.add(range).colspan(3).left().padTop(10).padLeft(25);
 
         upgradeRangeButton = new ImageButton(game.skin, "upgrade");
@@ -219,9 +223,9 @@ public class InfoTowerHUD extends SideHUD {
                         .getLevel() + 1) * Tower.upgradeCost) return;
                 gameScreen.money -= (towerPlace.getTower().getStat("lifeDuration").getLevel() + 1) * Tower.upgradeCost;
                 towerPlace.getTower()
-                        .setStat("range2", new Stat<>("lifeDuration",
-                                                      (Integer) towerPlace.getTower().getStat("range2").getValue() + 1,
-                                                      towerPlace.getTower().getStat("lifeDuration").getLevel() + 1));
+                        .setStat("lifeDuration", new Stat<>("lifeDuration", (Integer) towerPlace.getTower()
+                                .getStat("range2")
+                                .getValue() + 1, towerPlace.getTower().getStat("lifeDuration").getLevel() + 1));
             }
         });
         lifeDurationAmount = new Label("0", game.skin);
@@ -230,7 +234,7 @@ public class InfoTowerHUD extends SideHUD {
         table.add(upgradelifeDurationButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // range2
         table.row();
-        final Label range2 = new Label("Range2: ", game.skin);
+        final Label range2 = new Label("Tactical Range: ", game.skin);
         table.add(range2).colspan(3).left().padTop(10).padLeft(25);
 
         upgradeRange2Button = new ImageButton(game.skin, "upgrade");
@@ -296,6 +300,29 @@ public class InfoTowerHUD extends SideHUD {
 
         table.add(unitAmountAmount).colspan(1).right().padTop(10);
         table.add(upgradeUnitAmountButton).colspan(1).center().padTop(10).size(iconSize / 2f);
+        // range3 amount
+        table.row();
+        final Label range3 = new Label("Site Range: ", game.skin);
+        table.add(range3).colspan(3).left().padTop(10).padLeft(25);
+
+        upgradeRange3Button = new ImageButton(game.skin, "upgrade");
+        upgradeRange3Button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (gameScreen.money < (towerPlace.getTower().getStat("range3").getLevel() + 1) * Tower.upgradeCost)
+                    return;
+                gameScreen.money -= (towerPlace.getTower().getStat("range3").getLevel() + 1) * Tower.upgradeCost;
+                towerPlace.getTower()
+                        .setStat("range3", new Stat<>("range3", (int) ((Integer) towerPlace.getTower()
+                                .getStat("range3")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("range3").getValue() * 0.1f),
+                                                      towerPlace.getTower().getStat("range3").getLevel() + 1));
+            }
+        });
+        range3Amount = new Label("0", game.skin);
+
+        table.add(range3Amount).colspan(1).right().padTop(10);
+        table.add(upgradeRange3Button).colspan(1).center().padTop(10).size(iconSize / 2f);
         // refund
         table.row();
         table.add(new Label("", game.skin));
@@ -355,6 +382,19 @@ public class InfoTowerHUD extends SideHUD {
         table.add(refundAmount).right();
         table.add(moneyIcon).left().padLeft(5).size(game.settingPreference.getInteger("icon-size") / 2f);
 
+        setHomeLocation = new TextButton("Set Home Location", game.skin, "info");
+        setHomeLocation.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameScreen.selectedTowerPlace = towerPlace;
+                close();
+            }
+        });
+        table.row();
+        table.add(new Label("", game.skin));
+        table.row();
+        table.add(setHomeLocation).colspan(10).center().expandX();
+
         //table.debug();
     }
 
@@ -402,6 +442,8 @@ public class InfoTowerHUD extends SideHUD {
                 gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * Tower.upgradeCost);
         upgradeRange2Button.setDisabled(
                 gameScreen.money < (towerPlace.getTower().getStat("range2").getLevel() + 1) * Tower.upgradeCost);
+        upgradeRange3Button.setDisabled(
+                gameScreen.money < (towerPlace.getTower().getStat("range3").getLevel() + 1) * Tower.upgradeCost);
 
         TowerTypes towerType;
         try {
@@ -421,10 +463,12 @@ public class InfoTowerHUD extends SideHUD {
                 upgradelifeDurationButton.setDisabled(true);
                 upgradeHpButton.setDisabled(true);
                 upgradeUnitAmountButton.setDisabled(true);
+                upgradeRange3Button.setDisabled(true);
                 break;
             case AOE:
                 upgradeHpButton.setDisabled(true);
                 upgradeUnitAmountButton.setDisabled(true);
+                upgradeRange3Button.setDisabled(true);
                 break;
             case NONE:
                 break;
@@ -435,6 +479,8 @@ public class InfoTowerHUD extends SideHUD {
         towerImage.setDrawable(new TextureRegionDrawable(towerPlace.getTower().getTexture()));
         towerName.setText(towerPlace.getTower().name);
 
+        setHomeLocation.setDisabled(towerPlace.getTower().getType() != TowerTypes.MELEE);
+
         typeAmount.setText(towerPlace.getTower().getType().toString());
         killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
         damageAmount.setText(String.valueOf(towerPlace.getTower().getStat("damage").getValue()));
@@ -444,6 +490,7 @@ public class InfoTowerHUD extends SideHUD {
         totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
         atspeedAmount.setText(String.valueOf(towerPlace.getTower().getStat("atspeed").getValue()));
         range2Amount.setText(String.valueOf(towerPlace.getTower().getStat("range2").getValue()));
+        range3Amount.setText(String.valueOf(towerPlace.getTower().getStat("range3").getValue()));
         unitAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("unitAmount").getValue()));
         enemyAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("enemyAmount").getValue()));
         lifeDurationAmount.setText(String.valueOf(towerPlace.getTower().getStat("lifeDuration").getValue()));

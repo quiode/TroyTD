@@ -49,6 +49,8 @@ public class PlaceTowerHUD extends SideHUD {
     final Label unitAmountAmount;
     final Label speedLabel;
     final Label speedAmount;
+    final Label range3Label;
+    final Label range3Amount;
     Image leftTower;
     Image rightTower;
     Image middleTower;
@@ -295,7 +297,7 @@ public class PlaceTowerHUD extends SideHUD {
         // range label
         table.row();
 
-        rangeLabel = new Label("Range:", game.skin);
+        rangeLabel = new Label("Tower Range:", game.skin);
         table.add(rangeLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // range amount
@@ -333,6 +335,17 @@ public class PlaceTowerHUD extends SideHUD {
         // unitAmount amount
         unitAmountAmount = new Label(String.valueOf(towerStats.get("unitAmount").getValue()), game.skin);
         table.add(unitAmountAmount).colspan(2).right().padRight(25).padTop(10);
+
+        // site range label
+        table.row();
+
+        range3Label = new Label("Site Range:", game.skin);
+        table.add(range3Label).colspan(3).left().padTop(10).padLeft(25);
+
+        // site range amount
+        range3Amount = new Label(String.valueOf(towerStats.get("range3").getValue()), game.skin);
+        table.add(range3Amount).colspan(2).right().padRight(25).padTop(10);
+
         // speed label
         table.row();
 
@@ -345,7 +358,7 @@ public class PlaceTowerHUD extends SideHUD {
         // range2 label
         table.row();
 
-        range2Label = new Label("Range2:", game.skin);
+        range2Label = new Label("Tactical Range:", game.skin);
         table.add(range2Label).colspan(3).left().padTop(10).padLeft(25);
 
         // range2 amount
@@ -474,6 +487,7 @@ public class PlaceTowerHUD extends SideHUD {
                 towerTypeAmount.setText(Tower.type.toString());
             }
             range2Amount.setText(String.valueOf(towerStats.get("range2").getValue()));
+            range3Amount.setText(String.valueOf(towerStats.get("range3").getValue()));
             unitAmountAmount.setText(String.valueOf(towerStats.get("unitAmount").getValue()));
             enemyAmountAmount.setText(String.valueOf(towerStats.get("enemyAmount").getValue()));
             lifeDurationAmount.setText(String.valueOf(towerStats.get("lifeDuration").getValue()));

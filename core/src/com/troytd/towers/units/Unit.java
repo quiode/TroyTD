@@ -25,7 +25,7 @@ public abstract class Unit {
      */
     private final Vector2 position;
     private final Vector2 vectorToEnemy = new Vector2();
-    private final Vector2 vectorToTower = new Vector2();
+    private final Vector2 vectorToHomeLocation = new Vector2();
     private final ProgressBar healthBar;
     private int hp;
     private Enemy target;
@@ -79,10 +79,10 @@ public abstract class Unit {
                 } else {
                     target.setTargeted(false);
                     target = null;
-                    goBackToTower(units);
+                    goBackToHomeLocation(units);
                 }
             } else {
-                goBackToTower(units);
+                goBackToHomeLocation(units);
             }
         } else { // if there is a target, try to attack it
             if (enemyInRange(target)) {
@@ -95,13 +95,13 @@ public abstract class Unit {
             } else {
                 target.setTargeted(false);
                 target = null;
-                goBackToTower(units);
+                goBackToHomeLocation(units);
             }
         }
 
         // heal if near tower
         if (tower.getRect()
-                .getPosition(vectorToTower)
+                .getPosition(vectorToHomeLocation)
                 .dst(sprite.getBoundingRectangle().getPosition(position)) < Tower.getSize(game) / 5f) {
             if (hp < (Integer) tower.getStat("maxHP").getValue()) {
                 hp += MathUtils.round((Integer) tower.getStat("maxHP").getValue() * 0.025f + 0.5f);
@@ -138,10 +138,10 @@ public abstract class Unit {
 
     /**
      * @param enemies the enemies to attack
-     * @return an enemy if he is in range (of the tower), null otherwise
+     * @return an enemy if he is in range null otherwise
      */
     private Enemy enemyInRange(ArrayList<Enemy> enemies) {
-        Enemy closestEnemy = Enemy.getClosestNotTargeted(tower.getCenterPosition(), enemies);
+        Enemy closestEnemy = Enemy.getClosestNotTargeted(tower.getHomeLocation(), enemies);
 
         if (closestEnemy != null && enemyInRange(closestEnemy)) {
             return closestEnemy;
@@ -152,11 +152,11 @@ public abstract class Unit {
 
     /**
      * @param enemy the enemy to check
-     * @return true if the enemy is in range
+     * @return true if the enemy is in range of the home location
      */
     private boolean enemyInRange(Enemy enemy) {
         enemy.getRectangle().getCenter(enemyCenter);
-        return enemyCenter.dst(tower.getCenterPosition()) <= (int) tower.getStat("range").getValue();
+        return enemyCenter.dst(tower.getHomeLocation()) <= (int) tower.getStat("range3").getValue();
     }
 
 
@@ -210,39 +210,18 @@ public abstract class Unit {
         sprite.translate(vectorToEnemy.x, vectorToEnemy.y);
     }
 
-    public void goBackToTower(ArrayList<Unit> units) {
-        vectorToTower.set(tower.getCenterPosition().add(0, tower.getRect().height / 2f).sub(getCenterPosition()));
+    public void goBackToHomeLocation(ArrayList<Unit> units) {
+        vectorToHomeLocation.set(new Vector2(getHomeLocation()).sub(getCenterPosition()));
         //correctIfOverlap(vectorToTower, units);
 
         /*
           copied from SingleShot
          */
         float tmp_speed = (int) tower.getStat("speed").getValue() * Gdx.graphics.getDeltaTime();
-        vectorToTower.scl((float) Math.sqrt(
-                1 / ((vectorToTower.x * vectorToTower.x + vectorToTower.y * vectorToTower.y) / tmp_speed * tmp_speed)));
+        vectorToHomeLocation.scl((float) Math.sqrt(
+                1 / ((vectorToHomeLocation.x * vectorToHomeLocation.x + vectorToHomeLocation.y * vectorToHomeLocation.y) / tmp_speed * tmp_speed)));
 
-        sprite.translate(vectorToTower.x, vectorToTower.y);
-    }
-
-    /**
-     * adds randomness to the unit's movement
-     */
-    private Vector2 correctVector(final Vector2 vector) {
-        float rangeX = game.settingPreference.getInteger("height") / 10f;
-        float rangeY = game.settingPreference.getInteger("width") / 10f;
-        rangeX = MathUtils.random(-rangeX, rangeX);
-        rangeY = MathUtils.random(-rangeY, rangeY);
-        vector.add(rangeX, rangeY);
-        return vector;
-    }
-
-    private Vector2 correctIfOverlap(final Vector2 vector, final ArrayList<Unit> units) {
-        for (Unit unit : units) {
-            if (unit.sprite.getBoundingRectangle().overlaps(sprite.getBoundingRectangle())) {
-                return correctVector(vector);
-            }
-        }
-        return vector;
+        sprite.translate(vectorToHomeLocation.x, vectorToHomeLocation.y);
     }
 
     public Rectangle getRect() {
@@ -256,5 +235,21 @@ public abstract class Unit {
             units.remove(this);
             return;
         }
+    }
+
+    /**
+     * @return the home location
+     */
+    public Vector2 getHomeLocation() {
+        return tower.getHomeLocation();
+    }
+
+    /**
+     * sets the home location
+     *
+     * @param homeLocation the new home location
+     */
+    public void setHomeLocation(final Vector2 homeLocation) {
+        tower.setHomeLocation(homeLocation);
     }
 }

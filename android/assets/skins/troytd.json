@@ -312,6 +312,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	info: {
 		font: Montserrat-Bold-32-white
 		overFontColor: GREEN
+		disabledFontColor: RED
 	}
 	error: {
 		font: Montserrat-Bold-32-white
