@@ -460,10 +460,12 @@ public class InfoTowerHUD extends SideHUD {
                 upgradelifeDurationButton.setDisabled(true);
                 upgradeHpButton.setDisabled(true);
                 upgradeUnitAmountButton.setDisabled(true);
+                upgradeRange3Button.setDisabled(true);
                 break;
             case AOE:
                 upgradeHpButton.setDisabled(true);
                 upgradeUnitAmountButton.setDisabled(true);
+                upgradeRange3Button.setDisabled(true);
                 break;
             case NONE:
                 break;
