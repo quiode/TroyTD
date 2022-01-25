@@ -358,6 +358,13 @@ public class InfoTowerHUD extends SideHUD {
         table.add(moneyIcon).left().padLeft(5).size(game.settingPreference.getInteger("icon-size") / 2f);
 
         setHomeLocation = new TextButton("Set Home Location", game.skin, "info");
+        setHomeLocation.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                gameScreen.selectedTowerPlace = towerPlace;
+                close();
+            }
+        });
         table.row();
         table.add(new Label("", game.skin));
         table.row();

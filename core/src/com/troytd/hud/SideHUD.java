@@ -92,6 +92,7 @@ public abstract class SideHUD {
     public void close() {
         if (towerPlace != null && towerPlace.getTower() != null) towerPlace.getTower().isSelected = false;
         table.addAction(sequence(moveTo(stage.getWidth(), 0, 1 / 3f), visible(false)));
+        gameScreen.currentlyOpenHUD = null;
     }
 
     /**
@@ -99,5 +100,9 @@ public abstract class SideHUD {
      * used to update the labels
      */
     protected abstract void updatedTowerPlace();
+
+    public TowerPlace getTowerPlace() {
+        return towerPlace;
+    }
 
 }

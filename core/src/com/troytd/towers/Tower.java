@@ -38,6 +38,7 @@ public abstract class Tower {
 
     protected final Vector2 distortion;
     protected final TroyTD game;
+    private final Vector2 homeLocation;
     private final Vector2 centerPosition;
     private final HashMap<String, Stat> stats = new HashMap<>();
     private final Class<? extends Unit> unitClass;
@@ -81,6 +82,14 @@ public abstract class Tower {
         this.shotClass = shotClass;
         this.unitClass = unitClass;
         this.centerPosition = towerSprite.getBoundingRectangle().getCenter(new Vector2());
+
+        if (towerType != TowerTypes.MELEE) {
+            homeLocation = null;
+        } else {
+            homeLocation = new Vector2(
+                    position.x + towerSprite.getWidth() / 2f - game.settingPreference.getInteger("width") / 2f - 25,
+                    position.y + towerSprite.getHeight() * 1.1f - game.settingPreference.getInteger("height") / 2f);
+        }
     }
 
     static public float getSize(TroyTD game) {
@@ -237,5 +246,15 @@ public abstract class Tower {
     public Vector2 getCenterPosition() {
         updateCenterPosition();
         return centerPosition;
+    }
+
+    public Vector2 getHomeLocation() {
+        return homeLocation;
+    }
+
+    public void setHomeLocation(Vector2 position) {
+        if (position.dst(getCenterPosition()) <= (int) getStat("range").getValue()) {
+            homeLocation.set(position);
+        }
     }
 }

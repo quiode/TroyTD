@@ -5,8 +5,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.troytd.game.TroyTD;
 import com.troytd.hud.InfoTowerHUD;
 import com.troytd.hud.PlaceTowerHUD;
+import com.troytd.hud.SideHUD;
 import com.troytd.hud.TopHUD;
 import com.troytd.maps.DebugMap;
 import com.troytd.maps.Map;
@@ -49,6 +50,8 @@ public class GameScreen implements Screen {
     public int money = 200;
     public short kills;
     public short health;
+    public TowerPlace selectedTowerPlace = null;
+    public SideHUD currentlyOpenHUD;
     // HUDs
     private PlaceTowerHUD placeTowerHUD;
     private InfoTowerHUD infoTowerHUD;
@@ -136,6 +139,7 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(game.BACKGROUND_COLOR);
         stage.act(delta);
 
+
         if (Gdx.input.isTouched()) {
             TowerPlace selectedTowerPlace = map.checkTowerClick(
                     new Vector2(Gdx.input.getX(), viewport.getWorldHeight() - Gdx.input.getY()));
@@ -144,10 +148,12 @@ public class GameScreen implements Screen {
              ()));
             */
             if (selectedTowerPlace != null) {
-                if (selectedTowerPlace.getTower() == null) {
+                if (selectedTowerPlace.getTower() == null && currentlyOpenHUD == null) {
                     placeTowerHUD.show(selectedTowerPlace);
-                } else {
+                    currentlyOpenHUD = placeTowerHUD;
+                } else if (currentlyOpenHUD == null) {
                     infoTowerHUD.show(selectedTowerPlace);
+                    currentlyOpenHUD = infoTowerHUD;
                 }
             }
         }
@@ -157,6 +163,15 @@ public class GameScreen implements Screen {
         game.batch.begin();
         // Draw map
         map.draw(game.batch, this, delta, stage);
+
+        if (selectedTowerPlace != null) {
+            drawHomeLocationPointer();
+            checkHomeLocationPointer();
+        }
+
+        if (currentlyOpenHUD == infoTowerHUD) {
+            drawHomeLocation();
+        }
         game.batch.end();
         // Draw HUD
         stage.draw();
@@ -220,5 +235,29 @@ public class GameScreen implements Screen {
 
     public Map getMap() {
         return map;
+    }
+
+    public void drawHomeLocationPointer() {
+        game.shapeDrawer.setColor(Color.RED);
+        game.shapeDrawer.filledCircle(new Vector2(Gdx.input.getX() - game.settingPreference.getInteger("width") / 2f,
+                                                  game.settingPreference.getInteger("height") / 2f - Gdx.input.getY()),
+                                      game.settingPreference.getInteger("width") / 100f);
+    }
+
+    public void checkHomeLocationPointer() {
+        if (Gdx.input.isTouched()) {
+            selectedTowerPlace.getTower()
+                    .setHomeLocation(new Vector2(Gdx.input.getX() - game.settingPreference.getInteger("width") / 2f,
+                                                 game.settingPreference.getInteger("height") / 2f - Gdx.input.getY()));
+            selectedTowerPlace = null;
+        }
+    }
+
+    public void drawHomeLocation() {
+        if (currentlyOpenHUD.getTowerPlace().getTower().getHomeLocation() != null) {
+            game.shapeDrawer.setColor(Color.RED);
+            game.shapeDrawer.filledCircle(currentlyOpenHUD.getTowerPlace().getTower().getHomeLocation(),
+                                          game.settingPreference.getInteger("width") / 100f);
+        }
     }
 }

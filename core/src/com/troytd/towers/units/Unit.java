@@ -27,7 +27,6 @@ public abstract class Unit {
     private final Vector2 vectorToEnemy = new Vector2();
     private final Vector2 vectorToHomeLocation = new Vector2();
     private final ProgressBar healthBar;
-    private final Vector2 homeLocation;
     private int hp;
     private Enemy target;
 
@@ -52,9 +51,6 @@ public abstract class Unit {
         healthBar.setValue(hp);
         healthBar.setSize(sprite.getWidth(), healthBar.getHeight());
         healthBar.setVisible(false);
-        // location to go back to
-        homeLocation = new Vector2(tower.getPosition().x + tower.getRect().width / 2f - sprite.getWidth() / 2f,
-                                   tower.getPosition().y + tower.getRect().height * 1.1f);
     }
 
     public void draw() {
@@ -215,8 +211,7 @@ public abstract class Unit {
     }
 
     public void goBackToHomeLocation(ArrayList<Unit> units) {
-        vectorToHomeLocation.set(
-                new Vector2(homeLocation).add(0, tower.getRect().height / 2f).sub(getCenterPosition()));
+        vectorToHomeLocation.set(new Vector2(getHomeLocation()).sub(getCenterPosition()));
         //correctIfOverlap(vectorToTower, units);
 
         /*
@@ -264,10 +259,10 @@ public abstract class Unit {
     }
 
     /**
-     * @return a copy of the home location
+     * @return the home location
      */
     public Vector2 getHomeLocation() {
-        return new Vector2(homeLocation);
+        return tower.getHomeLocation();
     }
 
     /**
@@ -276,6 +271,6 @@ public abstract class Unit {
      * @param homeLocation the new home location
      */
     public void setHomeLocation(final Vector2 homeLocation) {
-        this.homeLocation.set(homeLocation);
+        tower.setHomeLocation(homeLocation);
     }
 }
