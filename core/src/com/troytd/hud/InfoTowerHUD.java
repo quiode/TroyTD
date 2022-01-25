@@ -313,9 +313,10 @@ public class InfoTowerHUD extends SideHUD {
                     return;
                 gameScreen.money -= (towerPlace.getTower().getStat("range3").getLevel() + 1) * Tower.upgradeCost;
                 towerPlace.getTower()
-                        .setStat("range3",
-                                 new Stat<>("range3", (Integer) towerPlace.getTower().getStat("range3").getValue() + 1,
-                                            towerPlace.getTower().getStat("range3").getLevel() + 1));
+                        .setStat("range3", new Stat<>("range3", (int) ((Integer) towerPlace.getTower()
+                                .getStat("range3")
+                                .getValue() + (Integer) towerPlace.getTower().getStat("range3").getValue() * 0.1f),
+                                                      towerPlace.getTower().getStat("range3").getLevel() + 1));
             }
         });
         range3Amount = new Label("0", game.skin);

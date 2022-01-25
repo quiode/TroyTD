@@ -258,6 +258,13 @@ public class GameScreen implements Screen {
             game.shapeDrawer.setColor(Color.RED);
             game.shapeDrawer.filledCircle(currentlyOpenHUD.getTowerPlace().getTower().getHomeLocation(),
                                           game.settingPreference.getInteger("width") / 100f);
+            drawHomeLocationRadius();
         }
+    }
+
+    public void drawHomeLocationRadius() {
+        game.shapeDrawer.setColor(0.3f, 0.3f, 0.3f, 0.25f);
+        game.shapeDrawer.filledCircle(currentlyOpenHUD.getTowerPlace().getTower().getHomeLocation(),
+                                      (int) currentlyOpenHUD.getTowerPlace().getTower().getStat("range3").getValue());
     }
 }
