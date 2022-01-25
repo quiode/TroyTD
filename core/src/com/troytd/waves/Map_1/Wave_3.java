@@ -19,8 +19,7 @@ public class Wave_3 extends Wave {
      * @param path          the path the enemies traverse
      * @param map           the map
      */
-    public Wave_3(TroyTD game, Vector2 mapDistortion, ArrayList<enemyAmount> enemyList, Vector2[] path, Map map,
-                  int pauseTime) {
+    public Wave_3(TroyTD game, Vector2 mapDistortion, Vector2[] path, Map map) {
         super(game, mapDistortion, new ArrayList<enemyAmount>(Arrays.asList(new enemyAmount(5, Swordsman.class),
                                                                             new enemyAmount(3, Horseman.class))),
               path, map,
