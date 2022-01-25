@@ -138,10 +138,10 @@ public abstract class Unit {
 
     /**
      * @param enemies the enemies to attack
-     * @return an enemy if he is in range (of the tower), null otherwise
+     * @return an enemy if he is in range null otherwise
      */
     private Enemy enemyInRange(ArrayList<Enemy> enemies) {
-        Enemy closestEnemy = Enemy.getClosestNotTargeted(tower.getCenterPosition(), enemies);
+        Enemy closestEnemy = Enemy.getClosestNotTargeted(tower.getHomeLocation(), enemies);
 
         if (closestEnemy != null && enemyInRange(closestEnemy)) {
             return closestEnemy;
@@ -152,11 +152,11 @@ public abstract class Unit {
 
     /**
      * @param enemy the enemy to check
-     * @return true if the enemy is in range
+     * @return true if the enemy is in range of the home location
      */
     private boolean enemyInRange(Enemy enemy) {
         enemy.getRectangle().getCenter(enemyCenter);
-        return enemyCenter.dst(tower.getCenterPosition()) <= (int) tower.getStat("range").getValue();
+        return enemyCenter.dst(tower.getHomeLocation()) <= (int) tower.getStat("range3").getValue();
     }
 
 
