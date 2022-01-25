@@ -25,8 +25,9 @@ public abstract class Unit {
      */
     private final Vector2 position;
     private final Vector2 vectorToEnemy = new Vector2();
-    private final Vector2 vectorToTower = new Vector2();
+    private final Vector2 vectorToHomeLocation = new Vector2();
     private final ProgressBar healthBar;
+    private final Vector2 homeLocation;
     private int hp;
     private Enemy target;
 
@@ -51,6 +52,9 @@ public abstract class Unit {
         healthBar.setValue(hp);
         healthBar.setSize(sprite.getWidth(), healthBar.getHeight());
         healthBar.setVisible(false);
+        // location to go back to
+        homeLocation = new Vector2(tower.getPosition().x + tower.getRect().width / 2f - sprite.getWidth() / 2f,
+                                   tower.getPosition().y + tower.getRect().height * 1.1f);
     }
 
     public void draw() {
@@ -79,10 +83,10 @@ public abstract class Unit {
                 } else {
                     target.setTargeted(false);
                     target = null;
-                    goBackToTower(units);
+                    goBackToHomeLocation(units);
                 }
             } else {
-                goBackToTower(units);
+                goBackToHomeLocation(units);
             }
         } else { // if there is a target, try to attack it
             if (enemyInRange(target)) {
@@ -95,13 +99,13 @@ public abstract class Unit {
             } else {
                 target.setTargeted(false);
                 target = null;
-                goBackToTower(units);
+                goBackToHomeLocation(units);
             }
         }
 
         // heal if near tower
         if (tower.getRect()
-                .getPosition(vectorToTower)
+                .getPosition(vectorToHomeLocation)
                 .dst(sprite.getBoundingRectangle().getPosition(position)) < Tower.getSize(game) / 5f) {
             if (hp < (Integer) tower.getStat("maxHP").getValue()) {
                 hp += MathUtils.round((Integer) tower.getStat("maxHP").getValue() * 0.025f + 0.5f);
@@ -210,18 +214,19 @@ public abstract class Unit {
         sprite.translate(vectorToEnemy.x, vectorToEnemy.y);
     }
 
-    public void goBackToTower(ArrayList<Unit> units) {
-        vectorToTower.set(tower.getCenterPosition().add(0, tower.getRect().height / 2f).sub(getCenterPosition()));
+    public void goBackToHomeLocation(ArrayList<Unit> units) {
+        vectorToHomeLocation.set(
+                new Vector2(homeLocation).add(0, tower.getRect().height / 2f).sub(getCenterPosition()));
         //correctIfOverlap(vectorToTower, units);
 
         /*
           copied from SingleShot
          */
         float tmp_speed = (int) tower.getStat("speed").getValue() * Gdx.graphics.getDeltaTime();
-        vectorToTower.scl((float) Math.sqrt(
-                1 / ((vectorToTower.x * vectorToTower.x + vectorToTower.y * vectorToTower.y) / tmp_speed * tmp_speed)));
+        vectorToHomeLocation.scl((float) Math.sqrt(
+                1 / ((vectorToHomeLocation.x * vectorToHomeLocation.x + vectorToHomeLocation.y * vectorToHomeLocation.y) / tmp_speed * tmp_speed)));
 
-        sprite.translate(vectorToTower.x, vectorToTower.y);
+        sprite.translate(vectorToHomeLocation.x, vectorToHomeLocation.y);
     }
 
     /**
@@ -256,5 +261,21 @@ public abstract class Unit {
             units.remove(this);
             return;
         }
+    }
+
+    /**
+     * @return a copy of the home location
+     */
+    public Vector2 getHomeLocation() {
+        return new Vector2(homeLocation);
+    }
+
+    /**
+     * sets the home location
+     *
+     * @param homeLocation the new home location
+     */
+    public void setHomeLocation(final Vector2 homeLocation) {
+        this.homeLocation.set(homeLocation);
     }
 }
