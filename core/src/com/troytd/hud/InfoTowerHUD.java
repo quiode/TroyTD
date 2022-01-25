@@ -117,7 +117,7 @@ public class InfoTowerHUD extends SideHUD {
         table.add(upgradeDamageButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // range
         table.row();
-        final Label range = new Label("Range: ", game.skin);
+        final Label range = new Label("Tower Range: ", game.skin);
         table.add(range).colspan(3).left().padTop(10).padLeft(25);
 
         upgradeRangeButton = new ImageButton(game.skin, "upgrade");
@@ -221,9 +221,9 @@ public class InfoTowerHUD extends SideHUD {
                         .getLevel() + 1) * Tower.upgradeCost) return;
                 gameScreen.money -= (towerPlace.getTower().getStat("lifeDuration").getLevel() + 1) * Tower.upgradeCost;
                 towerPlace.getTower()
-                        .setStat("range2", new Stat<>("lifeDuration",
-                                                      (Integer) towerPlace.getTower().getStat("range2").getValue() + 1,
-                                                      towerPlace.getTower().getStat("lifeDuration").getLevel() + 1));
+                        .setStat("lifeDuration", new Stat<>("lifeDuration", (Integer) towerPlace.getTower()
+                                .getStat("range2")
+                                .getValue() + 1, towerPlace.getTower().getStat("lifeDuration").getLevel() + 1));
             }
         });
         lifeDurationAmount = new Label("0", game.skin);
@@ -232,7 +232,7 @@ public class InfoTowerHUD extends SideHUD {
         table.add(upgradelifeDurationButton).colspan(1).center().padTop(10).size(iconSize / 2f);
         // range2
         table.row();
-        final Label range2 = new Label("Range2: ", game.skin);
+        final Label range2 = new Label("Tactical Range: ", game.skin);
         table.add(range2).colspan(3).left().padTop(10).padLeft(25);
 
         upgradeRange2Button = new ImageButton(game.skin, "upgrade");

@@ -295,7 +295,7 @@ public class PlaceTowerHUD extends SideHUD {
         // range label
         table.row();
 
-        rangeLabel = new Label("Range:", game.skin);
+        rangeLabel = new Label("Tower Range:", game.skin);
         table.add(rangeLabel).colspan(3).left().padTop(10).padLeft(25);
 
         // range amount
@@ -345,7 +345,7 @@ public class PlaceTowerHUD extends SideHUD {
         // range2 label
         table.row();
 
-        range2Label = new Label("Range2:", game.skin);
+        range2Label = new Label("Tactical Range:", game.skin);
         table.add(range2Label).colspan(3).left().padTop(10).padLeft(25);
 
         // range2 amount
