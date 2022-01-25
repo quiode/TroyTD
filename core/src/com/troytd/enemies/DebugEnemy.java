@@ -16,7 +16,7 @@ public class DebugEnemy extends Enemy {
     public final static HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) Enemy.defaultStats.clone();
 
     static {
-        defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 50));
+        defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 500));
         defaultStats.put("maxHP", new Stat<>("maxHP", 500));
         defaultStats.put("worth", new Stat<>("worth", 10));
     }

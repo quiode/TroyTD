@@ -18,7 +18,7 @@ public class DebugWave extends Wave {
      */
     public DebugWave(TroyTD game, Vector2 mapDistortion, Vector2[] path, Map map) {
         super(game, mapDistortion,
-              new ArrayList<enemyAmount>(Collections.singleton(new enemyAmount(5, DebugEnemy.class))), path, map);
+              new ArrayList<enemyAmount>(Collections.singleton(new enemyAmount(50, DebugEnemy.class))), path, map);
     }
 
     public static Class<? extends Enemy>[] getEnemyList() {
