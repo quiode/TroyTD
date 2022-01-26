@@ -1,0 +1,313 @@
+{
+"metaData": {
+	"scopeDefaults": [
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ]
+	],
+	"previewCamPos": {
+		"x": 0.3289711,
+		"y": -0.080333516
+	},
+	"previewCamZoom": 0.3001892,
+	"bgImagePath": "",
+	"isGridVisible": true,
+	"bgImageIsInBack": true,
+	"bgImageSize": 10,
+	"gridSize": 1,
+	"particlePositionX": 0,
+	"particlePositionY": 0,
+	"resourcePaths": [
+		"/home/quio/Downloads/heart.png"
+	]
+},
+"emitters": [
+	{
+		"name": "default_emitter",
+		"modules": [
+			{
+				"class": "ParticleModuleWrapper",
+				"id": 0,
+				"x": 547,
+				"y": 82,
+				"module": {
+					"data": {
+						"class": "ParticleModule",
+						"index": 0
+					}
+				}
+			},
+			{
+				"class": "EmitterModuleWrapper",
+				"id": 1,
+				"x": -598,
+				"y": 127,
+				"module": {
+					"data": {
+						"class": "EmitterModule",
+						"index": 1,
+						"delay": 0,
+						"duration": 1,
+						"rate": 12
+					}
+				}
+			},
+			{
+				"class": "EmConfigModuleWrapper",
+				"id": 2,
+				"x": -854,
+				"y": 121,
+				"module": {
+					"data": {
+						"class": "EmConfigModule",
+						"index": 2,
+						"additive": false,
+						"isBlendAdd": false,
+						"attached": false,
+						"continuous": true,
+						"aligned": false,
+						"immortal": true
+					}
+				}
+			},
+			{
+				"class": "Vector2ModuleWrapper",
+				"id": 3,
+				"x": -178,
+				"y": 530,
+				"module": {
+					"data": {
+						"class": "Vector2Module",
+						"index": 3,
+						"x": 0,
+						"y": 0
+					}
+				}
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 4,
+				"x": -521,
+				"y": 475,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 4,
+						"min": -1,
+						"max": 1,
+						"distributed": false
+					}
+				}
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 5,
+				"x": -548,
+				"y": 693,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 5,
+						"min": 1,
+						"max": 1,
+						"distributed": false
+					}
+				}
+			},
+			{
+				"class": "StaticValueModuleWrapper",
+				"id": 6,
+				"x": -881,
+				"y": 633,
+				"module": {
+					"data": {
+						"class": "StaticValueModule",
+						"index": 6,
+						"value": 1
+					}
+				}
+			},
+			{
+				"class": "MathModuleWrapper",
+				"id": 7,
+				"x": -853,
+				"y": 411,
+				"module": {
+					"data": {
+						"class": "MathModule",
+						"index": 7,
+						"a": 0,
+						"b": -1,
+						"mathExpression": "multiply"
+					}
+				}
+			},
+			{
+				"class": "GradientColorModuleWrapper",
+				"id": 8,
+				"x": -201,
+				"y": -154,
+				"module": {
+					"data": {
+						"class": "GradientColorModule",
+						"index": 8,
+						"points": [
+							{
+								"r": 1,
+								"g": 0.18431373,
+								"b": 0,
+								"pos": 0
+							}
+						]
+					}
+				}
+			},
+			{
+				"class": "DynamicRangeModuleWrapper",
+				"id": 9,
+				"x": -836,
+				"y": -174,
+				"module": {
+					"data": {
+						"class": "DynamicRangeModule",
+						"index": 9,
+						"points": [
+							{
+								"x": 0.1345682,
+								"y": 0.59608
+							},
+							{
+								"x": 0.49371836,
+								"y": 0.42329064
+							},
+							{
+								"x": 0.8800335,
+								"y": 0.6864184
+							},
+							{
+								"x": 1,
+								"y": 0.2211429
+							}
+						],
+						"lowMin": 0,
+						"lowMax": 0,
+						"highMin": 1,
+						"highMax": 1
+					}
+				},
+				"lowEquals": true,
+				"lowMirror": false,
+				"highEquals": true,
+				"highMirror": false
+			},
+			{
+				"class": "TextureModuleWrapper",
+				"id": 10,
+				"x": -211,
+				"y": 210,
+				"module": {
+					"data": {
+						"class": "TextureModule",
+						"index": 10,
+						"regionName": "heart"
+					}
+				},
+				"filePath": "/home/quio/Downloads/heart.png",
+				"regionName": "heart"
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 11,
+				"x": 72,
+				"y": 80,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 11,
+						"min": 1,
+						"max": 2,
+						"distributed": false
+					}
+				}
+			}
+		],
+		"connections": [
+			{
+				"moduleFrom": 2,
+				"moduleTo": 1,
+				"slotTo": 3
+			},
+			{
+				"moduleFrom": 3,
+				"slotTo": 3
+			},
+			{
+				"moduleFrom": 4,
+				"moduleTo": 3
+			},
+			{
+				"moduleFrom": 5,
+				"moduleTo": 3,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 6,
+				"moduleTo": 4
+			},
+			{
+				"moduleFrom": 6,
+				"moduleTo": 5
+			},
+			{
+				"moduleFrom": 6,
+				"moduleTo": 7
+			},
+			{
+				"moduleFrom": 7,
+				"moduleTo": 4,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 7,
+				"moduleTo": 5,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 8,
+				"slotTo": 9
+			},
+			{
+				"moduleFrom": 9,
+				"slotTo": 13
+			},
+			{
+				"moduleFrom": 10,
+				"slotTo": 2
+			},
+			{
+				"moduleFrom": 11,
+				"slotTo": 4
+			}
+		],
+		"groups": [
+			{
+				"text": "Offset",
+				"modules": [ 7, 5, 6, 4, 3 ],
+				"color": -1.3926823E38
+			},
+			{
+				"text": "Emitter",
+				"modules": [ 2, 1 ],
+				"color": -4.5872366E37
+			}
+		]
+	}
+]
+}
