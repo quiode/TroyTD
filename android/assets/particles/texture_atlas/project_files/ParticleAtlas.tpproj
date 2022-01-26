@@ -1,6 +1,6 @@
 name=ParticlePack
 filename=
-output=../../../../../../../../../media/quio/HDD/GitHub/TroyTD/android/assets/particles/texture_atlas/project_files/Atlas
+output=../../../../../../../../../media/quio/HDD/GitHub/TroyTD/android/assets/particles/texture_atlas
 
 alias=true
 alphaThreshold=0
@@ -32,7 +32,7 @@ limitMemory=true
 useIndexes=true
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:../../assets/white_plus.png,type:Input,regionName:null}]
+inputFiles=[{path:../../assets/white_plus.png,type:Input,regionName:null},{path:../../../../../../../../../media/quio/HDD/GitHub/TroyTD/android/assets/particles/assets/white_pixel.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 

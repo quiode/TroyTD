@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Stat;
+import com.troytd.maps.Map;
 import com.troytd.towers.units.DebugUnit;
 
 import java.util.HashMap;
@@ -23,8 +24,8 @@ public class DebugTower5 extends Tower {
         defaultStats.put("speed", new Stat("speed", 100));
     }
 
-    public DebugTower5(TroyTD game, Vector2 position, Vector2 distortion) {
+    public DebugTower5(TroyTD game, Vector2 position, Vector2 distortion, Map map) {
         super(game, position, game.assetManager.get("towers/DebugTower5.png", Texture.class), "DebugTower5", distortion,
-              null, DebugUnit.class);
+              null, DebugUnit.class, map);
     }
 }

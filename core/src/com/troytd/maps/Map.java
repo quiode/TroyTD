@@ -72,6 +72,7 @@ public abstract class Map implements Loadable {
     public Vector2 mapDistortion;
     // particles
     public ParticleEffectDescriptor HealingEffectDescriptor;
+    public ParticleEffectDescriptor UnitSpawnEffectDescriptor;
     /**
      * instance of the current wave
      */
@@ -181,7 +182,7 @@ public abstract class Map implements Loadable {
         updateEnemies(stage, gameScreen);
         drawEnemies();
         if (currentWave != null) updateTowers(currentWave.getEnemies());
-        drawTowers();
+        drawTowers(gameScreen);
         if (currentWave != null) updateUnits(gameScreen);
         drawUnits(gameScreen);
         updateShots(delta, gameScreen);
@@ -226,6 +227,9 @@ public abstract class Map implements Loadable {
         // make particles
         HealingEffectDescriptor = new ParticleEffectDescriptor(
                 Gdx.files.internal(TroyTD.Constants.ParticleDirectory + "Healing.p"),
+                game.assetManager.get(TroyTD.Constants.ParticlePackAtlasPath, TextureAtlas.class));
+        UnitSpawnEffectDescriptor = new ParticleEffectDescriptor(
+                Gdx.files.internal(TroyTD.Constants.ParticleDirectory + "UnitSpawn.p"),
                 game.assetManager.get(TroyTD.Constants.ParticlePackAtlasPath, TextureAtlas.class));
     }
 
@@ -286,10 +290,10 @@ public abstract class Map implements Loadable {
         return null;
     }
 
-    private void drawTowers() {
+    private void drawTowers(GameScreen gameScreen) {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.getTower() != null) {
-                towerPlace.getTower().draw();
+                towerPlace.getTower().draw(gameScreen);
             }
         }
     }

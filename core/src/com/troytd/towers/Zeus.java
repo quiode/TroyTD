@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Stat;
+import com.troytd.maps.Map;
 import com.troytd.towers.shots.single.DebugShot;
 
 import java.util.HashMap;
@@ -22,7 +23,8 @@ public class Zeus extends Tower {
     }
 
 
-    public Zeus(TroyTD game, Vector2 position, Texture texture, String name, TowerTypes type, Vector2 distortion) {
-        super(game, position, new Texture("towers/Zeus.jpg"), "Zeus", distortion, DebugShot.class);
+    public Zeus(TroyTD game, Vector2 position, Texture texture, String name, TowerTypes type, Vector2 distortion,
+                Map map) {
+        super(game, position, new Texture("towers/Zeus.jpg"), "Zeus", distortion, DebugShot.class, map);
     }
 }

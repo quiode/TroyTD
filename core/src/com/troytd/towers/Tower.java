@@ -1,5 +1,6 @@
 package com.troytd.towers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -7,10 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.talosvfx.talos.runtime.ParticleEffectInstance;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Stat;
 import com.troytd.maps.Map;
+import com.troytd.screens.GameScreen;
 import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.connecting.ConnectingShot;
 import com.troytd.towers.shots.single.SingleShot;
@@ -44,6 +47,7 @@ public abstract class Tower {
     private final Vector2 centerPosition;
     private final HashMap<String, Stat> stats = new HashMap<>();
     private final Class<? extends Unit> unitClass;
+    private final ParticleEffectInstance unitSpawnEffect;
     public String name;
     public int kills = 0;
     public int totalDamage = 0;
@@ -54,17 +58,17 @@ public abstract class Tower {
     private long lastShot = TimeUtils.millis();
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
-                 Class<? extends Shot> shotClass) {
-        this(game, position, texture, name, distortion, shotClass, null);
+                 Class<? extends Shot> shotClass, Map map) {
+        this(game, position, texture, name, distortion, shotClass, null, map);
     }
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name,
-                 Class<? extends Unit> unitClass, Vector2 distortion) {
-        this(game, position, texture, name, distortion, null, unitClass);
+                 Class<? extends Unit> unitClass, Vector2 distortion, Map map) {
+        this(game, position, texture, name, distortion, null, unitClass, map);
     }
 
     public Tower(final TroyTD game, Vector2 position, Texture texture, final String name, Vector2 distortion,
-                 Class<? extends Shot> shotClass, Class<? extends Unit> unitClass) {
+                 Class<? extends Shot> shotClass, Class<? extends Unit> unitClass, Map map) {
         TowerTypes towerType = getType();
 
         if (unitClass == null && towerType == TowerTypes.MELEE) {
@@ -92,6 +96,12 @@ public abstract class Tower {
                     position.x + towerSprite.getWidth() / 2f - game.settingPreference.getInteger("width") / 2f - 25,
                     position.y + towerSprite.getHeight() * 1.1f - game.settingPreference.getInteger("height") / 2f);
         }
+
+        // particle effects
+        unitSpawnEffect = map.UnitSpawnEffectDescriptor.createEffectInstance();
+        unitSpawnEffect.setPosition(centerPosition.x, centerPosition.y);
+        unitSpawnEffect.restart();
+        unitSpawnEffect.pause();
     }
 
     static public float getSize(TroyTD game) {
@@ -142,12 +152,13 @@ public abstract class Tower {
         return towerSprite.getBoundingRectangle();
     }
 
-    public void draw() {
+    public void draw(GameScreen gameScreen) {
         if (isSelected) {
             game.shapeDrawer.setColor(0.5f, 0.5f, 0.5f, 0.25f);
             game.shapeDrawer.filledCircle(getCenterPosition(), (int) getStat("range").getValue());
         }
         towerSprite.draw(game.batch);
+        unitSpawnEffect.render(gameScreen.defaultRenderer);
     }
 
     public Texture getTexture() {
@@ -194,6 +205,8 @@ public abstract class Tower {
 
     public void setPosition(Vector2 position) {
         towerSprite.setPosition(position.x, position.y);
+        updateCenterPosition();
+        unitSpawnEffect.setPosition(centerPosition.x, centerPosition.y);
     }
 
     public TowerTypes getType() {
@@ -232,6 +245,9 @@ public abstract class Tower {
                             units.add((Unit) ClassReflection.getConstructor(unitClass, TroyTD.class, Tower.class,
                                                                             Map.class).newInstance(game, this, map));
                             lastShot = TimeUtils.millis();
+                            // particles
+                            if (unitSpawnEffect.isPaused()) unitSpawnEffect.resume();
+                            unitSpawnEffect.restart();
                         } catch (ReflectionException e) {
                             e.printStackTrace();
                         }
@@ -239,6 +255,9 @@ public abstract class Tower {
                 }
                 break;
         }
+
+        // particles
+        unitSpawnEffect.update(Gdx.graphics.getDeltaTime());
     }
 
     private void updateCenterPosition() {

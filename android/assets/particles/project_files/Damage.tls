@@ -1,0 +1,237 @@
+{
+"metaData": {
+	"scopeDefaults": [
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ]
+	],
+	"previewCamPos": {
+		"x": -4.824555,
+		"y": -4.736833
+	},
+	"previewCamZoom": 5,
+	"bgImagePath": "",
+	"isGridVisible": true,
+	"bgImageIsInBack": true,
+	"bgImageSize": 10,
+	"gridSize": 50,
+	"particlePositionX": 0,
+	"particlePositionY": 0,
+	"resourcePaths": [
+		"/media/quio/HDD/GitHub/TroyTD/android/assets/particles/assets/white_pixel.png"
+	]
+},
+"emitters": [
+	{
+		"name": "center",
+		"modules": [
+			{
+				"class": "EmitterModuleWrapper",
+				"id": 0,
+				"x": -223.63202,
+				"y": -1558.791,
+				"module": {
+					"data": {
+						"class": "EmitterModule",
+						"index": 0,
+						"delay": 0,
+						"duration": 2,
+						"rate": 500
+					}
+				}
+			},
+			{
+				"class": "ParticleModuleWrapper",
+				"id": 1,
+				"x": 441,
+				"y": -1919,
+				"module": {
+					"data": {
+						"class": "ParticleModule",
+						"index": 1
+					}
+				}
+			},
+			{
+				"class": "EmConfigModuleWrapper",
+				"id": 2,
+				"x": -467.63202,
+				"y": -1564.791,
+				"module": {
+					"data": {
+						"class": "EmConfigModule",
+						"index": 2,
+						"additive": false,
+						"isBlendAdd": false,
+						"attached": false,
+						"continuous": false,
+						"aligned": false,
+						"immortal": true
+					}
+				}
+			},
+			{
+				"class": "TextureModuleWrapper",
+				"id": 3,
+				"x": 145,
+				"y": -1695,
+				"module": {
+					"data": {
+						"class": "TextureModule",
+						"index": 3,
+						"regionName": "white_pixel"
+					}
+				},
+				"filePath": "/media/quio/HDD/GitHub/TroyTD/android/assets/particles/assets/white_pixel.png",
+				"regionName": "white_pixel"
+			},
+			{
+				"class": "RadToCartModuleWrapper",
+				"id": 4,
+				"x": 101,
+				"y": -1972,
+				"module": {
+					"data": {
+						"class": "RadToCartModule",
+						"index": 4
+					}
+				}
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 5,
+				"x": -219,
+				"y": -2035,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 5,
+						"min": 0,
+						"max": 360,
+						"distributed": false
+					}
+				}
+			},
+			{
+				"class": "DynamicRangeModuleWrapper",
+				"id": 7,
+				"x": -836,
+				"y": -1871,
+				"module": {
+					"data": {
+						"class": "DynamicRangeModule",
+						"index": 7,
+						"points": [
+							{
+								"x": 0,
+								"y": 1
+							},
+							{
+								"x": 1,
+								"y": 0
+							}
+						],
+						"lowMin": 0,
+						"lowMax": 0,
+						"highMin": 1,
+						"highMax": 1
+					}
+				},
+				"lowEquals": true,
+				"lowMirror": false,
+				"highEquals": true,
+				"highMirror": false
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 8,
+				"x": -283,
+				"y": -2274,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 8,
+						"min": 0,
+						"max": 10,
+						"distributed": false
+					}
+				}
+			},
+			{
+				"class": "GradientColorModuleWrapper",
+				"id": 9,
+				"x": 140,
+				"y": -2200,
+				"module": {
+					"data": {
+						"class": "GradientColorModule",
+						"index": 9,
+						"points": [
+							{
+								"r": 1,
+								"g": 0.26666668,
+								"b": 0.101960786,
+								"pos": 0
+							}
+						]
+					}
+				}
+			}
+		],
+		"connections": [
+			{
+				"moduleFrom": 2,
+				"slotTo": 3
+			},
+			{
+				"moduleFrom": 3,
+				"moduleTo": 1,
+				"slotTo": 2
+			},
+			{
+				"moduleFrom": 4,
+				"moduleTo": 1,
+				"slotTo": 14
+			},
+			{
+				"moduleFrom": 5,
+				"moduleTo": 4
+			},
+			{
+				"moduleFrom": 7,
+				"moduleTo": 1,
+				"slotTo": 13
+			},
+			{
+				"moduleFrom": 8,
+				"moduleTo": 4,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 9,
+				"moduleTo": 1,
+				"slotTo": 9
+			},
+			{
+				"moduleFrom": 5,
+				"moduleTo": 1,
+				"slotTo": 7
+			}
+		],
+		"groups": [
+			{
+				"text": "Emitter",
+				"modules": [ 0, 2 ],
+				"color": -1.3926823E38
+			}
+		]
+	}
+]
+}

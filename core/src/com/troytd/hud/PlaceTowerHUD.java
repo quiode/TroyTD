@@ -418,8 +418,8 @@ public class PlaceTowerHUD extends SideHUD {
                 try {
                     towerPlace.setTower(
                             (Tower) ClassReflection.getConstructor(getSelectedTower(), TroyTD.class, Vector2.class,
-                                                                   Vector2.class)
-                                    .newInstance(game, towerPlace.place, map.mapDistortion), game);
+                                                                   Vector2.class, Map.class)
+                                    .newInstance(game, towerPlace.place, map.mapDistortion, map), game);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Dialog errorDialog = new Dialog("", game.skin, "error") {
