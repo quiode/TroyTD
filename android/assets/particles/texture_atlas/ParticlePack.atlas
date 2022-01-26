@@ -1,0 +1,13 @@
+
+ParticlePack.png
+size: 1024, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+white_plus
+  rotate: false
+  xy: 2, 2
+  size: 555, 555
+  orig: 555, 555
+  offset: 0, 0
+  index: -1

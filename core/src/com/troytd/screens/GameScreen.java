@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.talosvfx.talos.runtime.render.SpriteBatchParticleRenderer;
 import com.troytd.game.TroyTD;
 import com.troytd.hud.InfoTowerHUD;
 import com.troytd.hud.PlaceTowerHUD;
@@ -35,6 +37,7 @@ public class GameScreen implements Screen {
     public final ImageButton pauseButton;
     // stage for this screen
     public final Stage stage;
+    public final SpriteBatchParticleRenderer defaultRenderer = new SpriteBatchParticleRenderer();
     private final TroyTD game;
     private final Container<ImageButton> container;
     // camera and viewport
@@ -109,6 +112,12 @@ public class GameScreen implements Screen {
         TopHUD.loadAssets(game);
         InfoTowerHUD.loadAssets(game);
         PlaceTowerHUD.loadAssets(game);
+
+        // Load assets
+        loadParticles();
+
+        // particle renderer
+        defaultRenderer.setBatch(game.batch);
     }
 
     /**
@@ -266,5 +275,10 @@ public class GameScreen implements Screen {
         game.shapeDrawer.setColor(0.3f, 0.3f, 0.3f, 0.25f);
         game.shapeDrawer.filledCircle(currentlyOpenHUD.getTowerPlace().getTower().getHomeLocation(),
                                       (int) currentlyOpenHUD.getTowerPlace().getTower().getStat("range3").getValue());
+    }
+
+    public void loadParticles() {
+        // load all textures
+        game.assetManager.load(TroyTD.Constants.ParticlePackAtlasPath, TextureAtlas.class);
     }
 }

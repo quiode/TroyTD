@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1920"
+   height="1080"
+   viewBox="0 0 1920 1080"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="plus.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.10892022"
+     inkscape:cx="1014.504"
+     inkscape:cy="-169.84908"
+     inkscape:window-width="948"
+     inkscape:window-height="1032"
+     inkscape:window-x="964"
+     inkscape:window-y="40"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g1036"
+       style="fill:#ffffff"
+       inkscape:export-filename="/home/quio/Desktop/green2_plus.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <rect
+         style="fill:#ffffff;stroke-width:6.09005;stroke-linecap:round;stroke-linejoin:round"
+         id="rect846"
+         width="81.703964"
+         height="555.16467"
+         x="772.90576"
+         y="401.46179" />
+      <rect
+         style="fill:#ffffff;stroke-width:6.09005;stroke-linecap:round;stroke-linejoin:round"
+         id="rect846-3"
+         width="81.703964"
+         height="555.16467"
+         x="638.19214"
+         y="-1091.3401"
+         transform="rotate(90)" />
+    </g>
+  </g>
+</svg>

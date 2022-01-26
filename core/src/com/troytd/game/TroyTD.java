@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.talosvfx.talos.runtime.render.SpriteBatchParticleRenderer;
 import com.troytd.screens.MainMenuScreen;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -104,5 +105,10 @@ public class TroyTD extends Game {
         font.dispose();
         assetManager.dispose();
         music.dispose();
+    }
+
+    public static final class Constants {
+        public static final String ParticlePackAtlasPath = "particles/texture_atlas/ParticlePack.atlas";
+        public static final String ParticleDirectory = "particles/";
     }
 }

@@ -7,8 +7,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.talosvfx.talos.runtime.ParticleEffectInstance;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
+import com.troytd.maps.Map;
 import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 
@@ -27,11 +29,12 @@ public abstract class Unit {
     private final Vector2 vectorToEnemy = new Vector2();
     private final Vector2 vectorToHomeLocation = new Vector2();
     private final ProgressBar healthBar;
+    private final ParticleEffectInstance healingEffect;
     private int hp;
     private Enemy target;
 
 
-    public Unit(UnitType type, final TroyTD game, Tower tower) {
+    public Unit(UnitType type, final TroyTD game, Tower tower, Map map) {
         this.type = type;
         this.game = game;
         this.tower = tower;
@@ -51,14 +54,19 @@ public abstract class Unit {
         healthBar.setValue(hp);
         healthBar.setSize(sprite.getWidth(), healthBar.getHeight());
         healthBar.setVisible(false);
+
+        // particles
+        healingEffect = map.HealingEffectDescriptor.createEffectInstance();
     }
 
-    public void draw() {
+    public void draw(GameScreen gameScreen) {
         sprite.draw(game.batch);
         if (healthBar.isVisible()) healthBar.draw(game.batch, 1);
+        // particles
+        if (!healingEffect.isPaused()) healingEffect.render(gameScreen.defaultRenderer);
     }
 
-    public void update(ArrayList<Unit> units, ArrayList<Enemy> enemies, GameScreen gameScreen) {
+    public void update(ArrayList<Unit> units, ArrayList<Enemy> enemies, GameScreen gameScreen, Map map) {
         if (hp <= 0) {
             units.remove(this);
             if (target != null) target.setTargeted(false);
@@ -100,12 +108,17 @@ public abstract class Unit {
         }
 
         // heal if near tower
-        if (tower.getRect()
-                .getPosition(vectorToHomeLocation)
-                .dst(sprite.getBoundingRectangle().getPosition(position)) < Tower.getSize(game) / 5f) {
+        if (getHomeLocation().dst(sprite.getBoundingRectangle().getPosition(position)) < Tower.getSize(game) / 5f) {
             if (hp < (Integer) tower.getStat("maxHP").getValue()) {
-                hp += MathUtils.round((Integer) tower.getStat("maxHP").getValue() * 0.025f + 0.5f);
+                hp += MathUtils.round((Integer) tower.getStat("maxHP").getValue() * 0.001f + 0.5f);
+                if (healingEffect.isPaused()) healingEffect.resume();
+            } else {
+                healingEffect.restart();
+                healingEffect.pause();
             }
+        } else {
+            healingEffect.restart();
+            healingEffect.pause();
         }
 
         // health bar
@@ -126,6 +139,10 @@ public abstract class Unit {
                 healthBar.setVisible(false);
             }
         }
+
+        // particles
+        healingEffect.setPosition(getCenterPosition().x, getCenterPosition().y);
+        healingEffect.update(Gdx.graphics.getDeltaTime());
     }
 
     public Tower getTower() {

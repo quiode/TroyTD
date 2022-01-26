@@ -1,0 +1,400 @@
+{
+"metaData": {
+	"scopeDefaults": [
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ],
+		[ 1, 1, 1, 1 ]
+	],
+	"previewCamPos": {
+		"x": -2.0594063,
+		"y": -0.39901137
+	},
+	"previewCamZoom": 2,
+	"bgImagePath": "",
+	"isGridVisible": true,
+	"bgImageIsInBack": true,
+	"bgImageSize": 10,
+	"gridSize": 1,
+	"particlePositionX": 0,
+	"particlePositionY": 0,
+	"resourcePaths": []
+},
+"emitters": [
+	{
+		"name": "default_emitter",
+		"modules": [
+			{
+				"class": "EmitterModuleWrapper",
+				"id": 1,
+				"x": -288,
+				"y": 186,
+				"module": {
+					"data": {
+						"class": "EmitterModule",
+						"index": 1,
+						"delay": 0,
+						"duration": 1,
+						"rate": 4
+					}
+				}
+			},
+			{
+				"class": "EmConfigModuleWrapper",
+				"id": 2,
+				"x": -536.9999,
+				"y": 179,
+				"module": {
+					"data": {
+						"class": "EmConfigModule",
+						"index": 2,
+						"additive": false,
+						"isBlendAdd": false,
+						"attached": false,
+						"continuous": true,
+						"aligned": false,
+						"immortal": false
+					}
+				}
+			},
+			{
+				"class": "ParticleModuleWrapper",
+				"id": 3,
+				"x": 868,
+				"y": -398,
+				"module": {
+					"data": {
+						"class": "ParticleModule",
+						"index": 3
+					}
+				}
+			},
+			{
+				"class": "TextureModuleWrapper",
+				"id": 4,
+				"x": 122,
+				"y": -2,
+				"module": {
+					"data": {
+						"class": "TextureModule",
+						"index": 4,
+						"regionName": "white_plus"
+					}
+				},
+				"filePath": "/home/quio/Desktop/white_plus.png",
+				"regionName": "white_plus"
+			},
+			{
+				"class": "GradientColorModuleWrapper",
+				"id": 5,
+				"x": -154,
+				"y": -220,
+				"module": {
+					"data": {
+						"class": "GradientColorModule",
+						"index": 5,
+						"points": [
+							{
+								"r": 0.2,
+								"g": 1,
+								"b": 0,
+								"pos": 0
+							}
+						]
+					}
+				}
+			},
+			{
+				"class": "DynamicRangeModuleWrapper",
+				"id": 6,
+				"x": -41,
+				"y": -506,
+				"module": {
+					"data": {
+						"class": "DynamicRangeModule",
+						"index": 6,
+						"points": [
+							{
+								"x": 0,
+								"y": 1
+							},
+							{
+								"x": 0.50482553,
+								"y": 0
+							},
+							{
+								"x": 1,
+								"y": 1
+							}
+						],
+						"lowMin": 0,
+						"lowMax": 0,
+						"highMin": 1,
+						"highMax": 1
+					}
+				},
+				"lowEquals": true,
+				"lowMirror": false,
+				"highEquals": true,
+				"highMirror": false
+			},
+			{
+				"class": "Vector2ModuleWrapper",
+				"id": 7,
+				"x": 731.3622,
+				"y": -931.8143,
+				"module": {
+					"data": {
+						"class": "Vector2Module",
+						"index": 7,
+						"x": 0,
+						"y": 0
+					}
+				}
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 8,
+				"x": 238.90332,
+				"y": -1008.44714,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 8,
+						"min": -1,
+						"max": 1,
+						"distributed": false
+					}
+				}
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 9,
+				"x": 286.90332,
+				"y": -1216.4474,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 9,
+						"min": -1,
+						"max": 1,
+						"distributed": false
+					}
+				}
+			},
+			{
+				"class": "StaticValueModuleWrapper",
+				"id": 10,
+				"titleOverride": "AOE",
+				"x": -69,
+				"y": -956,
+				"module": {
+					"data": {
+						"class": "StaticValueModule",
+						"index": 10,
+						"value": 1.5
+					}
+				}
+			},
+			{
+				"class": "MathModuleWrapper",
+				"id": 11,
+				"x": -71.09668,
+				"y": -1233.4474,
+				"module": {
+					"data": {
+						"class": "MathModule",
+						"index": 11,
+						"a": 0,
+						"b": -1,
+						"mathExpression": "multiply"
+					}
+				}
+			},
+			{
+				"class": "StaticValueModuleWrapper",
+				"id": 12,
+				"x": 501,
+				"y": -7,
+				"module": {
+					"data": {
+						"class": "StaticValueModule",
+						"index": 12,
+						"value": 1
+					}
+				}
+			},
+			{
+				"class": "MathModuleWrapper",
+				"id": 13,
+				"titleOverride": "SizeChanger",
+				"x": 486,
+				"y": -512,
+				"module": {
+					"data": {
+						"class": "MathModule",
+						"index": 13,
+						"a": 0,
+						"b": 0,
+						"mathExpression": "multiply"
+					}
+				}
+			},
+			{
+				"class": "StaticValueModuleWrapper",
+				"id": 14,
+				"titleOverride": "GameSize",
+				"x": 222,
+				"y": -690,
+				"module": {
+					"data": {
+						"class": "StaticValueModule",
+						"index": 14,
+						"value": 5
+					}
+				}
+			},
+			{
+				"class": "MathModuleWrapper",
+				"id": 15,
+				"titleOverride": "SizeChanger",
+				"x": 533.3622,
+				"y": -1190.8141,
+				"module": {
+					"data": {
+						"class": "MathModule",
+						"index": 15,
+						"a": 0,
+						"b": 0,
+						"mathExpression": "multiply"
+					}
+				}
+			},
+			{
+				"class": "MathModuleWrapper",
+				"id": 16,
+				"titleOverride": "SizeChanger",
+				"x": 524.3622,
+				"y": -951.8143,
+				"module": {
+					"data": {
+						"class": "MathModule",
+						"index": 16,
+						"a": 0,
+						"b": 0,
+						"mathExpression": "multiply"
+					}
+				}
+			}
+		],
+		"connections": [
+			{
+				"moduleFrom": 2,
+				"moduleTo": 1,
+				"slotTo": 3
+			},
+			{
+				"moduleFrom": 4,
+				"moduleTo": 3,
+				"slotTo": 2
+			},
+			{
+				"moduleFrom": 5,
+				"moduleTo": 3,
+				"slotTo": 9
+			},
+			{
+				"moduleFrom": 10,
+				"moduleTo": 11
+			},
+			{
+				"moduleFrom": 10,
+				"moduleTo": 8,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 10,
+				"moduleTo": 9,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 11,
+				"moduleTo": 8
+			},
+			{
+				"moduleFrom": 12,
+				"moduleTo": 3,
+				"slotTo": 4
+			},
+			{
+				"moduleFrom": 14,
+				"moduleTo": 13,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 6,
+				"moduleTo": 13
+			},
+			{
+				"moduleFrom": 13,
+				"moduleTo": 3,
+				"slotTo": 13
+			},
+			{
+				"moduleFrom": 7,
+				"moduleTo": 3,
+				"slotTo": 14
+			},
+			{
+				"moduleFrom": 14,
+				"moduleTo": 15,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 14,
+				"moduleTo": 16,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 9,
+				"moduleTo": 16
+			},
+			{
+				"moduleFrom": 8,
+				"moduleTo": 15
+			},
+			{
+				"moduleFrom": 15,
+				"moduleTo": 7
+			},
+			{
+				"moduleFrom": 16,
+				"moduleTo": 7,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 11,
+				"moduleTo": 9
+			}
+		],
+		"groups": [
+			{
+				"text": "Emitter",
+				"modules": [ 1, 2 ],
+				"color": -4.9875627E37
+			},
+			{
+				"text": "GROUP NAME",
+				"modules": [ 10, 15, 7, 16, 8, 11, 9 ],
+				"color": -1.3926823E38
+			}
+		]
+	}
+]
+}

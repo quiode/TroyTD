@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Stat;
+import com.troytd.maps.Map;
 import com.troytd.towers.shots.Shot;
 import com.troytd.towers.shots.connecting.ConnectingShot;
 import com.troytd.towers.shots.single.SingleShot;
@@ -206,7 +207,7 @@ public abstract class Tower {
         return towerType;
     }
 
-    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots, ArrayList<Unit> units) {
+    public void update(ArrayList<Enemy> enemies, final ArrayList<Shot> shots, ArrayList<Unit> units, Map map) {
         if (enemies.isEmpty()) return;
 
         switch (getType()) {
@@ -228,8 +229,8 @@ public abstract class Tower {
                 if (TimeUtils.timeSinceMillis(lastShot) > 1f / ((int) getStat("atspeed").getValue() / 100000f)) {
                     if (unitsOfThisTower < (int) getStat("unitAmount").getValue()) {
                         try {
-                            units.add((Unit) ClassReflection.getConstructor(unitClass, TroyTD.class, Tower.class)
-                                    .newInstance(game, this));
+                            units.add((Unit) ClassReflection.getConstructor(unitClass, TroyTD.class, Tower.class,
+                                                                            Map.class).newInstance(game, this, map));
                             lastShot = TimeUtils.millis();
                         } catch (ReflectionException e) {
                             e.printStackTrace();

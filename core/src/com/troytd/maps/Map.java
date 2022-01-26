@@ -1,14 +1,17 @@
 package com.troytd.maps;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.talosvfx.talos.runtime.ParticleEffectDescriptor;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Loadable;
@@ -67,6 +70,8 @@ public abstract class Map implements Loadable {
      * the vector by which the map is scaled
      */
     public Vector2 mapDistortion;
+    // particles
+    public ParticleEffectDescriptor HealingEffectDescriptor;
     /**
      * instance of the current wave
      */
@@ -178,7 +183,7 @@ public abstract class Map implements Loadable {
         if (currentWave != null) updateTowers(currentWave.getEnemies());
         drawTowers();
         if (currentWave != null) updateUnits(gameScreen);
-        drawUnits();
+        drawUnits(gameScreen);
         updateShots(delta, gameScreen);
         drawShots();
     }
@@ -217,6 +222,11 @@ public abstract class Map implements Loadable {
         } catch (ReflectionException e) {
             e.printStackTrace();
         }
+
+        // make particles
+        HealingEffectDescriptor = new ParticleEffectDescriptor(
+                Gdx.files.internal(TroyTD.Constants.ParticleDirectory + "Healing.p"),
+                game.assetManager.get(TroyTD.Constants.ParticlePackAtlasPath, TextureAtlas.class));
     }
 
     /**
@@ -293,7 +303,7 @@ public abstract class Map implements Loadable {
     private void updateTowers(ArrayList<Enemy> enemies) {
         for (TowerPlace towerPlace : towerPlaces) {
             if (towerPlace.getTower() != null) {
-                towerPlace.getTower().update(enemies, shots, units);
+                towerPlace.getTower().update(enemies, shots, units, this);
             }
         }
     }
@@ -343,15 +353,15 @@ public abstract class Map implements Loadable {
         return currentWaveIndex;
     }
 
-    public void drawUnits() {
+    public void drawUnits(GameScreen gameScreen) {
         for (Unit unit : units) {
-            unit.draw();
+            unit.draw(gameScreen);
         }
     }
 
     public void updateUnits(GameScreen gameScreen) {
         for (Unit unit : units) {
-            unit.update(units, currentWave.getEnemies(), gameScreen);
+            unit.update(units, currentWave.getEnemies(), gameScreen, this);
         }
     }
 }
