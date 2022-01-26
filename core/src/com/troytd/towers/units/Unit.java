@@ -30,6 +30,7 @@ public abstract class Unit {
     private final Vector2 vectorToHomeLocation = new Vector2();
     private final ProgressBar healthBar;
     private final ParticleEffectInstance healingEffect;
+    private final ParticleEffectInstance damageEffect;
     private int hp;
     private Enemy target;
 
@@ -57,6 +58,8 @@ public abstract class Unit {
 
         // particles
         healingEffect = map.HealingEffectDescriptor.createEffectInstance();
+        damageEffect = map.DamageEffectDescriptor.createEffectInstance();
+        damageEffect.pause();
     }
 
     public void draw(GameScreen gameScreen) {
@@ -64,6 +67,7 @@ public abstract class Unit {
         if (healthBar.isVisible()) healthBar.draw(game.batch, 1);
         // particles
         if (!healingEffect.isPaused()) healingEffect.render(gameScreen.defaultRenderer);
+        damageEffect.render(gameScreen.defaultRenderer);
     }
 
     public void update(ArrayList<Unit> units, ArrayList<Enemy> enemies, GameScreen gameScreen, Map map) {
@@ -143,6 +147,8 @@ public abstract class Unit {
         // particles
         healingEffect.setPosition(getCenterPosition().x, getCenterPosition().y);
         healingEffect.update(Gdx.graphics.getDeltaTime());
+        damageEffect.setPosition(getCenterPosition().x, getCenterPosition().y);
+        damageEffect.update(Gdx.graphics.getDeltaTime());
     }
 
     public Tower getTower() {
@@ -247,6 +253,12 @@ public abstract class Unit {
 
     public void takeDamage(int damage, ArrayList<Unit> units) {
         hp -= damage;
+
+        // particles
+        damageEffect.setPosition(getCenterPosition().x, getCenterPosition().y);
+        if (damageEffect.isPaused()) damageEffect.resume();
+        if (damageEffect.isComplete()) damageEffect.restart();
+
         if (hp <= 0) {
             if (target != null) target.setTargeted(false);
             units.remove(this);
