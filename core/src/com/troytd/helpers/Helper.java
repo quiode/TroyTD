@@ -17,7 +17,7 @@ public class Helper {
     public static int getClosest(Vector2 center, Vector2[] points) {
         int shortestDistance = 0;
         for (int i = 0; i < points.length; i++) {
-            if (center.dst(points[i]) < center.dst(points[shortestDistance])) {
+            if (center.dst(points[i]) < center.dst(points[shortestDistance]) && center != points[i]) {
                 shortestDistance = i;
             }
         }

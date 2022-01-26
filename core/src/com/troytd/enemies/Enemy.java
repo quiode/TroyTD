@@ -17,10 +17,7 @@ import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 import com.troytd.towers.units.Unit;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * an enemy with its texture, health and other related properties

@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.screens.GameScreen;
@@ -85,16 +83,9 @@ public abstract class ConnectingShot implements Shot {
                 (this.enemies[0].getRectangle().x + this.enemies[0].getRectangle().width / 2f) - x + width / 2f,
                 (this.enemies[0].getRectangle().y + this.enemies[0].getRectangle().height / 2f) - y);
         float height = vectorToTarget.len();
-        try {
-            if (vectorToTarget.len() > (Integer) ClassReflection.getField(tower.getClass(), "range").get(null)) {
-                shots.remove(this);
-                return;
-            }
-        } catch (ReflectionException e) {
-            if (vectorToTarget.len() > (int) Tower.defaultStats.get("range").getValue()) {
-                shots.remove(this);
-                return;
-            }
+        if (vectorToTarget.len() > (int) tower.getStat("range").getValue()) {
+            shots.remove(this);
+            return;
         }
 
         sprites[0].setOrigin(width / 2f, 0);
@@ -112,14 +103,8 @@ public abstract class ConnectingShot implements Shot {
                     (this.enemies[i].getRectangle().x + this.enemies[i].getRectangle().width / 2f) - x + width / 2f,
                     (this.enemies[i].getRectangle().y + this.enemies[i].getRectangle().height / 2f) - y);
             height = vectorToTarget.len();
-            try {
-                if (vectorToTarget.len() > (Integer) ClassReflection.getField(tower.getClass(), "range2").get(null)) {
-                    break;
-                }
-            } catch (ReflectionException e) {
-                if (vectorToTarget.len() > (int) Tower.defaultStats.get("range2").getValue()) {
-                    break;
-                }
+            if (vectorToTarget.len() > (int) tower.getStat("range2").getValue()) {
+                break;
             }
 
             sprites[i].setOrigin(width / 2f, 0);
