@@ -43,15 +43,15 @@
 						"index": 0,
 						"delay": 0,
 						"duration": 2,
-						"rate": 500
+						"rate": 1000
 					}
 				}
 			},
 			{
 				"class": "ParticleModuleWrapper",
 				"id": 1,
-				"x": 441,
-				"y": -1919,
+				"x": 294.19965,
+				"y": -1921.5166,
 				"module": {
 					"data": {
 						"class": "ParticleModule",
@@ -62,8 +62,8 @@
 			{
 				"class": "EmConfigModuleWrapper",
 				"id": 2,
-				"x": -467.63202,
-				"y": -1564.791,
+				"x": -614.4324,
+				"y": -1567.3076,
 				"module": {
 					"data": {
 						"class": "EmConfigModule",
@@ -80,8 +80,8 @@
 			{
 				"class": "TextureModuleWrapper",
 				"id": 3,
-				"x": 145,
-				"y": -1695,
+				"x": -1.800354,
+				"y": -1697.5166,
 				"module": {
 					"data": {
 						"class": "TextureModule",
@@ -95,8 +95,8 @@
 			{
 				"class": "RadToCartModuleWrapper",
 				"id": 4,
-				"x": 101,
-				"y": -1972,
+				"x": -45.800354,
+				"y": -1974.5166,
 				"module": {
 					"data": {
 						"class": "RadToCartModule",
@@ -107,8 +107,8 @@
 			{
 				"class": "RandomRangeModuleWrapper",
 				"id": 5,
-				"x": -219,
-				"y": -2035,
+				"x": -365.80035,
+				"y": -2037.5166,
 				"module": {
 					"data": {
 						"class": "RandomRangeModule",
@@ -122,8 +122,8 @@
 			{
 				"class": "DynamicRangeModuleWrapper",
 				"id": 7,
-				"x": -836,
-				"y": -1871,
+				"x": -982.80035,
+				"y": -1873.5166,
 				"module": {
 					"data": {
 						"class": "DynamicRangeModule",
@@ -131,7 +131,7 @@
 						"points": [
 							{
 								"x": 0,
-								"y": 1
+								"y": 0.21324074
 							},
 							{
 								"x": 1,
@@ -152,14 +152,14 @@
 			{
 				"class": "RandomRangeModuleWrapper",
 				"id": 8,
-				"x": -283,
-				"y": -2274,
+				"x": -429.80035,
+				"y": -2276.5166,
 				"module": {
 					"data": {
 						"class": "RandomRangeModule",
 						"index": 8,
 						"min": 0,
-						"max": 10,
+						"max": 5,
 						"distributed": false
 					}
 				}
@@ -167,8 +167,8 @@
 			{
 				"class": "GradientColorModuleWrapper",
 				"id": 9,
-				"x": 140,
-				"y": -2200,
+				"x": -6.800354,
+				"y": -2202.5166,
 				"module": {
 					"data": {
 						"class": "GradientColorModule",
