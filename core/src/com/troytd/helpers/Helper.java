@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+
 /**
  * A helper class for various things.
  */
@@ -22,6 +24,15 @@ public class Helper {
             }
         }
         return shortestDistance;
+    }
+
+    /**
+     * @param center Point to start the search
+     * @param points points to find the closest point to
+     * @return The closest point as index in points
+     */
+    public static int getClosest(Vector2 center, ArrayList<Vector2> points) {
+        return getClosest(center, points.toArray(new Vector2[0]));
     }
 
     /**

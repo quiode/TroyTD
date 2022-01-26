@@ -17,7 +17,10 @@ import com.troytd.screens.GameScreen;
 import com.troytd.towers.Tower;
 import com.troytd.towers.units.Unit;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * an enemy with its texture, health and other related properties
@@ -150,19 +153,20 @@ public abstract class Enemy {
         if (n >= enemies.size()) {
             return enemies.toArray(new Enemy[0]);
         }
-        Vector2[] enemyPositions = new Vector2[enemies.size()];
-        for (int i = 0; i < enemyPositions.length; i++) {
-            enemyPositions[i] = enemies.get(i).getPosition();
+        ArrayList<Vector2> enemyPositions = new ArrayList<>(enemies.size());
+        for (int i = 0; i < enemies.size(); i++) {
+            enemyPositions.add(enemies.get(i).getPosition());
         }
-        Vector2[] positions = new Vector2[n + 1];
-        positions[0] = position;
+        ArrayList<Vector2> positions = new ArrayList<>(n + 1);
+        positions.add(position);
         for (int i = 0; i < n; i++) {
-            positions[i + 1] = enemies.get(Helper.getClosest(positions[i], enemyPositions)).getPosition();
+            enemyPositions.removeAll(positions);
+            positions.add(enemies.get(Helper.getClosest(positions.get(i), enemyPositions)).getPosition());
         }
         Enemy[] result = new Enemy[n];
         for (int i = 0; i < n; i++) {
             for (Enemy enemy : enemies) {
-                if (enemy.getPosition().equals(positions[i + 1])) {
+                if (enemy.getPosition().equals(positions.get(i + 1))) {
                     result[i] = enemy;
                     break;
                 }
