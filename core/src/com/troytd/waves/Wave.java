@@ -96,9 +96,9 @@ public abstract class Wave {
         if (enemyAmount.spawn()) spawnEnemy(enemyAmount.enemy, enemyAmount.getLine(), stage);
     }
 
-    public void draw() {
+    public void draw(GameScreen gameScreen) {
         for (Enemy enemy : activeEnemies) {
-            enemy.draw();
+            enemy.draw(gameScreen);
         }
     }
 

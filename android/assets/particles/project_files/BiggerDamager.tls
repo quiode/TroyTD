@@ -12,11 +12,8 @@
 		[ 1, 1, 1, 1 ],
 		[ 1, 1, 1, 1 ]
 	],
-	"previewCamPos": {
-		"x": -4.824555,
-		"y": -4.736833
-	},
-	"previewCamZoom": 5,
+	"previewCamPos": {},
+	"previewCamZoom": 5.230445,
 	"bgImagePath": "",
 	"isGridVisible": true,
 	"bgImageIsInBack": true,
@@ -30,108 +27,21 @@
 },
 "emitters": [
 	{
-		"name": "center",
+		"name": "default_emitter",
 		"modules": [
 			{
-				"class": "EmitterModuleWrapper",
-				"id": 0,
-				"x": -223.63202,
-				"y": -1558.791,
-				"module": {
-					"data": {
-						"class": "EmitterModule",
-						"index": 0,
-						"delay": 0,
-						"duration": 0.5,
-						"rate": 1000
-					}
-				}
-			},
-			{
-				"class": "ParticleModuleWrapper",
-				"id": 1,
-				"x": 294.19965,
-				"y": -1921.5166,
-				"module": {
-					"data": {
-						"class": "ParticleModule",
-						"index": 1
-					}
-				}
-			},
-			{
-				"class": "EmConfigModuleWrapper",
-				"id": 2,
-				"x": -614.4324,
-				"y": -1567.3076,
-				"module": {
-					"data": {
-						"class": "EmConfigModule",
-						"index": 2,
-						"additive": false,
-						"isBlendAdd": false,
-						"attached": false,
-						"continuous": false,
-						"aligned": false,
-						"immortal": true
-					}
-				}
-			},
-			{
-				"class": "TextureModuleWrapper",
-				"id": 3,
-				"x": -1.800354,
-				"y": -1697.5166,
-				"module": {
-					"data": {
-						"class": "TextureModule",
-						"index": 3,
-						"regionName": "white_pixel"
-					}
-				},
-				"filePath": "/media/quio/HDD/GitHub/TroyTD/android/assets/particles/assets/white_pixel.png",
-				"regionName": "white_pixel"
-			},
-			{
-				"class": "RadToCartModuleWrapper",
-				"id": 4,
-				"x": -45.800354,
-				"y": -1974.5166,
-				"module": {
-					"data": {
-						"class": "RadToCartModule",
-						"index": 4
-					}
-				}
-			},
-			{
-				"class": "RandomRangeModuleWrapper",
-				"id": 5,
-				"x": -365.80035,
-				"y": -2037.5166,
-				"module": {
-					"data": {
-						"class": "RandomRangeModule",
-						"index": 5,
-						"min": 0,
-						"max": 360,
-						"distributed": false
-					}
-				}
-			},
-			{
 				"class": "DynamicRangeModuleWrapper",
-				"id": 7,
+				"id": 8,
 				"x": -982.80035,
 				"y": -1873.5166,
 				"module": {
 					"data": {
 						"class": "DynamicRangeModule",
-						"index": 7,
+						"index": 8,
 						"points": [
 							{
 								"x": 0,
-								"y": 0.21324074
+								"y": 0.4898587
 							},
 							{
 								"x": 1,
@@ -150,29 +60,116 @@
 				"highMirror": false
 			},
 			{
+				"class": "ParticleModuleWrapper",
+				"id": 9,
+				"x": 294.19965,
+				"y": -1921.5166,
+				"module": {
+					"data": {
+						"class": "ParticleModule",
+						"index": 9
+					}
+				}
+			},
+			{
 				"class": "RandomRangeModuleWrapper",
-				"id": 8,
+				"id": 10,
 				"x": -429.80035,
 				"y": -2276.5166,
 				"module": {
 					"data": {
 						"class": "RandomRangeModule",
-						"index": 8,
+						"index": 10,
 						"min": 0,
-						"max": 5,
+						"max": 7.5,
 						"distributed": false
 					}
 				}
 			},
 			{
+				"class": "TextureModuleWrapper",
+				"id": 11,
+				"x": -1.800354,
+				"y": -1697.5166,
+				"module": {
+					"data": {
+						"class": "TextureModule",
+						"index": 11,
+						"regionName": "white_pixel"
+					}
+				},
+				"filePath": "/media/quio/HDD/GitHub/TroyTD/android/assets/particles/assets/white_pixel.png",
+				"regionName": "white_pixel"
+			},
+			{
+				"class": "EmitterModuleWrapper",
+				"id": 12,
+				"x": -223.63202,
+				"y": -1558.791,
+				"module": {
+					"data": {
+						"class": "EmitterModule",
+						"index": 12,
+						"delay": 0,
+						"duration": 0.5,
+						"rate": 1000
+					}
+				}
+			},
+			{
+				"class": "RandomRangeModuleWrapper",
+				"id": 13,
+				"x": -365.80035,
+				"y": -2037.5166,
+				"module": {
+					"data": {
+						"class": "RandomRangeModule",
+						"index": 13,
+						"min": 0,
+						"max": 360,
+						"distributed": false
+					}
+				}
+			},
+			{
+				"class": "RadToCartModuleWrapper",
+				"id": 14,
+				"x": -45.800354,
+				"y": -1974.5166,
+				"module": {
+					"data": {
+						"class": "RadToCartModule",
+						"index": 14
+					}
+				}
+			},
+			{
+				"class": "EmConfigModuleWrapper",
+				"id": 15,
+				"x": -614.4324,
+				"y": -1567.3076,
+				"module": {
+					"data": {
+						"class": "EmConfigModule",
+						"index": 15,
+						"additive": false,
+						"isBlendAdd": false,
+						"attached": false,
+						"continuous": false,
+						"aligned": false,
+						"immortal": true
+					}
+				}
+			},
+			{
 				"class": "GradientColorModuleWrapper",
-				"id": 9,
+				"id": 16,
 				"x": -6.800354,
 				"y": -2202.5166,
 				"module": {
 					"data": {
 						"class": "GradientColorModule",
-						"index": 9,
+						"index": 16,
 						"points": [
 							{
 								"r": 1,
@@ -186,13 +183,13 @@
 			},
 			{
 				"class": "StaticValueModuleWrapper",
-				"id": 10,
-				"x": -59.800293,
-				"y": -1785.5166,
+				"id": 17,
+				"x": -233,
+				"y": -1753,
 				"module": {
 					"data": {
 						"class": "StaticValueModule",
-						"index": 10,
+						"index": 17,
 						"value": 0.5
 					}
 				}
@@ -200,53 +197,54 @@
 		],
 		"connections": [
 			{
-				"moduleFrom": 2,
+				"moduleFrom": 15,
+				"moduleTo": 12,
 				"slotTo": 3
 			},
 			{
-				"moduleFrom": 3,
-				"moduleTo": 1,
+				"moduleFrom": 11,
+				"moduleTo": 9,
 				"slotTo": 2
 			},
 			{
-				"moduleFrom": 4,
-				"moduleTo": 1,
+				"moduleFrom": 14,
+				"moduleTo": 9,
 				"slotTo": 14
 			},
 			{
-				"moduleFrom": 5,
-				"moduleTo": 4
-			},
-			{
-				"moduleFrom": 7,
-				"moduleTo": 1,
-				"slotTo": 13
+				"moduleFrom": 13,
+				"moduleTo": 14
 			},
 			{
 				"moduleFrom": 8,
-				"moduleTo": 4,
-				"slotTo": 1
-			},
-			{
-				"moduleFrom": 9,
-				"moduleTo": 1,
-				"slotTo": 9
-			},
-			{
-				"moduleFrom": 5,
-				"moduleTo": 1,
-				"slotTo": 7
+				"moduleTo": 9,
+				"slotTo": 13
 			},
 			{
 				"moduleFrom": 10,
-				"moduleTo": 1,
+				"moduleTo": 14,
+				"slotTo": 1
+			},
+			{
+				"moduleFrom": 16,
+				"moduleTo": 9,
+				"slotTo": 9
+			},
+			{
+				"moduleFrom": 13,
+				"moduleTo": 9,
+				"slotTo": 7
+			},
+			{
+				"moduleFrom": 17,
+				"moduleTo": 9,
 				"slotTo": 4
 			}
 		],
 		"groups": [
 			{
 				"text": "Emitter",
-				"modules": [ 0, 2 ],
+				"modules": [ 12, 15 ],
 				"color": -1.3926823E38
 			}
 		]

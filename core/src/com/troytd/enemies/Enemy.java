@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.talosvfx.talos.runtime.ParticleEffectInstance;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Helper;
 import com.troytd.helpers.Stat;
@@ -49,6 +50,7 @@ public abstract class Enemy {
     private final ProgressBar healthBar;
     private final Vector2 position = new Vector2();
     private final Vector2 centerPosition;
+    private final ParticleEffectInstance damagerEffect;
     /**
      * t in [0,1] in path
      */
@@ -99,6 +101,10 @@ public abstract class Enemy {
         healthBar.setSize(enemySprite.getWidth(), healthBar.getHeight());
         healthBar.setVisible(false);
         centerPosition = enemySprite.getBoundingRectangle().getCenter(new Vector2());
+
+        // particles
+        damagerEffect = map.BiggerDamagerEffectDescriptor.createEffectInstance();
+        damagerEffect.pause();
     }
 
     public static void loadAssets() {
@@ -195,10 +201,13 @@ public abstract class Enemy {
         draw = true;
     }
 
-    public void draw() {
+    public void draw(GameScreen gameScreen) {
         if (draw) {
             enemySprite.draw(game.batch);
             if (healthBar.isVisible()) healthBar.draw(game.batch, 1);
+
+            // particles
+            damagerEffect.render(gameScreen.defaultRenderer);
         }
     }
 
@@ -273,6 +282,9 @@ public abstract class Enemy {
                 }
             }
         }
+
+        // particles
+        damagerEffect.update(Gdx.graphics.getDeltaTime());
     }
 
     public Rectangle getRectangle() {
@@ -297,6 +309,14 @@ public abstract class Enemy {
         }
 
         hp -= damage;
+
+        // particles
+        damagerEffect.setPosition(getCenterPosition().x, getCenterPosition().y);
+        if (damagerEffect.isPaused()) {
+            damagerEffect.resume();
+        }
+        damagerEffect.restart();
+
         if (hp <= 0) {
             enemies.remove(this);
             tower.kills++;
