@@ -326,8 +326,8 @@ public abstract class Map implements Loadable {
                 if (++currentWaveIndex < waves.size()) {
                     try {
                         currentWave = (Wave) ClassReflection.getConstructor(waves.get(currentWaveIndex), TroyTD.class,
-                                                                            Vector2.class, Vector2[].class)
-                                .newInstance(game, mapDistortion, pathPointsCalculated);
+                                                                            Vector2.class, Vector2[].class, Map.class)
+                                .newInstance(game, mapDistortion, pathPointsCalculated, this);
                     } catch (ReflectionException e) {
                         e.printStackTrace();
                     }

@@ -1,4 +1,4 @@
-package com.troytd.waves;
+package com.troytd.waves.Debug;
 
 import com.badlogic.gdx.math.Vector2;
 import com.troytd.enemies.DebugEnemy;
@@ -6,6 +6,7 @@ import com.troytd.enemies.Enemy;
 import com.troytd.game.TroyTD;
 import com.troytd.enemies.enemyAmount;
 import com.troytd.maps.Map;
+import com.troytd.waves.Wave;
 
 import java.util.ArrayList;
 import java.util.Collections;

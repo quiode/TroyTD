@@ -15,6 +15,8 @@ public class Spear_Thrower extends Enemy {
         defaultStats.put("speed", new Stat<>("speed", 60));
         defaultStats.put("damage", new Stat<>("damage", 30));
         defaultStats.put("range", new Stat<>("range", 120));
+        defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 160));
+        defaultStats.put("worth", new Stat<>("worth", 20));
     }
 
     /**

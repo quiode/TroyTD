@@ -20,6 +20,7 @@ public class Trojan_Horse extends Enemy {
         defaultStats.put("speed", new Stat<>("speed", 30));
         defaultStats.put("damage", new Stat<>("damage", 0));
         defaultStats.put("range", new Stat<>("range", 0));
+        defaultStats.put("worth", new Stat<>("worth", 60));
     }
 
     /**
