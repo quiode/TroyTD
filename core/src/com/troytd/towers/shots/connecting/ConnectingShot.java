@@ -45,7 +45,7 @@ public abstract class ConnectingShot implements Shot {
 
         this.enemies = Enemy.getClosestN(tower.getPosition(), enemies, enemyAmount);
         this.sprites = new Sprite[enemyAmount];
-        float sizeModifier = game.settingPreference.getInteger("width") * 0.0035f / game.assetManager.get(
+        float sizeModifier = game.settingPreference.getInteger("width") * 0.0145f / game.assetManager.get(
                 "shots/" + tower.getClass().getSimpleName() + "Shot" + ".png", Texture.class).getWidth();
         for (int i = 0; i < enemyAmount; i++) {
             sprites[i] = new Sprite(game.assetManager.get("shots/" + tower.getClass().getSimpleName() + "Shot" + ".png",
