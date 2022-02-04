@@ -48,6 +48,7 @@ public abstract class Tower {
     private final HashMap<String, Stat> stats = new HashMap<>();
     private final Class<? extends Unit> unitClass;
     private final ParticleEffectInstance unitSpawnEffect;
+    private final ParticleEffectInstance upgradeEffect;
     public String name;
     public int kills = 0;
     public int totalDamage = 0;
@@ -102,6 +103,11 @@ public abstract class Tower {
         unitSpawnEffect.setPosition(centerPosition.x, centerPosition.y);
         unitSpawnEffect.restart();
         unitSpawnEffect.pause();
+
+        upgradeEffect = map.UpgradeEffectDescriptor.createEffectInstance();
+        upgradeEffect.setPosition(centerPosition.x, centerPosition.y);
+        upgradeEffect.restart();
+        upgradeEffect.pause();
     }
 
     static public float getSize(TroyTD game) {
@@ -118,6 +124,7 @@ public abstract class Tower {
         if (tempStats.containsKey(key)) {
             if (tempStats.get(key).getValue().getClass() == stat.getValue().getClass()) {
                 stats.put(key, stat);
+                playUpgradeEffect();
             } else {
                 throw new IllegalArgumentException(
                         "Cannot set stat " + key + " to " + stat.getValue() + " because it is not of type " + tempStats.get(
@@ -159,6 +166,7 @@ public abstract class Tower {
         }
         towerSprite.draw(game.batch);
         unitSpawnEffect.render(gameScreen.defaultRenderer);
+        upgradeEffect.render(gameScreen.defaultRenderer);
     }
 
     public Texture getTexture() {
@@ -207,6 +215,7 @@ public abstract class Tower {
         towerSprite.setPosition(position.x, position.y);
         updateCenterPosition();
         unitSpawnEffect.setPosition(centerPosition.x, centerPosition.y);
+        upgradeEffect.setPosition(centerPosition.x, centerPosition.y);
     }
 
     public TowerTypes getType() {
@@ -258,6 +267,7 @@ public abstract class Tower {
 
         // particles
         unitSpawnEffect.update(Gdx.graphics.getDeltaTime());
+        upgradeEffect.update(Gdx.graphics.getDeltaTime());
     }
 
     private void updateCenterPosition() {
@@ -277,5 +287,10 @@ public abstract class Tower {
         if (position.dst(getCenterPosition()) <= (int) getStat("range").getValue()) {
             homeLocation.set(position);
         }
+    }
+
+    private void playUpgradeEffect() {
+        if (upgradeEffect.isPaused()) upgradeEffect.resume();
+        upgradeEffect.restart();
     }
 }

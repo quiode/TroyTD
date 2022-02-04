@@ -75,6 +75,7 @@ public abstract class Map implements Loadable {
     public ParticleEffectDescriptor UnitSpawnEffectDescriptor;
     public ParticleEffectDescriptor DamageEffectDescriptor;
     public ParticleEffectDescriptor BiggerDamagerEffectDescriptor;
+    public ParticleEffectDescriptor UpgradeEffectDescriptor;
     /**
      * instance of the current wave
      */
@@ -238,6 +239,9 @@ public abstract class Map implements Loadable {
                 game.assetManager.get(TroyTD.Constants.ParticlePackAtlasPath, TextureAtlas.class));
         BiggerDamagerEffectDescriptor = new ParticleEffectDescriptor(
                 Gdx.files.internal(TroyTD.Constants.ParticleDirectory + "BiggerDamager.p"),
+                game.assetManager.get(TroyTD.Constants.ParticlePackAtlasPath, TextureAtlas.class));
+        UpgradeEffectDescriptor = new ParticleEffectDescriptor(
+                Gdx.files.internal(TroyTD.Constants.ParticleDirectory + "Upgrade.p"),
                 game.assetManager.get(TroyTD.Constants.ParticlePackAtlasPath, TextureAtlas.class));
     }
 
