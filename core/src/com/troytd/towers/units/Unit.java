@@ -31,6 +31,11 @@ public abstract class Unit {
     private final ProgressBar healthBar;
     private final ParticleEffectInstance healingEffect;
     private final ParticleEffectInstance damageEffect;
+    /**
+     * vector that modifies the home location so that the unit stands in a circle
+     */
+    private final Vector2 modificationVector;
+    private final Vector2 homeLocation;
     private int hp;
     private Enemy target;
 
@@ -60,6 +65,12 @@ public abstract class Unit {
         healingEffect = map.HealingEffectDescriptor.createEffectInstance();
         damageEffect = map.DamageEffectDescriptor.createEffectInstance();
         damageEffect.pause();
+
+        final int radius = game.settingPreference.getInteger("height") / 50;
+        modificationVector = new Vector2(radius * MathUtils.cosDeg(MathUtils.random(-360, 360)),
+                                         radius * MathUtils.sinDeg(MathUtils.random(-360, 360)));
+
+        homeLocation = new Vector2(tower.getHomeLocation());
     }
 
     public void draw(GameScreen gameScreen) {
@@ -164,7 +175,7 @@ public abstract class Unit {
      * @return an enemy if he is in range null otherwise
      */
     private Enemy enemyInRange(ArrayList<Enemy> enemies) {
-        Enemy closestEnemy = Enemy.getClosestNotTargeted(tower.getHomeLocation(), enemies);
+        Enemy closestEnemy = Enemy.getClosestNotTargeted(getHomeLocation(), enemies);
 
         if (closestEnemy != null && enemyInRange(closestEnemy)) {
             return closestEnemy;
@@ -179,7 +190,7 @@ public abstract class Unit {
      */
     private boolean enemyInRange(Enemy enemy) {
         enemy.getRectangle().getCenter(enemyCenter);
-        return enemyCenter.dst(tower.getHomeLocation()) <= (int) tower.getStat("range3").getValue();
+        return enemyCenter.dst(getHomeLocation()) <= (int) tower.getStat("range3").getValue();
     }
 
 
@@ -234,7 +245,7 @@ public abstract class Unit {
     }
 
     public void goBackToHomeLocation(ArrayList<Unit> units) {
-        vectorToHomeLocation.set(new Vector2(getHomeLocation()).sub(getCenterPosition()));
+        vectorToHomeLocation.set(getHomeLocation()).sub(getCenterPosition());
         //correctIfOverlap(vectorToTower, units);
 
         /*
@@ -270,7 +281,8 @@ public abstract class Unit {
      * @return the home location
      */
     public Vector2 getHomeLocation() {
-        return tower.getHomeLocation();
+        this.homeLocation.set(tower.getHomeLocation());
+        return this.homeLocation.add(modificationVector);
     }
 
     /**
@@ -279,6 +291,7 @@ public abstract class Unit {
      * @param homeLocation the new home location
      */
     public void setHomeLocation(final Vector2 homeLocation) {
-        tower.setHomeLocation(homeLocation);
+        this.homeLocation.set(homeLocation);
+        tower.setHomeLocation(this.homeLocation);
     }
 }
