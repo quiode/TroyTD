@@ -12,6 +12,10 @@ import java.util.HashMap;
 public class Spearthrower extends Tower {
     public final static TowerTypes type = TowerTypes.SINGLE;
     public static final HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) Tower.defaultStats.clone();
+    /**
+     * description of the tower
+     */
+    public final static String description = "A tower which deals high damage to a single target.";
 
     static {
         defaultStats.put("damage", new Stat<>("damage", 40));

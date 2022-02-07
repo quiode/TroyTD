@@ -12,6 +12,10 @@ import java.util.HashMap;
 public class Melee_Tower extends Tower {
     public final static TowerTypes type = TowerTypes.MELEE;
     public static final HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) Tower.defaultStats.clone();
+    /**
+     * description of the tower
+     */
+    public final static String description = "A tower which spawns units that stop the enemies.";
 
     static {
         defaultStats.put("damage", new Stat<>("damage", 15));

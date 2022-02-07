@@ -26,6 +26,10 @@ public abstract class Tower {
     public static final int upgradeCost = 25;
     public static final HashMap<String, Stat> defaultStats = new HashMap<>();
     public final static TowerTypes type = TowerTypes.NONE;
+    /**
+     * description of the tower
+     */
+    public final static String description = "A tower that does something";
 
     static {
         defaultStats.put("cost", new Stat<>("cost", 100));

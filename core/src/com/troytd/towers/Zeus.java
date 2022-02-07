@@ -12,6 +12,10 @@ import java.util.HashMap;
 public class Zeus extends Tower {
     public final static TowerTypes type = TowerTypes.AOE;
     public static final HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) Tower.defaultStats.clone();
+    /**
+     * description of the tower
+     */
+    public final static String description = "A tower which attacks multiple enemies at the same time.";
 
     static {
         defaultStats.put("damage", new Stat<>("damage", 50));

@@ -1,5 +1,6 @@
 package com.troytd.hud;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
@@ -28,29 +30,10 @@ public class PlaceTowerHUD extends SideHUD {
     final HorizontalGroup navigationGroup;
     final Label costLabel;
     final Label costAmount;
-    final Label damageLabel;
-    final Label damageAmount;
-    final Label rangeLabel;
-    final Label rangeAmount;
     final Label towerTypeLabel;
     final Label towerTypeAmount;
-    final Label HPLabel;
-    final Label HPAmount;
     final Label towerName;
-    final Label atSpeedLabel;
-    final Label atSpeedAmount;
-    final Label range2Label;
-    final Label range2Amount;
-    final Label lifeDurationLabel;
-    final Label lifeDurationAmount;
-    final Label enemyAmountLabel;
-    final Label enemyAmountAmount;
-    final Label unitAmountLabel;
-    final Label unitAmountAmount;
-    final Label speedLabel;
-    final Label speedAmount;
-    final Label range3Label;
-    final Label range3Amount;
+    final Label towerDescription;
     Image leftTower;
     Image rightTower;
     Image middleTower;
@@ -284,107 +267,12 @@ public class PlaceTowerHUD extends SideHUD {
         costAmount = new Label(String.valueOf(towerStats.get("cost").getValue()), game.skin);
         table.add(costAmount).colspan(2).right().padRight(25).padTop(10);
 
-        // damage label
+        // description label
         table.row();
-
-        damageLabel = new Label("Damage:", game.skin);
-        table.add(damageLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // damage amount
-        damageAmount = new Label(String.valueOf(towerStats.get("damage").getValue()), game.skin);
-        table.add(damageAmount).colspan(2).right().padRight(25).padTop(10);
-
-        // range label
-        table.row();
-
-        rangeLabel = new Label("Tower Range:", game.skin);
-        table.add(rangeLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // range amount
-        rangeAmount = new Label(String.valueOf(towerStats.get("range").getValue()), game.skin);
-        table.add(rangeAmount).colspan(2).right().padRight(25).padTop(10);
-
-        // hp label
-        table.row();
-
-        HPLabel = new Label("HP:", game.skin);
-        table.add(HPLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // hp amount
-        HPAmount = new Label(String.valueOf(towerStats.get("maxHP").getValue()), game.skin);
-        table.add(HPAmount).colspan(2).right().padRight(25).padTop(10);
-
-        // attack speed label
-        table.row();
-
-        atSpeedLabel = new Label("Attack Speed:", game.skin);
-        table.add(atSpeedLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // attack speed amount
-        atSpeedAmount = new Label(String.valueOf(towerStats.get("atspeed").getValue()), game.skin);
-        table.add(atSpeedAmount).colspan(2).right().padRight(25).padTop(10);
-
-        // special attributes
-
-        // unitAmount label
-        table.row();
-
-        unitAmountLabel = new Label("Unit Amount:", game.skin);
-        table.add(unitAmountLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // unitAmount amount
-        unitAmountAmount = new Label(String.valueOf(towerStats.get("unitAmount").getValue()), game.skin);
-        table.add(unitAmountAmount).colspan(2).right().padRight(25).padTop(10);
-
-        // site range label
-        table.row();
-
-        range3Label = new Label("Site Range:", game.skin);
-        table.add(range3Label).colspan(3).left().padTop(10).padLeft(25);
-
-        // site range amount
-        range3Amount = new Label(String.valueOf(towerStats.get("range3").getValue()), game.skin);
-        table.add(range3Amount).colspan(2).right().padRight(25).padTop(10);
-
-        // speed label
-        table.row();
-
-        speedLabel = new Label("Speed:", game.skin);
-        table.add(speedLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // speed amount
-        speedAmount = new Label(String.valueOf(towerStats.get("speed").getValue()), game.skin);
-        table.add(speedAmount).colspan(2).right().padRight(25).padTop(10);
-        // range2 label
-        table.row();
-
-        range2Label = new Label("Tactical Range:", game.skin);
-        table.add(range2Label).colspan(3).left().padTop(10).padLeft(25);
-
-        // range2 amount
-        range2Amount = new Label(String.valueOf(towerStats.get("range2").getValue()), game.skin);
-        table.add(range2Amount).colspan(2).right().padRight(25).padTop(10);
-
-        // lifeDuration label
-        table.row();
-
-        lifeDurationLabel = new Label("Life Duration:", game.skin);
-        table.add(lifeDurationLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // lifeDuration amount
-        lifeDurationAmount = new Label(String.valueOf(towerStats.get("lifeDuration").getValue()), game.skin);
-        table.add(lifeDurationAmount).colspan(2).right().padRight(25).padTop(10);
-
-        // enemyAmount label
-        table.row();
-
-        enemyAmountLabel = new Label("Enemy Amount:", game.skin);
-        table.add(enemyAmountLabel).colspan(3).left().padTop(10).padLeft(25);
-
-        // enemyAmount amount
-        enemyAmountAmount = new Label(String.valueOf(towerStats.get("enemyAmount").getValue()), game.skin);
-        table.add(enemyAmountAmount).colspan(2).right().padRight(25).padTop(10);
-
+        towerDescription = new Label(Tower.description, game.skin);
+        towerDescription.setAlignment(Align.center);
+        towerDescription.setWrap(true);
+        table.add(towerDescription).colspan(5).expandX().padTop(10).width(table.getWidth() - 55);
 
         // hud - place tower button
         navigationGroup = new HorizontalGroup();
@@ -450,7 +338,7 @@ public class PlaceTowerHUD extends SideHUD {
         cancelButton.pad(5);
         navigationGroup.addActor(cancelButton);
 
-        //table.debug();
+        table.debug();
     }
 
     /**
@@ -476,21 +364,16 @@ public class PlaceTowerHUD extends SideHUD {
                 towerStats = Tower.defaultStats;
             }
             costAmount.setText(String.valueOf(towerStats.get("cost").getValue()));
-            damageAmount.setText(String.valueOf(towerStats.get("damage").getValue()));
-            rangeAmount.setText(String.valueOf(towerStats.get("range").getValue()));
-            speedAmount.setText(String.valueOf(towerStats.get("speed").getValue()));
-            HPAmount.setText(String.valueOf(towerStats.get("maxHP").getValue()));
-            atSpeedAmount.setText(String.valueOf(towerStats.get("atspeed").getValue()));
             try {
                 towerTypeAmount.setText(ClassReflection.getField(selectedTower, "type").get(null).toString());
             } catch (ReflectionException e) {
                 towerTypeAmount.setText(Tower.type.toString());
             }
-            range2Amount.setText(String.valueOf(towerStats.get("range2").getValue()));
-            range3Amount.setText(String.valueOf(towerStats.get("range3").getValue()));
-            unitAmountAmount.setText(String.valueOf(towerStats.get("unitAmount").getValue()));
-            enemyAmountAmount.setText(String.valueOf(towerStats.get("enemyAmount").getValue()));
-            lifeDurationAmount.setText(String.valueOf(towerStats.get("lifeDuration").getValue()));
+            try {
+                towerDescription.setText(ClassReflection.getField(selectedTower, "description").get(null).toString());
+            } catch (ReflectionException e) {
+                towerDescription.setText(Tower.description);
+            }
             towerName.setText(selectedTower.getSimpleName());
         }
         this.selectedTower = selectedTower;
