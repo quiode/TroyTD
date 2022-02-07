@@ -287,9 +287,9 @@ public class InfoTowerHUD extends SideHUD {
         upgradeUnitAmountButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * 0.2 * Tower.upgradeCost)
+                if (gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * 0.4 * Tower.upgradeCost)
                     return;
-                gameScreen.money -= (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * 0.2 * Tower.upgradeCost;
+                gameScreen.money -= (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * 0.4 * Tower.upgradeCost;
                 towerPlace.getTower()
                         .setStat("unitAmount", new Stat<>("unitAmount", (Integer) towerPlace.getTower()
                                 .getStat("unitAmount")
@@ -439,7 +439,7 @@ public class InfoTowerHUD extends SideHUD {
         upgradeEnemyAmountButton.setDisabled(
                 gameScreen.money < (towerPlace.getTower().getStat("enemyAmount").getLevel() + 1) * 0.2 * Tower.upgradeCost);
         upgradeUnitAmountButton.setDisabled(
-                gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * 0.2 * Tower.upgradeCost);
+                gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * 0.4 * Tower.upgradeCost);
         upgradeRange2Button.setDisabled(
                 gameScreen.money < (towerPlace.getTower().getStat("range2").getLevel() + 1) * 0.2 * Tower.upgradeCost);
         upgradeRange3Button.setDisabled(
