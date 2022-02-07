@@ -28,6 +28,10 @@ import java.util.HashMap;
  */
 public abstract class Enemy {
     public final static HashMap<String, Stat> defaultStats = new HashMap<>();
+    /**
+     * the type of the enemy
+     */
+    public static final EnemyTypes type = EnemyTypes.NONE;
 
     static {
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 100));

@@ -337,8 +337,6 @@ public class PlaceTowerHUD extends SideHUD {
         });
         cancelButton.pad(5);
         navigationGroup.addActor(cancelButton);
-
-        table.debug();
     }
 
     /**
