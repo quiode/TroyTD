@@ -76,8 +76,8 @@ public class Map1 extends Map {
                       new Vector2(376, 1536 - 616),
                       new Vector2(680, 1536 - 124)
               }, pathPoints, "Map1", new ArrayList<Class<? extends Tower>>(Arrays.asList(Spearthrower.class,
-                                                                                         DebugTower3.class,
-                                                                                         DebugTower5.class)),
+                                                                                         Zeus.class,
+                                                                                         Melee_Tower.class)),
               new ArrayList<Class<? extends Wave>>(Arrays.asList(Wave_1.class, Wave_2.class, Wave_3.class,
                                                                  Wave_4.class, Wave_5.class, Wave_6.class,
                                                                  Wave_7.class, Wave_8.class, Wave_9.class,

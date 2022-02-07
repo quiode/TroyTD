@@ -20,7 +20,8 @@ public class Wave_9 extends Wave {
      * @param map           the map
      */
     public Wave_9(TroyTD game, Vector2 mapDistortion, Vector2[] path, Map map) {
-        super(game, mapDistortion, new ArrayList<enemyAmount>(Arrays.asList(new enemyAmount(8, Cart_Rider.class))),
+        super(game, mapDistortion, new ArrayList<enemyAmount>(Arrays.asList(new enemyAmount(4, Cart_Rider.class),
+                                                                            new enemyAmount(4, Cart_Rider.class))),
               path, map,
               15000);
 

@@ -14,9 +14,10 @@ public class Spear_Thrower extends Enemy {
     static {
         defaultStats.put("speed", new Stat<>("speed", 60));
         defaultStats.put("damage", new Stat<>("damage", 30));
-        defaultStats.put("range", new Stat<>("range", 120));
+        defaultStats.put("range", new Stat<>("range", 260));
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 160));
         defaultStats.put("worth", new Stat<>("worth", 20));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 15000));
     }
 
     /**
@@ -27,7 +28,7 @@ public class Spear_Thrower extends Enemy {
      * @param map
      */
     public Spear_Thrower(byte line, TroyTD game, Vector2 position, Vector2[] path, Map map) {
-        super(line, game, position, game.assetManager.get("Spear_Thrower.png", Texture.class), path, map
+        super(line, game, position, game.assetManager.get("enemies/Spear_Thrower.png", Texture.class), path, map
         );
     }
 }

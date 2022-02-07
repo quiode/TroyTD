@@ -17,6 +17,7 @@ public class Poseidon extends Enemy {
         defaultStats.put("damage", new Stat<>("damage", 50));
         defaultStats.put("range", new Stat<>("range", 40));
         defaultStats.put("worth", new Stat<>("worth", 100));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 80000));
     }
 
     /**

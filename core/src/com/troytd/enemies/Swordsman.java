@@ -18,6 +18,7 @@ public class Swordsman extends Enemy {
         defaultStats.put("range", new Stat<>("range", 20));
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 160));
         defaultStats.put("worth", new Stat<>("worth", 10));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 10000));
     }
 
     /**

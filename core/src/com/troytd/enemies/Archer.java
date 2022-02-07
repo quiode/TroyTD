@@ -16,9 +16,10 @@ public class Archer extends Enemy {
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 20));
         defaultStats.put("speed", new Stat<>("speed", 50));
         defaultStats.put("damage", new Stat<>("damage", 20));
-        defaultStats.put("range", new Stat<>("range", 160));
+        defaultStats.put("range", new Stat<>("range", 360));
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 200));
         defaultStats.put("worth", new Stat<>("worth", 16));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 6000));
     }
 
     /**

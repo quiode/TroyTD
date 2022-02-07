@@ -19,12 +19,14 @@ public class Wave_12 extends Wave {
      */
     public Wave_12(TroyTD game, Vector2 mapDistortion, Vector2[] path, Map map) {
         super(game, mapDistortion, new ArrayList<enemyAmount>(Arrays.asList(new enemyAmount(1, Poseidon.class),
-                                                                            new enemyAmount(8, Spear_Thrower.class))),
+                                                                            new enemyAmount(8, Spear_Thrower.class),
+                                                                            new enemyAmount(4, Cart_Rider.class))),
               path, map,
               15000);
 
     }
 
-    public static Class<? extends Enemy>[] getEnemyList() {return new Class[]{Poseidon.class, Spear_Thrower.class};}
+    public static Class<? extends Enemy>[] getEnemyList() {return new Class[]{Poseidon.class, Spear_Thrower.class,
+                                                                              Cart_Rider.class};}
 
 }

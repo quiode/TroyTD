@@ -18,6 +18,7 @@ public class Horseman extends Enemy {
         defaultStats.put("range", new Stat<>("range", 20));
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 80));
         defaultStats.put("worth", new Stat<>("worth", 20));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 15000));
     }
 
     /**

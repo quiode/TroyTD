@@ -18,11 +18,12 @@ public class Spearthrower extends Tower {
     public final static String description = "A tower which deals high damage to a single target.";
 
     static {
-        defaultStats.put("damage", new Stat<>("damage", 40));
+        defaultStats.put("damage", new Stat<>("damage", 6000));
         defaultStats.put("cost", new Stat<>("cost", 80));
-        defaultStats.put("range", new Stat<>("range", 160));
-        defaultStats.put("speed", new Stat<>("speed", 100));
+        defaultStats.put("range", new Stat<>("range", 280));
+        defaultStats.put("speed", new Stat<>("speed", 700));
         defaultStats.put("maxHP", new Stat<>("maxHP", 100));
+        defaultStats.put("atspeed", new Stat<>("atspeed", 50));
     }
 
 

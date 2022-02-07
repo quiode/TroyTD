@@ -84,7 +84,7 @@ public abstract class SingleShot implements Shot {
         // the computer
 
         vectorToTarget.scl((float) Math.sqrt(
-                1 / ((vectorToTarget.x * vectorToTarget.x + vectorToTarget.y * vectorToTarget.y) / tmp_speed * tmp_speed)));
+                1 / ((vectorToTarget.x * vectorToTarget.x + vectorToTarget.y * vectorToTarget.y) / tmp_speed)));
 
         sprite.translate(vectorToTarget.x, vectorToTarget.y);
 

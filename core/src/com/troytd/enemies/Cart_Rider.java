@@ -14,10 +14,11 @@ public class Cart_Rider extends Enemy {
 
     static {
         defaultStats.put("speed", new Stat<>("speed", 80));
-        defaultStats.put("damage", new Stat<>("damage", 40));
+        defaultStats.put("damage", new Stat<>("damage", 60));
         defaultStats.put("range", new Stat<>("range", 40));
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 80));
         defaultStats.put("worth", new Stat<>("worth", 30));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 40000));
     }
 
     /**
@@ -29,6 +30,6 @@ public class Cart_Rider extends Enemy {
      * @param map
      */
     public Cart_Rider(byte line, TroyTD game, Vector2 position, Vector2[] path, Map map) {
-        super(line, game, position, new Texture("towers/range.jpg"), path, map);
+        super(line, game, position, game.assetManager.get("enemies/Cart_Rider.png", Texture.class), path, map);
     }
 }
