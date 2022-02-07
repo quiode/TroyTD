@@ -483,17 +483,17 @@ public class InfoTowerHUD extends SideHUD {
 
         typeAmount.setText(towerPlace.getTower().getType().toString());
         killsAmount.setText(String.valueOf(towerPlace.getTower().kills));
-        damageAmount.setText(String.valueOf(towerPlace.getTower().getStat("damage").getValue()));
-        rangeAmount.setText(String.valueOf(towerPlace.getTower().getStat("range").getValue()));
-        speedAmount.setText(String.valueOf(towerPlace.getTower().getStat("speed").getValue()));
-        maxHPAmount.setText(String.valueOf(towerPlace.getTower().getStat("maxHP").getValue()));
+        damageAmount.setText(String.valueOf(towerPlace.getTower().getStat("damage").getLevel() + 1));
+        rangeAmount.setText(String.valueOf(towerPlace.getTower().getStat("range").getLevel() + 1));
+        speedAmount.setText(String.valueOf(towerPlace.getTower().getStat("speed").getLevel() + 1));
+        maxHPAmount.setText(String.valueOf(towerPlace.getTower().getStat("maxHP").getLevel() + 1));
         totalDamageAmount.setText(String.valueOf(towerPlace.getTower().totalDamage));
-        atspeedAmount.setText(String.valueOf(towerPlace.getTower().getStat("atspeed").getValue()));
-        range2Amount.setText(String.valueOf(towerPlace.getTower().getStat("range2").getValue()));
-        range3Amount.setText(String.valueOf(towerPlace.getTower().getStat("range3").getValue()));
-        unitAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("unitAmount").getValue()));
-        enemyAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("enemyAmount").getValue()));
-        lifeDurationAmount.setText(String.valueOf(towerPlace.getTower().getStat("lifeDuration").getValue()));
+        atspeedAmount.setText(String.valueOf(towerPlace.getTower().getStat("atspeed").getLevel() + 1));
+        range2Amount.setText(String.valueOf(towerPlace.getTower().getStat("range2").getLevel() + 1));
+        range3Amount.setText(String.valueOf(towerPlace.getTower().getStat("range3").getLevel() + 1));
+        unitAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("unitAmount").getLevel() + 1));
+        enemyAmountAmount.setText(String.valueOf(towerPlace.getTower().getStat("enemyAmount").getLevel() + 1));
+        lifeDurationAmount.setText(String.valueOf(towerPlace.getTower().getStat("lifeDuration").getLevel() + 1));
         int refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
         try {
             HashMap<String, Stat> defaultStats = (HashMap<String, Stat>) ClassReflection.getField(
