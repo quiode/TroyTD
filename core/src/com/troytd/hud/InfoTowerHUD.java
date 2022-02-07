@@ -198,7 +198,7 @@ public class InfoTowerHUD extends SideHUD {
                 if (gameScreen.money < (towerPlace.getTower()
                         .getStat("enemyAmount")
                         .getLevel() + 1) * 0.2 * Tower.upgradeCost) return;
-                gameScreen.money -= (towerPlace.getTower().getStat("enemyAmount").getLevel() + 1) * 0.2 * Tower.upgradeCost;
+                gameScreen.money -= (towerPlace.getTower().getStat("enemyAmount").getLevel() + 1) * 0.4 * Tower.upgradeCost;
                 towerPlace.getTower()
                         .setStat("enemyAmount", new Stat<>("enemyAmount", (Integer) towerPlace.getTower()
                                 .getStat("enemyAmount")
@@ -437,7 +437,7 @@ public class InfoTowerHUD extends SideHUD {
         upgradelifeDurationButton.setDisabled(
                 gameScreen.money < (towerPlace.getTower().getStat("lifeDuration").getLevel() + 1) * 0.2 * Tower.upgradeCost);
         upgradeEnemyAmountButton.setDisabled(
-                gameScreen.money < (towerPlace.getTower().getStat("enemyAmount").getLevel() + 1) * 0.2 * Tower.upgradeCost);
+                gameScreen.money < (towerPlace.getTower().getStat("enemyAmount").getLevel() + 1) * 0.4 * Tower.upgradeCost);
         upgradeUnitAmountButton.setDisabled(
                 gameScreen.money < (towerPlace.getTower().getStat("unitAmount").getLevel() + 1) * 0.4 * Tower.upgradeCost);
         upgradeRange2Button.setDisabled(
