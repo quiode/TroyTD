@@ -7,9 +7,9 @@
 4. [Screenshots](#screenshots)
 5. [Sources](#sources)
 ## Usage
-[Download the latest release.](https://github.com/quiode/TroyTD/releases)  
+[Download the latest release.](https://github.com/quiode/TroyTD/releases)
+On Desktop, open the [java](https://www.java.com/en/download/) file with java (preferred version 11) or run `java -jar [filename]`.  
 For android, move the apk file to your phone and open in.  
-On Desktop, open the java file with java (preferred version 11) or run `java -jar [filename]`.  
 For browsers, download the zip file, unzip it and open the html file with your preferred browser.
 ## Build Guide
 Compiling from source is really easy as explained below.
