@@ -272,7 +272,7 @@ public class GameScreen implements Screen {
     }
 
     public void drawHomeLocationRadius() {
-        game.shapeDrawer.setColor(0.3f, 0.3f, 0.3f, 0.25f);
+        game.shapeDrawer.setColor(TroyTD.Constants.HomeLocationRadius);
         game.shapeDrawer.filledCircle(currentlyOpenHUD.getTowerPlace().getTower().getHomeLocation(),
                                       (int) currentlyOpenHUD.getTowerPlace().getTower().getStat("range3").getValue());
     }

@@ -165,7 +165,7 @@ public abstract class Tower {
 
     public void draw(GameScreen gameScreen) {
         if (isSelected) {
-            game.shapeDrawer.setColor(0.5f, 0.5f, 0.5f, 0.25f);
+            game.shapeDrawer.setColor(TroyTD.Constants.range_radius);
             game.shapeDrawer.filledCircle(getCenterPosition(), (int) getStat("range").getValue());
         }
         towerSprite.draw(game.batch);
