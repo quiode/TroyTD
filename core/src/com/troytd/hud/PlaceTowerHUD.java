@@ -1,6 +1,5 @@
 package com.troytd.hud;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -282,12 +281,18 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(navigationGroup).expandX().colspan(5).padTop(10).padBottom(10).center();
 
         placeButton = new TextButton("Place", game.skin, "place");
-        final HashMap<String, Stat> finalTowerStats = towerStats;
         placeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if ((int) finalTowerStats.get("cost").getValue() <= gameScreen.money) {
-                    gameScreen.money -= (int) finalTowerStats.get("cost").getValue();
+                HashMap<String, Stat> towerStats;
+                try {
+                    towerStats = (HashMap<String, Stat>) ClassReflection.getField(selectedTower, "defaultStats")
+                            .get(null);
+                } catch (ReflectionException e) {
+                    towerStats = Tower.defaultStats;
+                }
+                if ((int) towerStats.get("cost").getValue() <= gameScreen.money) {
+                    gameScreen.money -= (int) towerStats.get("cost").getValue();
                 } else {
                     Dialog errorDialog = new Dialog("", game.skin, "error") {
                         @Override
