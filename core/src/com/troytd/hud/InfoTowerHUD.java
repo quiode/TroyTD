@@ -209,10 +209,10 @@ public class InfoTowerHUD extends SideHUD {
             public void changed(ChangeEvent event, Actor actor) {
                 if (gameScreen.money < (towerPlace.getTower()
                         .getStat("enemyAmount")
-                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost + Tower.upgradeCost) return;
+                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost * 2 + Tower.upgradeCost) return;
                 gameScreen.money -= (towerPlace.getTower()
                         .getStat("enemyAmount")
-                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost;
+                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost * 2;
                 towerPlace.getTower()
                         .setStat("enemyAmount", new Stat<>("enemyAmount", (Integer) towerPlace.getTower()
                                 .getStat("enemyAmount")
@@ -311,10 +311,10 @@ public class InfoTowerHUD extends SideHUD {
             public void changed(ChangeEvent event, Actor actor) {
                 if (gameScreen.money < (towerPlace.getTower()
                         .getStat("unitAmount")
-                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost) return;
+                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost * 2) return;
                 gameScreen.money -= (towerPlace.getTower()
                         .getStat("unitAmount")
-                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost;
+                        .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost * 2;
                 towerPlace.getTower()
                         .setStat("unitAmount", new Stat<>("unitAmount", (Integer) towerPlace.getTower()
                                 .getStat("unitAmount")
@@ -372,7 +372,9 @@ public class InfoTowerHUD extends SideHUD {
                         upgradeCost = Tower.upgradeCost;
                     }
                     for (String statName : defaultStats.keySet()) {
-                        refundAmountAmount += ((towerPlace.getTower().getStat(statName).getLevel()) * upgradeCost * 0.2 / 3);
+                        refundAmountAmount += ((towerPlace.getTower()
+                                .getStat(statName)
+                                .getLevel()) * upgradeCost * 0.2 / 3);
                     }
                 } catch (ReflectionException e) {
                     refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
@@ -470,10 +472,10 @@ public class InfoTowerHUD extends SideHUD {
                 .getLevel() + 1) * 0.2 * Tower.upgradeCost + Tower.upgradeCost);
         upgradeEnemyAmountButton.setDisabled(gameScreen.money < (towerPlace.getTower()
                 .getStat("enemyAmount")
-                .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost);
+                .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost * 2);
         upgradeUnitAmountButton.setDisabled(gameScreen.money < (towerPlace.getTower()
                 .getStat("unitAmount")
-                .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost);
+                .getLevel() + 1) * 0.4 * Tower.upgradeCost + Tower.upgradeCost * 2);
         upgradeRange2Button.setDisabled(gameScreen.money < (towerPlace.getTower()
                 .getStat("range2")
                 .getLevel() + 1) * 0.2 * Tower.upgradeCost + Tower.upgradeCost);
