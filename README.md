@@ -9,7 +9,7 @@
 ## Usage
 [Download the latest release.](https://github.com/quiode/TroyTD/releases)
 
-On Desktop, open the [java](https://www.java.com/en/download/) file with java (preferred version 11) or run `java -jar [filename]`.  
+On Desktop, open the jar file with [java](https://www.java.com/en/download/) (preferred version 11) or run `java -jar [filename]`.  
 For android, move the apk file to your phone and open in.  
 For browsers, download the zip file, unzip it and open the html file with your preferred browser.
 ## Build Guide
