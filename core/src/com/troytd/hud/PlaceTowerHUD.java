@@ -227,8 +227,6 @@ public class PlaceTowerHUD extends SideHUD {
         table.add(towerName).colspan(5).center();
         table.row();
 
-        String tmp_text = "";
-
         TowerTypes towerType;
         try {
             towerType = (TowerTypes) ClassReflection.getField(selectedTower, "type").get(null);
