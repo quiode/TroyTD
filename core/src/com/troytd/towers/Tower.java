@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Tower {
-    public static final int upgradeCost = 25;
+    public static final int upgradeCost = 50;
     public static final HashMap<String, Stat> defaultStats = new HashMap<>();
     public final static TowerTypes type = TowerTypes.NONE;
     /**
