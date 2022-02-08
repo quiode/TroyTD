@@ -55,6 +55,7 @@ public class InfoTowerHUD extends SideHUD {
                         final GameScreen gameScreen) {
         super(game, stage, map, topHUDHeight, "Tower Stats", gameScreen);
 
+
         final int iconSize = game.settingPreference.getInteger("icon-size");
 
         // tower preview image
