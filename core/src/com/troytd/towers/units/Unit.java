@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public abstract class Unit {
     final Vector2 enemyCenter = new Vector2();
+    final int radius;
     private final UnitType type;
     private final TroyTD game;
     private final Sprite sprite;
@@ -66,7 +67,7 @@ public abstract class Unit {
         damageEffect = map.DamageEffectDescriptor.createEffectInstance();
         damageEffect.pause();
 
-        final int radius = game.settingPreference.getInteger("height") / 50;
+        radius = game.settingPreference.getInteger("height") / 50;
         modificationVector = new Vector2(radius * MathUtils.cosDeg(MathUtils.random(-360, 360)),
                                          radius * MathUtils.sinDeg(MathUtils.random(-360, 360)));
 
@@ -123,7 +124,7 @@ public abstract class Unit {
         }
 
         // heal if near tower
-        if (getHomeLocation().dst(sprite.getBoundingRectangle().getPosition(position)) < Tower.getSize(game) / 5f) {
+        if (getHomeLocation().dst(sprite.getBoundingRectangle().getPosition(position)) <= radius * 1.1) {
             if (hp < (Integer) tower.getStat("maxHP").getValue()) {
                 hp += MathUtils.round((Integer) tower.getStat("maxHP").getValue() * 0.001f + 0.5f);
                 if (healingEffect.isPaused()) healingEffect.resume();
