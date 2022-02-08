@@ -49,7 +49,7 @@ public abstract class Unit {
 
         sprite = new Sprite(
                 game.assetManager.get("units/" + tower.getClass().getSimpleName() + "Unit" + ".png", Texture.class));
-        sprite.setSize(Tower.getSize(game) / 5f, Tower.getSize(game) / 5f);
+        sprite.setSize(Tower.getSize(game) / 2.5f, Tower.getSize(game) / 2.5f);
         sprite.setPosition(tower.getPosition().x + tower.getRect().width / 2f - sprite.getWidth() / 2f,
                            tower.getPosition().y + tower.getRect().height * 1.1f);
         this.position = sprite.getBoundingRectangle().getCenter(new Vector2());

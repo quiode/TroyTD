@@ -14,11 +14,11 @@ public class Cart_Rider extends Enemy {
 
     static {
         defaultStats.put("speed", new Stat<>("speed", 80));
-        defaultStats.put("damage", new Stat<>("damage", 60));
+        defaultStats.put("damage", new Stat<>("damage", 50));
         defaultStats.put("range", new Stat<>("range", 40));
         defaultStats.put("spawnSpeed", new Stat<>("spawnSpeed", 80));
         defaultStats.put("worth", new Stat<>("worth", 30));
-        defaultStats.put("maxHP", new Stat<>("maxHP", 40000));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 30000));
     }
 
     /**

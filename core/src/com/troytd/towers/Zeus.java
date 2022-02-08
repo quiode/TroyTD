@@ -19,12 +19,13 @@ public class Zeus extends Tower {
     public final static String description = "A tower which attacks multiple enemies at the same time.";
 
     static {
-        defaultStats.put("damage", new Stat<>("damage", 7000));
+        defaultStats.put("damage", new Stat<>("damage", 10000));
         defaultStats.put("cost", new Stat<>("cost", 130));
-        defaultStats.put("range", new Stat<>("range", 200));
+        defaultStats.put("range", new Stat<>("range", 220));
         defaultStats.put("speed", new Stat<>("speed", 100));
         defaultStats.put("maxHP", new Stat<>("maxHP", 100));
         defaultStats.put("range2", new Stat<>("range2", 200));
+        defaultStats.put("atspeed", new Stat<>("atspeed", 35));
     }
 
 

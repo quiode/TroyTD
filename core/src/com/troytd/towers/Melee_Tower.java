@@ -23,7 +23,7 @@ public class Melee_Tower extends Tower {
         defaultStats.put("cost", new Stat<>("cost", 100));
         defaultStats.put("range", new Stat<>("range", 240));
         defaultStats.put("speed", new Stat<>("speed", 100));
-        defaultStats.put("maxHP", new Stat<>("maxHP", 2500));
+        defaultStats.put("maxHP", new Stat<>("maxHP", 3000));
         defaultStats.put("range2", new Stat("range2", 10));
         defaultStats.put("atspeed", new Stat("atspeed", 15));
     }
