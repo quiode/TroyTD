@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.troytd.game.TroyTD;
 import com.troytd.helpers.Stat;
 import com.troytd.maps.Map;
-import com.troytd.towers.shots.single.DebugShot;
 import com.troytd.towers.units.DebugUnit;
 
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class Melee_Tower extends Tower {
 
     public Melee_Tower(TroyTD game, Vector2 position, Vector2 distortion, Map map) {
         super(game, position, game.assetManager.get("towers/Melee_Tower.png", Texture.class), "Swordsmen", distortion,
-              null,DebugUnit.class, map);
+              null, DebugUnit.class, map);
     }
 
 
