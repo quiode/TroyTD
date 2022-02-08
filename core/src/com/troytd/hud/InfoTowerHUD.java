@@ -372,7 +372,7 @@ public class InfoTowerHUD extends SideHUD {
                         upgradeCost = Tower.upgradeCost;
                     }
                     for (String statName : defaultStats.keySet()) {
-                        refundAmountAmount += ((towerPlace.getTower().getStat(statName).getLevel()) * upgradeCost / 3);
+                        refundAmountAmount += ((towerPlace.getTower().getStat(statName).getLevel()) * upgradeCost * 0.2 / 3);
                     }
                 } catch (ReflectionException e) {
                     refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
@@ -542,7 +542,7 @@ public class InfoTowerHUD extends SideHUD {
                 upgradeCost = Tower.upgradeCost;
             }
             for (String statName : defaultStats.keySet()) {
-                refundAmountAmount += ((towerPlace.getTower().getStat(statName).getLevel()) * upgradeCost / 3);
+                refundAmountAmount += ((towerPlace.getTower().getStat(statName).getLevel()) * upgradeCost * 0.2 / 3);
             }
         } catch (ReflectionException e) {
             refundAmountAmount = ((int) towerPlace.getTower().getStat("cost").getValue() / 3) * 2;
